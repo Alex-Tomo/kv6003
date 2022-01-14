@@ -5,6 +5,7 @@ const BASEPATH = (
 );
 
 const USER_DATABASE = "db" . DIRECTORY_SEPARATOR . "users.sqlite";
+const UNI_DATABASE = "db" . DIRECTORY_SEPARATOR . "uni.sqlite";
 
 const DEVELOPMENT_MODE = true;
 

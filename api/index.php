@@ -10,9 +10,9 @@ switch ($request->getPath()) {
     case "api/authenticate":
         $controller = new ApiAuthenticateController($request, $response);
         break;
-//    case "api/readinglist":
-//        $controller = new ApiReadinglistController($request, $response);
-//        break;
+    case "api/courses":
+        $controller = new ApiCourseController($request, $response);
+        break;
     default:
         $controller = new ErrorController($request, $response);
         break;

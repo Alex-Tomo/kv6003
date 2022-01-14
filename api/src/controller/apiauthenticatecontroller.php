@@ -4,7 +4,6 @@ use Firebase\JWT\JWT;
 
 class apiAuthenticateController extends Controller
 {
-
     protected function setGateway()
     {
         $this->gateway = new apiAuthenticateGateway();
