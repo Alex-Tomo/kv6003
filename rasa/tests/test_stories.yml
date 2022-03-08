@@ -1,0 +1,29 @@
+stories:
+- story: ask courses
+  steps:
+  - user: |
+      what courses?
+    intent: ask_which_courses
+  - action: action_get_courses
+  - user: |
+      Computer Science BSc
+    intent: select_course
+  - action: action_say_course_name
+  - user: |
+      which modules
+    intent: show_modules
+  - action: action_show_modules
+
+- story: say goodbye
+  steps:
+  - user: |
+      bye-bye!
+    intent: goodbye
+  - action: utter_goodbye
+
+- story: bot challenge
+  steps:
+  - user: |
+      are you a bot?
+    intent: bot_challenge
+  - action: utter_iamabot

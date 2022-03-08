@@ -1,0 +1,7 @@
+RewriteEngine on
+
+# Makes the assets directory public
+RewriteRule assets/ - [L]
+
+# Makes all pages redirect to index.php
+RewriteRule ^(.*)$ index.php

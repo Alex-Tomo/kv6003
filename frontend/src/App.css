@@ -1,0 +1,77 @@
+.App {
+  text-align: center;
+}
+
+#root {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: auto;
+  grid-template-rows: 40px auto 40px;
+  grid-template-areas:
+    "nav"
+    "messages"
+    "message-functionality";
+}
+
+#nav {
+  grid-area: nav;
+
+}
+
+#nav > * {
+  margin: 0;
+  box-shadow: 1px 1px aliceblue;
+}
+
+#messages {
+  grid-area: messages;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  margin-top: 15px;
+  padding-top: 10px;
+}
+
+.dark {
+  background-color: #17141D !important;
+  color: white;
+}
+
+.light {
+  background-color: white !important;
+  color: black;
+}
+
+#message-functionality {
+  grid-area: message-functionality;
+  display: flex;
+  background-color: #17141D;
+  color: white;
+}
+
+.container > button {
+  background-color: #17141D;
+  color: white;
+}
+
+.user-message {
+  width: fit-content;
+  max-width: 45%;
+  word-wrap: break-word;
+  border: 2px solid red;
+  border-radius: 8px 0 8px 8px;
+  margin: 5px 25px 5px auto;
+  padding: 0 20px;
+}
+
+.bot-message {
+  width: fit-content;
+  max-width: 45%;
+  word-wrap: break-word;
+  border: 2px solid green;
+  border-radius: 0 8px 8px 8px;
+  margin: 5px auto 5px 25px;
+  padding: 0 20px;
+}
+
+

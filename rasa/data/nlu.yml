@@ -1,0 +1,275 @@
+version: "3.0"
+nlu:
+- intent: out_of_scope
+  examples: |
+    - I want to order food
+    - What is 2 + 2?
+    - Who's the US President?
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - heya
+    - hiya
+    - hey ya
+    - helo
+    - het
+    - heyaa
+    - heloo
+    - hey friend
+    - hello bot
+    - greetings
+    - greeting
+    - gretings
+    - howdy
+    - howde
+    - welcome
+    - hi welcome
+    - bonjour
+    - good day.
+    - gud day
+    - how goes it
+    - what's up
+    - what's happening
+    - hi-ya
+    - nice to meet you
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - gudbye
+    - bye -bye
+    - bye-bye
+    - by by
+    - cu l8r
+    - cu later
+    - c u later
+    - later
+    - cheerio
+    - so long
+    - see you another day
+    - ive got to go now
+    - im going now
+    - good day
+    - adios
+    - toodle-oo
+    - ciao
+    - im leaving
+    - g2g
+    - gtg
+    - got to go
+    - byee
+    - byeee
+    - seee you
+    - see you
+    - be seeing you
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - assert
+    - confirm
+    - corect
+    - ye
+    - yea
+    - yeah
+    - yess
+    - okay
+    - ok
+    - k
+    - okie
+    - okey
+    - affirm
+    - affirmative
+    - yes!
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - nop
+    - nope
+    - nah
+    - no way!
+    - nah!
+    - refuse
+    - reject
+    - turn down
+    - disprove
+    - negate
+    - negative
+    - definately not
+    - definitely not
+- intent: tell_name
+  examples: |
+    - i want to tell you my name
+    - i want to tell you my name!
+    - give name
+    - give name!
+    - ill give you my name
+    - i'll give you my name
+    - do you want to know my name?
+    - do you want to know my name!?
+    - i will tell you my name
+    - my name
+    - me name
+    - give my name
+    - give me name
+    - do you want to know my name
+    - do you want to know my name??
+    - du u want tu now me name
+    - i can tell you my name
+    - i can tell you me name
+    - i want to tell you me name
+    - i'm going to tell you my name
+    - im going to tell you my name
+- intent: repeat_name
+  examples: |
+    - what is my name
+    - tell me my name
+    - do you know my name
+    - repeat my name
+    - wot is my name
+    - wots my name
+    - wots me name
+    - whats my name
+    - what's my name
+    - waht is my name
+    - waht's my name
+    - wahts my name
+    - do you know me
+    - do you know me?
+    - do you knwo my name
+    - tell my name
+    - who am i
+    - whoami
+    - whoam i
+    - who ami
+    - my anme is?
+    - my name is?
+    - me name is?
+- intent: give_name
+  examples: |
+    - [vincent](name)
+    - my name is [vincent](name)
+    - i am [vincent](name)
+    - im [vincent](name)
+    - i'm [vincent](name)
+    - name is [vincent](name)
+    - [rachel](name)
+    - my name is [rachel](name)
+    - i am [rachel](name)
+    - im [rachel](name)
+    - i'm [rachel](name)
+    - name is [rachel](name)
+    - [emma](name)
+    - my name is [emma](name)
+    - i am [emma](name)
+    - im [emma](name)
+    - i'm [emma](name)
+    - name is [emma](name)
+    - [alex](name)
+    - my name is [alex](name)
+    - i am [alex](name)
+    - im [alex](name)
+    - i'm [alex](name)
+    - name is [alex](name)
+    - [pete](name)
+    - my name is [pete](name)
+    - i am [pete](name)
+    - im [pete](name)
+    - i'm [pete](name)
+    - name is [pete](name)
+    - [yolinda](name)
+    - my name is [yolinda](name)
+    - i am [yolinda](name)
+    - im [yolinda](name)
+    - i'm [yolinda](name)
+    - name is [yolinda](name)
+- intent: interest_in_course
+  examples: |
+    - I'm interested in taking a course
+    - Im interested in taking a course
+    - a course
+    - course
+- intent: ask_which_courses
+  examples: |
+    - What courses
+    - tell me about the available courses
+    - what courses are there
+- intent: select_course
+  examples: |
+    - [Computer and Digital Forensics BSc](course)
+    - [Computer Networks and Cyber Security BSc](course)
+    - [Computer Science BSc](course)
+    - [Computer Science with Artificial Intelligence BSc](course)
+    - [Computer Science with Games Development BSc](course)
+    - [Computer Science with Web Development BSc](course)
+- intent: choose_module_type
+  examples: |
+    - [all](year) Modules
+    - Year [1](year) Modules
+    - Year [2](year) Modules
+    - Year [3](year) Modules
+    - Year [4](year) Modules
+- intent: show_modules
+  examples: |
+    - Show me the modules
+    - modules
+    - module
+    - what modules
+    - show modules
+    - the module
+    - the modules
+    - show the modules
+    - which modules are there
+    - Please show me modules.
+    - modules to show me
+    - Modules, please.
+    - show me modules
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - who are you?
+    - whom are you?
+    - to whom am i speaking
+    - to whom am i speaking?
+    - you are not a human
+    - you are not a human, are you
+    - you are not a human, are you?
+    - you are not a human are you
+    - you are not a human are you?
+    - you are a bot
+    - your a bot
+    - youre a bot
+    - you're a bot

@@ -1,0 +1,75 @@
+version: '3.0'
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+intents:
+- show_modules
+- greet
+- goodbye
+- affirm
+- deny
+- tell_name
+- repeat_name
+- give_name
+- interest_in_course
+- ask_which_courses
+- select_course
+- choose_module_type
+- bot_challenge
+-
+entities:
+- course
+- courseCode
+- name
+- year
+-
+slots:
+  name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: name
+  course:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: course
+  courseCode:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: courseCode
+  year:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: year
+
+responses:
+  utter_greet:
+  - text: Hi, welcome to NUChat, I am your helper bot.
+  utter_ask_name:
+  - text: What is your name?
+  utter_goodbye:
+  - text: Bye
+  utter_which_course:
+  - text: Which course?
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_default:
+  - text: Sorry, i do not understand...
+
+actions:
+- action_get_courses
+- action_get_name
+- action_offer_help
+- action_say_course_name
+- action_say_name
+- action_show_modules
+- action_which_modules
