@@ -1,0 +1,11 @@
+#nav {
+  width: 80%;
+  margin: auto;
+  grid-area: nav;
+  display: flex;
+  justify-content: space-between;
+}
+
+#nav h1 {
+  float: start;
+}

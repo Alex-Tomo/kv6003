@@ -1,22 +1,26 @@
 import React from "react"
-import MyButton from "../components/form/MyButton"
-import axios from "axios"
-import VoiceButton from "../components/form/VoiceButton";
-import {Container, FormControl, InputGroup, Navbar} from "react-bootstrap";
+
+import NavBar from "./sections/NavBar"
+import Messages from "./sections/Messages"
+import MessagesFunctions from "./sections/MessagesFunctions"
+import SignupModal from "../components/Modals/SignupModal"
+import LoginModal from "../components/Modals/LoginModal"
 
 class HomePage extends React.Component {
   USER = 0
   BOT = 1
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       userInput: "",
       responses: [],
-      loggedin: false,
       isSending: false,
-      colourTheme: "dark"
+      colourTheme: "dark",
+      isChecked: (localStorage.getItem("sound") === 'true') ? true : false,
+      modal: <></>,
+      loggedIn: false
     }
 
     this.handleInput = this.handleInput.bind(this)
@@ -24,12 +28,12 @@ class HomePage extends React.Component {
     this.handleVoice = this.handleVoice.bind(this)
   }
 
-  handleInput = (e) => {
-    this.setState({userInput: e.target.value})
+  handleInput = (event) => {
+    this.setState({userInput: event.target.value})
   }
 
-  handleKeyPress = (e) => {
-    if ((e.key === 'Enter') && (!this.state.isSending)) {
+  handleKeyPress = (event) => {
+    if ((event.key === 'Enter') && (!this.state.isSending)) {
       this.handleClick()
     }
   }
@@ -92,7 +96,7 @@ class HomePage extends React.Component {
                   buttons.push(d[i].buttons[j].title)
                 }
               }
-            } catch (e) {}
+            } catch (error) {}
 
             tempArray.push({
               sender: this.BOT,
@@ -106,12 +110,16 @@ class HomePage extends React.Component {
         })
       })
       .then(() => {
-        this.speak()
-        this.setState({userInput: ""})
-        this.setState({isSending: false})
+        if (this.state.isChecked) {
+          this.speak()
+        }
+        this.setState({
+          userInput: "",
+          isSending: false
+        })
       })
-      .catch(e => {
-        console.log("Error: " + e)
+      .catch(error => {
+        console.log("Error: " + error)
         this.setState({isSending: false})
       })
   }
@@ -128,6 +136,40 @@ class HomePage extends React.Component {
     } else {
       this.setState({colourTheme: "dark"})
     }
+  }
+
+  handleChange = () => {
+    if (this.state.isChecked) {
+      localStorage.setItem("sound", false)
+    } else {
+      localStorage.setItem("sound", true)
+    }
+    this.setState({ isChecked: !this.state.isChecked })
+  }
+
+  displaySignupModal = async () => {
+    await this.setState({
+      modal: <SignupModal handleLogin={this.handleLogin} />
+    })
+  }
+
+  displayLoginModal = async () => {
+    await this.setState({
+      modal: <LoginModal handleLogin={this.handleLogin} />
+    })
+  }
+
+  closeModal = () => {
+    this.setState({modal: <></>})
+  }
+
+  handleLogout = () => {
+    this.setState({loggedIn: false})
+  }
+
+  handleLogin = () => {
+    this.setState({loggedIn: true})
+    this.closeModal()
   }
 
   render() {
@@ -166,34 +208,35 @@ class HomePage extends React.Component {
     }
 
     return (
-      <div id="root">
+      <div id="root" className={this.state.colourTheme}>
+        <NavBar
+          colourTheme={this.state.colourTheme}
+          changeColourTheme={this.changeColourTheme}
+          handleChange={this.handleChange}
+          isChecked={this.state.isChecked}
+          displaySignupModal={this.displaySignupModal}
+          displayLoginModal={this.displayLoginModal}
+          closeModal={this.closeModal}
+          loggedIn={this.state.loggedIn}
+          handleLogout={this.handleLogout}
+        />
 
-        <div id="nav" className={this.state.colourTheme}>
-          <Navbar bg="dark" variant="dark">
-            <Container>
-              <Navbar.Brand>
-                React Bootstrap
-              </Navbar.Brand>
-              <button onClick={this.changeColourTheme}>{this.state.colourTheme === "dark" ? "Light" : "Dark"}</button>
-            </Container>
-          </Navbar>
-        </div>
+        <Messages
+          colourTheme={this.state.colourTheme}
+          responses={responses}
+        />
 
-        <div id="messages" className={this.state.colourTheme}>{responses}</div>
+        <MessagesFunctions
+          colourTheme={this.state.colourTheme}
+          handleVoice={this.handleVoice}
+          userInput={this.state.userInput}
+          handleInput={this.handleInput}
+          handleKeyPress={this.handleKeyPress}
+          isSending={this.state.isSending}
+          handleClick={this.handleClick}
+        />
 
-        <div id="message-functionality" className={this.state.colourTheme}>
-          <InputGroup className={"mb-3 "+this.state.colourTheme}>
-            <VoiceButton handleVoice={this.handleVoice}/>
-            <FormControl
-              aria-label="Example text with button addon"
-              aria-describedby="basic-addon1"
-              value={this.state.userInput}
-              onChange={this.handleInput}
-              onKeyDown={this.handleKeyPress}
-            />
-            <MyButton isSending={this.state.isSending} buttonText="Send" handleClick={this.handleClick}/>
-          </InputGroup>
-        </div>
+        {this.state.modal}
 
       </div>
     )

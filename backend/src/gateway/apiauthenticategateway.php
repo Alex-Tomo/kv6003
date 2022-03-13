@@ -7,14 +7,14 @@ class apiAuthenticateGateway extends Gateway
         $this->setDatabase(USER_DATABASE);
     }
 
-    public function findPassword($email)
+    public function findPassword($username)
     {
         $sql = "
             SELECT users.user_id, users.user_password 
             FROM users 
-            WHERE users.user_email = :email
+            WHERE users.username = :username
         ";
-        $params = [":email" => $email];
+        $params = [":username" => $username];
         $result = $this->getDatabase()->executeSQL($sql, $params);
         $this->setResult($result);
     }

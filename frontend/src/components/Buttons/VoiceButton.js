@@ -25,6 +25,7 @@ const VoiceButton = (props) => {
       variant="outline-secondary"
       id="button-addon1"
       onClick={SpeechRecognition.startListening}
+      style={{borderBottomRightRadius: "0", borderTopRightRadius: "0"}}
     >
       Voice
     </Button>

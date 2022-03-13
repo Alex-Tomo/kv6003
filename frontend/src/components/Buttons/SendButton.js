@@ -1,7 +1,7 @@
 import React from "react"
 import Button from "react-bootstrap/Button"
 
-class MyButton extends React.Component {
+class SendButton extends React.Component {
   constructor(props) {
     super(props)
 
@@ -16,6 +16,7 @@ class MyButton extends React.Component {
         variant="primary"
         disabled={this.props.isSending}
         onClick={!this.props.isSending ? this.props.handleClick : null}
+        style={{borderBottomLeftRadius: "0", borderTopLeftRadius: "0"}}
       >
         {!this.props.isSending ? this.props.buttonText : 'Sending'}
       </Button>
@@ -23,4 +24,4 @@ class MyButton extends React.Component {
   }
 }
 
-export default MyButton
+export default SendButton

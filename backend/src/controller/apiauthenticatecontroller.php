@@ -20,7 +20,7 @@ class ApiAuthenticateController extends Controller
         // if the parameters have errors
         if (parent::requestHasErrors($errors, 401)) return [];
 
-        $this->getGateway()->findPassword($parameters['email']);
+        $this->getGateway()->findPassword($parameters['username']);
 
         // if there are not results
         if (!parent::requestHasResults()) return [];
@@ -65,14 +65,14 @@ class ApiAuthenticateController extends Controller
      */
     private function getParametersAndErrors()
     {
-        $parameters["email"] = null;
+        $parameters["username"] = null;
         $parameters["password"] = null;
         $errors = null;
 
         // if the email is null, set an error
-        if ($this->getRequest()->getParameter("email") !== null) {
-            $parameters["email"] = $this->getRequest()->
-                                     getParameter("email");
+        if ($this->getRequest()->getParameter("username") !== null) {
+            $parameters["username"] = $this->getRequest()->
+                                     getParameter("username");
         } else {
             $errors = "Unauthorized";
         }

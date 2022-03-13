@@ -1,3 +1,6 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
+@import './css/navbar.css';
+
 .App {
   text-align: center;
 }
@@ -6,21 +9,11 @@
   display: grid;
   height: 100vh;
   grid-template-columns: auto;
-  grid-template-rows: 40px auto 40px;
+  grid-template-rows: auto auto 40px;
   grid-template-areas:
     "nav"
     "messages"
     "message-functionality";
-}
-
-#nav {
-  grid-area: nav;
-
-}
-
-#nav > * {
-  margin: 0;
-  box-shadow: 1px 1px aliceblue;
 }
 
 #messages {
@@ -28,7 +21,6 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
-  margin-top: 15px;
   padding-top: 10px;
 }
 
@@ -47,6 +39,8 @@
   display: flex;
   background-color: #17141D;
   color: white;
+  width: 80%;
+  margin: auto;
 }
 
 .container > button {
@@ -72,6 +66,12 @@
   border-radius: 0 8px 8px 8px;
   margin: 5px auto 5px 25px;
   padding: 0 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  #message-functionality {
+    width: 100%;
+  }
 }
 
 
