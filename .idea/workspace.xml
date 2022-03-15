@@ -2,21 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Modals/SignupModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/forms/Signup.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/css/navbar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/controller/apisignupcontroller.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/gateway/apisignupgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/baaf32ee-c482-44c2-a974-fea2c5e801ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/baaf32ee-c482-44c2-a974-fea2c5e801ed.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/controller/apiauthenticatecontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apiauthenticatecontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apimessagescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apimessagescontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/database/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/database/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/gateway/apiauthenticategateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apiauthenticategateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apicoursesgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apicoursesgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apimessagesgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apimessagesgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/gateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/gateway.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/form/MyButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Buttons/SendButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/form/VoiceButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Buttons/VoiceButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/forms/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/login/Logout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/SignupModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/SignupModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/forms/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/forms/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/css/navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/css/navbar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/sections/MessagesFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/sections/MessagesFunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/sections/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/sections/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/domain.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +109,8 @@
       <workItem from="1644963054622" duration="14422000" />
       <workItem from="1645538687807" duration="17474000" />
       <workItem from="1647189871349" duration="11466000" />
+      <workItem from="1647213685695" duration="753000" />
+      <workItem from="1647283770915" duration="14889000" />
     </task>
     <servers />
   </component>

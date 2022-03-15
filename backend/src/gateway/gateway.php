@@ -5,9 +5,9 @@ abstract class Gateway
     private $database;
     private $result;
 
-    protected function setDatabase($database)
+    protected function setDatabase()
     {
-        $this->database = new Database($database);
+        $this->database = new Database();
     }
 
     protected function getDatabase()

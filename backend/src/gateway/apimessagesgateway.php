@@ -4,20 +4,20 @@ class ApiMessagesGateway extends Gateway
 {
     public function __construct()
     {
-        $this->setDatabase(USER_DATABASE);
+        $this->setDatabase();
     }
 
-    public function getMessages()
+    public function getMessages($id)
     {
-        $sql = "SELECT * FROM messages";
-        $result = $this->getDatabase()->executeSQL($sql);
+        $sql = "SELECT * FROM kv6003_messages WHERE user_id = :id";
+        $result = $this->getDatabase()->executeSQL($sql, [":id" => $id]);
         $this->setResult($result);
     }
 
-    public function addMessage($sender, $message, $date_added)
+    public function addMessage($id, $type, $message, $date)
     {
-        $sql = "INSERT INTO messages (sender, message, date_added) VALUES (:sender, :message, :date_added)";
-        $params = [":sender" => $sender, ":message" => $message, ":date_added" => $date_added];
+        $sql = "INSERT INTO kv6003_messages (user_id, type, message, date_added) VALUES (:id, :type, :message, :date)";
+        $params = [":id" => $id, ":type" => $type, ":message" => $message, ":date" => $date];
         $result = $this->getDatabase()->executeSQL($sql, $params);
         $this->setResult($result);
     }

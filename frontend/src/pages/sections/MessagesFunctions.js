@@ -14,7 +14,11 @@ class MessagesFunctions extends React.Component {
           onChange={this.props.handleInput}
           onKeyDown={this.props.handleKeyPress}
         />
-        <SendButton isSending={this.props.isSending} buttonText="Send" handleClick={this.props.handleClick}/>
+        <SendButton
+          isSending={this.props.isSending}
+          buttonText="Send"
+          handleClick={this.props.handleClick}
+        />
       </div>
     )
   }

@@ -9,7 +9,7 @@
   display: grid;
   height: 100vh;
   grid-template-columns: auto;
-  grid-template-rows: auto auto 40px;
+  grid-template-rows: 70px auto 40px;
   grid-template-areas:
     "nav"
     "messages"

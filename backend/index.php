@@ -7,6 +7,9 @@ $request = new Request();
 $response = new JSONResponse();
 
 switch ($request->getPath()) {
+    case "api/signup":
+        $controller = new ApiSignupController($request, $response);
+        break;
     case "api/authenticate":
         $controller = new ApiAuthenticateController($request, $response);
         break;

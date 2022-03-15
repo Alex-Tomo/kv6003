@@ -44,7 +44,7 @@ class NavBar extends React.Component {
     }
 
     return (
-      <div>
+      <div id="nav-container">
         <div
           id="nav"
           className={this.props.colourTheme}

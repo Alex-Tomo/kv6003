@@ -12,12 +12,13 @@ class ApiMessagesController extends Controller
         if (!parent::isValidRequestMethod("POST")) return "error";
 
         if ($this->getRequest()->getParameter("add") !== null) {
-            $sender = $this->getRequest()->getParameter("sender");
+            $id = $this->getRequest()->getParameter("id");
+            $type = $this->getRequest()->getParameter("type");
             $message = $this->getRequest()->getParameter("message");
-            $date_added = $this->getRequest()->getParameter("date_added");
-            $this->getGateway()->addMessage($sender, $message, $date_added);
-        } else {
-            $this->getGateway()->getMessages();
+            $date = $this->getRequest()->getParameter("date");
+            $this->getGateway()->addMessage($id, $type, $message, $date);
+        } else if ($this->getRequest()->getParameter("id") !== null) {
+            $this->getGateway()->getMessages($this->getRequest()->getParameter("id"));
         }
 
         return $this->getGateway()->getResult();

@@ -5,26 +5,26 @@ session_config:
   carry_over_slots_to_new_session: true
 
 intents:
-- show_modules
-- greet
-- goodbye
-- affirm
-- deny
-- tell_name
-- repeat_name
-- give_name
-- interest_in_course
-- ask_which_courses
-- select_course
-- choose_module_type
-- bot_challenge
--
+  - show_modules
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - tell_name
+  - repeat_name
+  - give_name
+  - interest_in_course
+  - ask_which_courses
+  - select_course
+  - choose_module_type
+  - bot_challenge
+
 entities:
-- course
-- courseCode
-- name
-- year
--
+  - course
+  - courseCode
+  - name
+  - year
+
 slots:
   name:
     type: text

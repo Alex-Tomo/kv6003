@@ -18,9 +18,11 @@ class HomePage extends React.Component {
       responses: [],
       isSending: false,
       colourTheme: "dark",
-      isChecked: (localStorage.getItem("sound") === 'true') ? true : false,
+      isChecked: (localStorage.getItem("sound") === 'true'),
       modal: <></>,
-      loggedIn: false
+      loggedIn: false,
+      accessToken: "",
+      user_id: null
     }
 
     this.handleInput = this.handleInput.bind(this)
@@ -46,6 +48,36 @@ class HomePage extends React.Component {
     this.sendMessageToBot(this.state.userInput)
   }
 
+  componentDidMount() {
+    if (localStorage.getItem("token") && localStorage.getItem("id")) {
+      this.handleLogin(localStorage.getItem("token"), localStorage.getItem("id"))
+        .then(() => {
+          let formData = new FormData()
+          formData.append('id', this.state.user_id)
+
+          fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
+            method: 'POST',
+            body: formData
+          }).then(r => {
+            return r.json()
+          }).then(r => {
+            let arr = []
+            for (let i = 0; i < r.length; i++) {
+              arr.push({
+                sender: (r[i].type === 'sent') ? this.USER : this.BOT,
+                message: r[i].message,
+                buttons: []
+              })
+            }
+
+            this.setState({responses: arr})
+          }).catch(e => {
+            console.log(e)
+          })
+        })
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (document.getElementById('messages').lastElementChild != null) {
       document.getElementById('messages').lastElementChild.scrollIntoView()
@@ -66,6 +98,11 @@ class HomePage extends React.Component {
     this.setState({
       isSending: true
     })
+
+    if (this.state.loggedIn) {
+      this.addMessageToDatabase(localStorage.getItem("id"), 'sent', msg)
+    }
+
     let tempArray = this.state.responses
     tempArray.push({
       sender: this.USER,
@@ -84,11 +121,13 @@ class HomePage extends React.Component {
         return r.json()
       })
       .then(d => {
-        console.log(d)
+        let botText = ""
+        let tempArray = this.state.responses
+        let buttons = []
+
         if (d.length > 0) {
           for (let i = 0; i < d.length; i++) {
-            let tempArray = this.state.responses
-            let buttons = []
+            botText += d[i].text + " "
 
             try {
               if (d[i].buttons.length > 0) {
@@ -98,16 +137,22 @@ class HomePage extends React.Component {
               }
             } catch (error) {}
 
-            tempArray.push({
-              sender: this.BOT,
-              message: d[i].text,
-              buttons: buttons
-            })
           }
+          tempArray.push({
+            sender: this.BOT,
+            message: botText,
+            buttons: buttons
+          })
         }
+
+        if (this.state.loggedIn) {
+          this.addMessageToDatabase(localStorage.getItem("id"), 'received', botText)
+        }
+
         this.setState({
           responses: tempArray
         })
+
       })
       .then(() => {
         if (this.state.isChecked) {
@@ -122,6 +167,27 @@ class HomePage extends React.Component {
         console.log("Error: " + error)
         this.setState({isSending: false})
       })
+  }
+
+  // id => users id
+  // type => 'sent' or 'received'
+  // msg => the message => do not include buttons
+  addMessageToDatabase = (id, type, msg) => {
+    let formData = new FormData()
+    formData.append('add', true)
+    formData.append('id', id)
+    formData.append('type', type)
+    formData.append('message', msg)
+    formData.append('date', new Date().toString())
+
+    fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
+      method: 'POST',
+      body: formData
+    }).then(r => {
+      console.log("Message added")
+    }).catch(e => {
+      console.log("Could not add message")
+    })
   }
 
   handleOptionClick = (option) => {
@@ -149,7 +215,7 @@ class HomePage extends React.Component {
 
   displaySignupModal = async () => {
     await this.setState({
-      modal: <SignupModal handleLogin={this.handleLogin} />
+      modal: <SignupModal closeModal={this.closeModal} accountCreated={this.accountCreated} />
     })
   }
 
@@ -163,20 +229,42 @@ class HomePage extends React.Component {
     this.setState({modal: <></>})
   }
 
-  handleLogout = () => {
-    this.setState({loggedIn: false})
+  accountCreated = () => {
+    document.getElementById("success-message").innerText = "Account Successfully Created!"
+    document.getElementById("success-notification").classList.remove("is-hidden")
+
+    setTimeout(() => {
+      document.getElementById("success-message").innerText = ""
+      document.getElementById("success-notification").classList.add("is-hidden")
+    }, 3000)
   }
 
-  handleLogin = () => {
-    this.setState({loggedIn: true})
+  handleLogout = () => {
+    this.setState({
+      accessToken: "",
+      user_id: null,
+      loggedIn: false
+    })
+    localStorage.removeItem("token")
+    localStorage.removeItem("id")
+  }
+
+  handleLogin = async (token, id) => {
+    this.setState({
+      accessToken: token,
+      user_id: parseInt(id),
+      loggedIn: true
+    })
+    localStorage.setItem("token", token)
+    localStorage.setItem("id", id)
     this.closeModal()
   }
 
   render() {
     let responses = ""
+
     if (this.state.responses.length > 0) {
       responses = this.state.responses.map((response, i) => {
-        console.log(response)
         let buttons = ""
         {
           if ((response.buttons !== null) && (response.buttons.length > 0)) {
@@ -192,17 +280,20 @@ class HomePage extends React.Component {
         }
 
         if (response.sender === this.USER) {
-          return (<div key={i} className="user-message">
-            <p><em>You:</em> {response.message}</p>
-          </div>)
+          return (
+            <div key={i} className="user-message">
+              <p><em>You:</em> {response.message}</p>
+            </div>
+          )
         } else {
           return (
-          <div key={i}>
-            <div className="bot-message">
-              <p><em>Bot:</em> {response.message}</p>
+            <div key={i}>
+              <div className="bot-message">
+                <p><em>Bot:</em> {response.message}</p>
+              </div>
+              {buttons}
             </div>
-            {buttons}
-          </div>)
+          )
         }
       })
     }
@@ -220,6 +311,20 @@ class HomePage extends React.Component {
           loggedIn={this.state.loggedIn}
           handleLogout={this.handleLogout}
         />
+
+        <div
+          id="success-notification"
+          className="notification is-success is-hidden"
+          style={{
+            position: "absolute",
+            top: "75px",
+            left: "10%",
+            height: "fit-content",
+            width: "80%",
+            margin: "auto"
+        }}>
+          <p id="success-message" />
+        </div>
 
         <Messages
           colourTheme={this.state.colourTheme}
