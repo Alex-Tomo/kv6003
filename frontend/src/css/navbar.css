@@ -1,15 +1,50 @@
 #nav-container {
-  height: fit-content;
+  height: 100%;
+  max-width: 200px;
   grid-area: nav;
+  border-right: 1px solid white;
+  padding: 5px;
 }
 
 #nav {
-  width: 80%;
+  width: fit-content;
+  height: 100%;
   margin: auto;
   display: flex;
+  flex-direction: column;
+}
+
+#buttons-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
-#nav h1 {
-  float: start;
+#buttons-container > div > button {
+  width: 100px;
+  margin-bottom: 2.5px;
+}
+
+@media only screen and (max-width: 600px) {
+  #nav-container {
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid white;
+  }
+
+  #nav {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  #buttons-container {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  #buttons-container > div > button {
+    width: fit-content;
+  }
 }

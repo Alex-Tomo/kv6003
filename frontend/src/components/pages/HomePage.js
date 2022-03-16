@@ -1,10 +1,12 @@
 import React from "react"
 
-import NavBar from "./sections/NavBar"
-import Messages from "./sections/Messages"
-import MessagesFunctions from "./sections/MessagesFunctions"
-import SignupModal from "../components/Modals/SignupModal"
-import LoginModal from "../components/Modals/LoginModal"
+import NavBar from "../sections/NavBar"
+import Messages from "../sections/Messages"
+import MessagesFunctions from "../sections/MessagesFunctions"
+import SignupModal from "../Modals/SignupModal"
+import LoginModal from "../Modals/LoginModal"
+import MessagesHeader from "../sections/MessagesHeader";
+import SettingsModal from "../Modals/SettingsModal";
 
 class HomePage extends React.Component {
   USER = 0
@@ -17,12 +19,15 @@ class HomePage extends React.Component {
       userInput: "",
       responses: [],
       isSending: false,
-      colourTheme: "dark",
-      isChecked: (localStorage.getItem("sound") === 'true'),
       modal: <></>,
       loggedIn: false,
       accessToken: "",
-      user_id: null
+      user_id: null,
+      user_type: (localStorage.getItem("type") === null) ? "" : localStorage.getItem("type")
+    }
+
+    if (localStorage.getItem("theme") === null) {
+      localStorage.setItem("theme", "dark")
     }
 
     this.handleInput = this.handleInput.bind(this)
@@ -99,10 +104,6 @@ class HomePage extends React.Component {
   }
 
   sendMessageToBot = (msg) => {
-    this.setState({
-      isSending: true
-    })
-
     if (this.state.loggedIn) {
       this.addMessageToDatabase(localStorage.getItem("id"), 'sent', msg)
     }
@@ -114,7 +115,12 @@ class HomePage extends React.Component {
       buttons: []
     })
 
-    fetch("http://localhost:5005/webhooks/rest/webhook", {
+    this.setState({
+      isSending: true
+    })
+
+    // fetch("http://localhost:5005/webhooks/rest/webhook", {
+    fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
       method: 'POST',
       body: JSON.stringify({
         sender: "alex",
@@ -159,7 +165,7 @@ class HomePage extends React.Component {
 
       })
       .then(() => {
-        if (this.state.isChecked) {
+        if (localStorage.getItem("sound") === 'true') {
           this.speak()
         }
         this.setState({
@@ -198,25 +204,6 @@ class HomePage extends React.Component {
     this.sendMessageToBot(option)
   }
 
-  changeColourTheme = () => {
-    // Change to light theme
-    if (this.state.colourTheme === "dark") {
-      this.setState({colourTheme: "light"})
-    // Change to dark theme
-    } else {
-      this.setState({colourTheme: "dark"})
-    }
-  }
-
-  handleChange = () => {
-    if (this.state.isChecked) {
-      localStorage.setItem("sound", false)
-    } else {
-      localStorage.setItem("sound", true)
-    }
-    this.setState({ isChecked: !this.state.isChecked })
-  }
-
   displaySignupModal = async () => {
     await this.setState({
       modal: <SignupModal closeModal={this.closeModal} accountCreated={this.accountCreated} />
@@ -226,6 +213,14 @@ class HomePage extends React.Component {
   displayLoginModal = async () => {
     await this.setState({
       modal: <LoginModal handleLogin={this.handleLogin} />
+    })
+  }
+
+  displaySettingsModal = async () => {
+    await this.setState({
+      modal: <SettingsModal
+        closeModal={this.closeModal}
+      />
     })
   }
 
@@ -254,15 +249,17 @@ class HomePage extends React.Component {
     localStorage.removeItem("id")
   }
 
-  handleLogin = async (token, id) => {
+  handleLogin = async (token, id, type) => {
     await this.setState({
       accessToken: token,
       user_id: parseInt(id),
+      user_type: type,
       loggedIn: true,
       responses: []
     })
     localStorage.setItem("token", token)
     localStorage.setItem("id", id)
+    localStorage.setItem("type", type)
     this.closeModal()
     this.getMessages()
   }
@@ -303,7 +300,7 @@ class HomePage extends React.Component {
               <div className="bot-message">
                 <p><em>Bot:</em> {response.message}</p>
               </div>
-              <div id="buttons-container">
+              <div id="message-buttons-container">
                 {buttons}
               </div>
             </div>
@@ -313,17 +310,18 @@ class HomePage extends React.Component {
     }
 
     return (
-      <div id="root" className={this.state.colourTheme}>
+      <div id="root" className={localStorage.getItem("theme")}>
         <NavBar
-          colourTheme={this.state.colourTheme}
+          colourTheme={localStorage.getItem("theme")}
           changeColourTheme={this.changeColourTheme}
           handleChange={this.handleChange}
-          isChecked={this.state.isChecked}
           displaySignupModal={this.displaySignupModal}
           displayLoginModal={this.displayLoginModal}
           closeModal={this.closeModal}
           loggedIn={this.state.loggedIn}
           handleLogout={this.handleLogout}
+          displaySettingsModal={this.displaySettingsModal}
+          userType={this.state.user_type}
         />
 
         <div
@@ -340,13 +338,17 @@ class HomePage extends React.Component {
           <p id="success-message" />
         </div>
 
+        <MessagesHeader
+          colourTheme={localStorage.getItem("theme")}
+        />
+
         <Messages
-          colourTheme={this.state.colourTheme}
+          colourTheme={localStorage.getItem("theme")}
           responses={responses}
         />
 
         <MessagesFunctions
-          colourTheme={this.state.colourTheme}
+          colourTheme={localStorage.getItem("theme")}
           handleVoice={this.handleVoice}
           userInput={this.state.userInput}
           handleInput={this.handleInput}

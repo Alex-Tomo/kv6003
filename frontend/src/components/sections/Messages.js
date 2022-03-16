@@ -8,7 +8,6 @@ class Messages extends React.Component {
         className={this.props.colourTheme}
       >
         {this.props.responses}
-        <hr style={{padding: "2.5px"}}/>
       </div>
     )
   }

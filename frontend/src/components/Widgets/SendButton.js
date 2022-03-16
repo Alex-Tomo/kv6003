@@ -13,6 +13,7 @@ class SendButton extends React.Component {
   render() {
     return (
       <Button
+        id="send-button"
         disabled={this.props.isSending}
         onClick={!this.props.isSending ? this.props.handleClick : null}
         style={{borderBottomLeftRadius: "0", borderTopLeftRadius: "0"}}

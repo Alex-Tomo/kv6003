@@ -2,21 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/buildings.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conversations" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/entry_requirements.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Modals/SettingsModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/forms/Settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesHeader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/sections/NavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apiauthenticatecontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apiauthenticatecontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apiauthenticategateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apiauthenticategateway.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Buttons/SendButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Buttons/SendButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Buttons/VoiceButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Buttons/VoiceButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/actions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/nlu.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/data/rules.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/rules.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/data/stories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/stories.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/domain.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/story_graph.dot" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/story_graph.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Buttons/SendButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Widgets/SendButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Buttons/VoiceButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/css/navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/css/navbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/sections/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/Messages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/sections/MessagesFunctions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/sections/NavBar.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,11 +78,11 @@
       <recent name="C:\Users\Alex\Desktop\rasa_individual\rasa" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Alex\Desktop\Uni Third Year\KV6003 Individual Computing Project\chatbot\kv6003\frontend\src\components" />
       <recent name="C:\Users\Alex\Desktop\Uni Third Year\KV6003 Individual Computing Project\chatbot\kv6003\frontend\src\components\form" />
       <recent name="C:\Users\Alex\Desktop\Uni Third Year\KV6003 Individual Computing Project\chatbot\kv6003\frontend\src\components\Buttons" />
       <recent name="C:\Users\Alex\Desktop\rasa_individual\frontend\src\components\form" />
       <recent name="C:\Users\Alex\Desktop\rasa_individual\frontend\src\components\login" />
-      <recent name="C:\Users\Alex\Desktop\rasa_individual\frontend\src\pages" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -103,6 +106,7 @@
       <workItem from="1647189871349" duration="11466000" />
       <workItem from="1647213685695" duration="753000" />
       <workItem from="1647283770915" duration="14889000" />
+      <workItem from="1647439764777" duration="14927000" />
     </task>
     <servers />
   </component>

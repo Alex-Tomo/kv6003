@@ -8,12 +8,22 @@
 #root {
   display: grid;
   height: 100vh;
-  grid-template-columns: auto;
-  grid-template-rows: 70px auto 40px;
+  width: 100vw;
+  grid-template-columns: auto 80vw;
+  grid-template-rows: 70px auto 60px;
   grid-template-areas:
-    "nav"
-    "messages"
-    "message-functionality";
+    "nav messages-header"
+    "nav messages"
+    "nav message-functionality";
+}
+
+#messages-header {
+  grid-area: messages-header;
+}
+
+#messages-header-para {
+  text-align: start;
+  margin: 5px 10% 0 10%;
 }
 
 #messages {
@@ -22,6 +32,10 @@
   flex-direction: column;
   overflow: auto;
   padding-top: 10px;
+}
+
+#messages::-webkit-scrollbar {
+ display: none;
 }
 
 .dark {
@@ -34,8 +48,15 @@
   color: black;
 }
 
-#message-functionality {
+#message-functionality-container {
   grid-area: message-functionality;
+}
+
+#message-functionality-container hr {
+  margin: 0 auto 7.5px;
+}
+
+#message-functionality {
   display: flex;
   background-color: #17141D;
   color: white;
@@ -72,12 +93,26 @@
   padding: 0 20px;
 }
 
+#settings {
+  color: black;
+}
+
 @media only screen and (max-width: 600px) {
+  #root {
+    grid-template-columns: auto;
+    grid-template-rows: 70px 60px auto 60px;
+    grid-template-areas:
+      "nav"
+      "messages-header"
+      "messages"
+      "message-functionality";
+  }
+
   #message-functionality {
     width: 100%;
   }
 
-  #buttons-container {
+  #message-buttons-container {
     margin: 0 25px;
     display: flex;
     overflow-y: hidden;
@@ -90,11 +125,19 @@
   }
 
   .user-message {
-    margin: 5px 25px 5px auto;
+    margin: 5px 5px 5px auto;
   }
 
   .bot-message {
-    margin: 5px auto 5px 25px;
+    margin: 5px auto 5px 5px;
+  }
+
+  #messages-header-para {
+    margin: 5px 0 0 0;
+  }
+
+  #messages {
+    margin-top: 15px;
   }
 }
 

@@ -45,7 +45,7 @@ class LoginModal extends React.Component {
   }
 
   accept = (results) => {
-    this.props.handleLogin(results.token, results.id)
+    this.props.handleLogin(results.token, results.id, results.type)
   }
 
   reject = () => {
@@ -69,7 +69,7 @@ class LoginModal extends React.Component {
           </section>
           <footer className="modal-card-foot">
             <button className="button is-success" onClick={this.handleLogin}>Log In</button>
-            <button className="button cancel" onClick={this.closeModal}>Cancel</button>
+            <button className="button cancel">Cancel</button>
           </footer>
         </div>
       </div>
