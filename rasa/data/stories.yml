@@ -23,12 +23,67 @@ stories:
     - intent: select_course
     - action: action_say_course_name
 
-# TODO
-#- story: User has picked a none existing course
-
 - story: Show modules
   steps:
     - intent: show_modules
     - action: action_which_modules
     - intent: choose_module_type
     - action: action_show_modules
+
+- story: ask entry requirements
+  steps:
+    - intent: select_course
+    - action: action_say_course_name
+    - intent: entry_requirements
+    - action: action_say_course_entry_requirements
+
+- story: ask how final grade is calculated
+  steps:
+    - intent: how_are_grades_calculated
+    - action: utter_grades_calculated
+
+- story: can i help (yes)
+  steps:
+    - intent: thank
+    - action: utter_can_i_help
+    - intent: affirm
+    - action: action_offer_help
+
+- story: can i help (no)
+  steps:
+    - intent: thank
+    - action: utter_can_i_help
+    - intent: deny
+    - action: utter_goodbye
+
+- story: full interative story 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_ask_name
+  - intent: give_name
+    entities:
+    - name: Alex
+  - slot_was_set:
+    - name: Alex
+  - action: action_offer_help
+  - intent: interest_in_course
+  - action: utter_which_course
+  - intent: ask_which_courses
+  - action: action_get_courses
+  - intent: select_course
+    entities:
+    - course: Computer Science BSc
+  - slot_was_set:
+    - course: Computer Science BSc
+  - action: action_say_course_name
+  - intent: show_modules
+  - action: action_which_modules
+  - intent: choose_module_type
+    entities:
+    - year: '1'
+  - action: action_show_modules
+  - intent: goodbye
+  - action: utter_goodbye
+
+

@@ -61,8 +61,8 @@ class ActionGetCourses(Action):
         for i in range(0, len(response.json())):
             title = str(response.json()[i]['course_title'])
             courses.append({
-                "title": "\""+title+"\"",
-                "payload": "select_course{{\"course\":\"" + title + "\"}}"
+                "title": title,
+                "payload": "select_course{{\"course\":" + title + "}}"
             })
 
         dispatcher.utter_message(text="Here are the courses I found:", buttons=courses)
@@ -155,4 +155,19 @@ class ActionShowModules(Action):
         dispatcher.utter_message(text="Here are the modules:\n"+modulesTemp)
 
         return []
+
+
+class ActionSayCourseEntryRequirements(Action):
+
+    def name(self) -> Text:
+        return "action_say_course_entry_requirements"
+
+    def run(self, dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        dispatcher.utter_message(text="The entry requirements for " + tracker.get_slot("course") + " are...")
+
+        return []
+
 

@@ -16,3 +16,8 @@ rules:
   steps:
   - intent: nlu_fallback
   - action: utter_default
+
+- rule: Ask can i help with anything else
+  steps:
+  - intent: thank
+  - action: utter_can_i_help

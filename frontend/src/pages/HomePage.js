@@ -52,30 +52,34 @@ class HomePage extends React.Component {
     if (localStorage.getItem("token") && localStorage.getItem("id")) {
       this.handleLogin(localStorage.getItem("token"), localStorage.getItem("id"))
         .then(() => {
-          let formData = new FormData()
-          formData.append('id', this.state.user_id)
-
-          fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
-            method: 'POST',
-            body: formData
-          }).then(r => {
-            return r.json()
-          }).then(r => {
-            let arr = []
-            for (let i = 0; i < r.length; i++) {
-              arr.push({
-                sender: (r[i].type === 'sent') ? this.USER : this.BOT,
-                message: r[i].message,
-                buttons: []
-              })
-            }
-
-            this.setState({responses: arr})
-          }).catch(e => {
-            console.log(e)
-          })
+          this.getMessages()
+        }).catch(e => {
+          console.log(e)
         })
     }
+  }
+
+  getMessages = () => {
+    let formData = new FormData()
+    formData.append('id', this.state.user_id)
+
+    fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
+      method: 'POST',
+      body: formData
+    }).then(r => {
+      return r.json()
+    }).then(r => {
+      let arr = []
+      for (let i = 0; i < r.length; i++) {
+        arr.push({
+          sender: (r[i].type === 'sent') ? this.USER : this.BOT,
+          message: r[i].message,
+          buttons: []
+        })
+      }
+
+      this.setState({responses: arr})
+    })
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -243,21 +247,24 @@ class HomePage extends React.Component {
     this.setState({
       accessToken: "",
       user_id: null,
-      loggedIn: false
+      loggedIn: false,
+      responses: []
     })
     localStorage.removeItem("token")
     localStorage.removeItem("id")
   }
 
   handleLogin = async (token, id) => {
-    this.setState({
+    await this.setState({
       accessToken: token,
       user_id: parseInt(id),
-      loggedIn: true
+      loggedIn: true,
+      responses: []
     })
     localStorage.setItem("token", token)
     localStorage.setItem("id", id)
     this.closeModal()
+    this.getMessages()
   }
 
   render() {
@@ -271,7 +278,12 @@ class HomePage extends React.Component {
             buttons = response.buttons.map((button, i) => {
               return (
                 <div key={i}>
-                  <button onClick={() => {this.handleOptionClick(button)}}>{button}</button>
+                  <button
+                    className="button"
+                    id="buttons"
+                    onClick={() => {this.handleOptionClick(button)}}
+                    style={{margin: "2.5px", width: "60%"}}
+                  >{button}</button>
                   <br />
                 </div>
               )
@@ -291,7 +303,9 @@ class HomePage extends React.Component {
               <div className="bot-message">
                 <p><em>Bot:</em> {response.message}</p>
               </div>
-              {buttons}
+              <div id="buttons-container">
+                {buttons}
+              </div>
             </div>
           )
         }

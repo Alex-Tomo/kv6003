@@ -52,9 +52,11 @@
   width: fit-content;
   max-width: 45%;
   word-wrap: break-word;
-  border: 2px solid red;
+  border: 2px solid #D8D8D8;
+  background-color: #D8D8D8;
+  color: black;
   border-radius: 8px 0 8px 8px;
-  margin: 5px 25px 5px auto;
+  margin: 5px 10% 5px auto;
   padding: 0 20px;
 }
 
@@ -62,15 +64,37 @@
   width: fit-content;
   max-width: 45%;
   word-wrap: break-word;
-  border: 2px solid green;
+  border: 2px solid #ACB9CC;
+  background-color: #ACB9CC;
+  color: black;
   border-radius: 0 8px 8px 8px;
-  margin: 5px auto 5px 25px;
+  margin: 5px auto 5px 10%;
   padding: 0 20px;
 }
 
 @media only screen and (max-width: 600px) {
   #message-functionality {
     width: 100%;
+  }
+
+  #buttons-container {
+    margin: 0 25px;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+
+  #buttons {
+    margin: 20px 0 20px 2.5px !important;
+    width: fit-content !important;
+  }
+
+  .user-message {
+    margin: 5px 25px 5px auto;
+  }
+
+  .bot-message {
+    margin: 5px auto 5px 25px;
   }
 }
 

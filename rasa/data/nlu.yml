@@ -5,6 +5,8 @@ nlu:
     - I want to order food
     - What is 2 + 2?
     - Who's the US President?
+
+
 - intent: greet
   examples: |
     - hey
@@ -127,6 +129,39 @@ nlu:
     - negative
     - definately not
     - definitely not
+- intent: thank
+  examples: |
+    - thanks
+    - thank you
+    - cheers
+    - cool
+    - sound
+    - ty
+    - thnx
+    - thx
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - who are you?
+    - whom are you?
+    - to whom am i speaking
+    - to whom am i speaking?
+    - you are not a human
+    - you are not a human, are you
+    - you are not a human, are you?
+    - you are not a human are you
+    - you are not a human are you?
+    - you are a bot
+    - your a bot
+    - youre a bot
+    - you're a bot
+   
+
+
+
 - intent: tell_name
   examples: |
     - i want to tell you my name
@@ -213,6 +248,11 @@ nlu:
     - im [yolinda](name)
     - i'm [yolinda](name)
     - name is [yolinda](name)
+    - [Alex](name)
+    
+
+
+
 - intent: interest_in_course
   examples: |
     - I'm interested in taking a course
@@ -224,6 +264,7 @@ nlu:
     - What courses
     - tell me about the available courses
     - what courses are there
+    - which courses are there
 - intent: select_course
   examples: |
     - [Computer and Digital Forensics BSc](course)
@@ -232,6 +273,7 @@ nlu:
     - [Computer Science with Artificial Intelligence BSc](course)
     - [Computer Science with Games Development BSc](course)
     - [Computer Science with Web Development BSc](course)
+    - [Computer Science BSc](course)
 - intent: choose_module_type
   examples: |
     - [all](year) Modules
@@ -239,6 +281,14 @@ nlu:
     - Year [2](year) Modules
     - Year [3](year) Modules
     - Year [4](year) Modules
+    - year [1](year)
+    - year [2](year)
+    - year [3](year)
+    - year [4](year)
+    - [1](year)
+    - [2](year)
+    - [3](year)
+    - [4](year)
 - intent: show_modules
   examples: |
     - Show me the modules
@@ -254,22 +304,24 @@ nlu:
     - modules to show me
     - Modules, please.
     - show me modules
-- intent: bot_challenge
+    - what modules are on this course
+- intent: entry_requirements
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
-    - who are you?
-    - whom are you?
-    - to whom am i speaking
-    - to whom am i speaking?
-    - you are not a human
-    - you are not a human, are you
-    - you are not a human, are you?
-    - you are not a human are you
-    - you are not a human are you?
-    - you are a bot
-    - your a bot
-    - youre a bot
-    - you're a bot
+    - What are the entry requirements
+    - entry requirements
+    - requirements
+    - entry
+    - what do i need
+    - which grades do i need
+    - what grades do i need
+    - are my grades enough
+    - do i have the right grades
+
+
+- intent: how_are_grades_calculated
+  examples: |
+    - how are my grades calculated
+    - how is my final mark calculated
+    - final grade
+    - final mark
+    - how is my final grade worked out

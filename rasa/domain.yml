@@ -1,30 +1,29 @@
 version: '3.0'
-
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
-
 intents:
-  - show_modules
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - tell_name
-  - repeat_name
-  - give_name
-  - interest_in_course
-  - ask_which_courses
-  - select_course
-  - choose_module_type
-  - bot_challenge
-
+- select_course
+- choose_module_type
+- interest_in_course
+- ask_which_courses
+- show_modules
+- give_name
+- greet
+- goodbye
+- affirm
+- deny
+- tell_name
+- repeat_name
+- bot_challenge
+- entry_requirements
+- thank
+- how_are_grades_calculated
 entities:
-  - course
-  - courseCode
-  - name
-  - year
-
+- course
+- courseCode
+- name
+- year
 slots:
   name:
     type: text
@@ -50,7 +49,6 @@ slots:
     mappings:
     - type: from_entity
       entity: year
-
 responses:
   utter_greet:
   - text: Hi, welcome to NUChat, I am your helper bot.
@@ -58,13 +56,19 @@ responses:
   - text: What is your name?
   utter_goodbye:
   - text: Bye
+  - text: Goodbye
+  - text: Have a great day!
+  - text: Goodbye {name}!
   utter_which_course:
   - text: Which course?
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
+  utter_can_i_help:
+  - text: Is there anything else I can help with?
   utter_default:
   - text: Sorry, i do not understand...
-
+  utter_grades_calculated:
+  - text: 40% of 100 credits from 5th year plus 60% of 100 credits from final year or 100% of final year. Visit <a>https://www.ucas.com/connect/videos/coronavirus/calculated-grades</a> for more information.
 actions:
 - action_get_courses
 - action_get_name
@@ -73,3 +77,8 @@ actions:
 - action_say_name
 - action_show_modules
 - action_which_modules
+- action_say_course_entry_requirements
+- utter_ask_name
+- utter_goodbye
+- utter_greet
+- utter_which_course
