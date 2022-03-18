@@ -1,8 +1,59 @@
-FAQs
+Aspiring Students
+
+Courses:
+    modules
+    fees
+    entry requirements
+    start dates
+
+Visit Campus:
+    Open days
+    loans/scholarships
+    Facilities
+    Map
+
+Accommodation:
+    Link
+
+Existing Students
+
+Building Locations:
+    Map
+    Directions
+    Building name/code
+
+Staff contact information:
+    what is x email
+    when is x available
+    where is x room
+
+Calendar:
+    when is half term
+    When is term 1, 2 or 3
 
 
-You: how are my grades calculated?
-Bot: Explain both ways. -> https://www.ucas.com/connect/videos/coronavirus/calculated-grades
+
+FAQs -> Mostly single answers or links
+
+How do i apply for an extension?
+How do i report absence?
+How do i file a complaint?
+How do i switch course?
+How do i calculate my final grade
+
+Support -> mostly links to each
+
+I need wellbeing support
+I need mental health support
+I need physical health support
+I need financial support
+I need legal support
+I am struggling with my course
+Discrimination
+
+Student Assistance Programme (SAP) is here to help. Call the SAP helpline - 0800 028 3766 - for 24/7 support.
+
+
 
 You: I want to come to campus, when are your next open days?
 Bot: There are a number of open days. Visit https://www.northumbria.ac.uk/study-at-northumbria/coming-to-northumbria/northumbria-undergraduate-open-days/ for more
@@ -12,14 +63,3 @@ Bot: Visit https://www.northumbria.ac.uk/study-at-northumbria/accommodation/ for
 
 You: Entry Requirements (Add this to the courses convo)
 You: Tuition Fees (Add this to the courses convo)
-
-You: I want to transfer courses
-
-You: I need support
-Bot: What kind of support (Offer choices)
-You: Financial, life, Legal, Medical
-Bot: Student Assistance Programme (SAP) is here to help. Call the SAP helpline - 0800 028 3766 - for 24/7 support.
-
-You: Show me the campus map
-
-You: Where is building x || Where is x

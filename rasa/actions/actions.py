@@ -6,34 +6,6 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 
-class ActionGetName(Action):
-
-    def name(self) -> Text:
-        return "action_get_name"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        text = tracker.latest_message['text']
-        dispatcher.utter_message(text=f"ill remember that")
-        return [SlotSet("name", text)]
-
-
-class ActionSayName(Action):
-
-    def name(self) -> Text:
-        return "action_say_name"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        name = str(tracker.get_slot("name"))
-        name = name.capitalize()
-        dispatcher.utter_message(text=f"Your name is {name}")
-
-        return []
-
-
 class ActionOfferHelp(Action):
 
     def name(self) -> Text:
@@ -42,9 +14,39 @@ class ActionOfferHelp(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        name = str(tracker.get_slot("name"))
-        name = name.capitalize()
-        dispatcher.utter_message(text=f"Ok {name}, how can I help?")
+
+        buttons = []
+
+        buttons.append({"title": "aspiring student", "payload": "/my_student_type{\"student_type\":\"aspiring\"}"})
+        buttons.append({"title": "existing student", "payload": "/my_student_type{\"student_type\":\"existing\"}"})
+
+        dispatcher.utter_message(text="Are you an...?", buttons=buttons)
+        return []
+
+
+class ActionStudentOptions(Action):
+
+    def name(self) -> Text:
+        return "action_student_options"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        print(str(tracker.get_slot("student_type")))
+
+        buttons = []
+
+        if str(tracker.get_slot("student_type")) == "aspiring":
+            buttons.append({"title": "courses", "payload": "/interest_in_course"})
+            buttons.append({"title": "accommodation", "payload": "/university_accommodation"})
+            buttons.append({"title": "visit campus", "payload": "/open_days"})
+        elif str(tracker.get_slot("student_type")) == "existing":
+            buttons.append({"title": "buildings", "payload": "/building_name"})
+            buttons.append({"title": "lecturers", "payload": "/lecturer_email"})
+            buttons.append({"title": "calendar", "payload": "/show_me_the_calendar"})
+
+        dispatcher.utter_message(text="What would you like to know about?", buttons=buttons)
         return []
 
 
@@ -62,7 +64,7 @@ class ActionGetCourses(Action):
             title = str(response.json()[i]['course_title'])
             courses.append({
                 "title": title,
-                "payload": "select_course{{\"course\":" + title + "}}"
+                "payload": "/select_course{\"course\":\"" + title + "\"}"
             })
 
         dispatcher.utter_message(text="Here are the courses I found:", buttons=courses)
@@ -97,7 +99,14 @@ class ActionSayCourseName(Action):
             courseCode = None
 
         if course is not None:
-            dispatcher.utter_message(text=f"What would you like to know about {course}")
+            buttons = []
+
+            buttons.append({"title": "modules", "payload": "/show_modules"})
+            buttons.append({"title": "entry requirements", "payload": "/show_modules"})
+            buttons.append({"title": "fees", "payload": "/show_modules"})
+            buttons.append({"title": "dates", "payload": "/show_modules"})
+
+            dispatcher.utter_message(text=f"What would you like to know about {course}?", buttons=buttons)
         else:
             dispatcher.utter_message(text="Sorry, I cannot find that course")
 
@@ -115,11 +124,11 @@ class ActionWhichModules(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         modules = []
-        modules.append({"title": "All Modules", "payload": "/choose_module_type{{\"year\":\"all\"}}"})
-        modules.append({"title": "Year 1 Modules", "payload": "/choose_module_type{{\"year\":\"1\"}}"})
-        modules.append({"title": "Year 2 Modules", "payload": "/choose_module_type{{\"year\":\"2\"}}"})
-        modules.append({"title": "Year 3 Modules", "payload": "/choose_module_type{{\"year\":\"3\"}}"})
-        modules.append({"title": "Year 4 Modules", "payload": "/choose_module_type{{\"year\":\"4\"}}"})
+        modules.append({"title": "All Modules", "payload": "/choose_module_type{\"year\":\"all\"}"})
+        modules.append({"title": "Year 1 Modules", "payload": "/choose_module_type{\"year\":\"1\"}"})
+        modules.append({"title": "Year 2 Modules", "payload": "/choose_module_type{\"year\":\"2\"}"})
+        modules.append({"title": "Year 3 Modules", "payload": "/choose_module_type{\"year\":\"3\"}"})
+        modules.append({"title": "Year 4 Modules", "payload": "/choose_module_type{\"year\":\"4\"}"})
 
         dispatcher.utter_message(text="Which modules would you like to see?", buttons=modules)
         return []

@@ -7,6 +7,8 @@ import SignupModal from "../Modals/SignupModal"
 import LoginModal from "../Modals/LoginModal"
 import MessagesHeader from "../sections/MessagesHeader";
 import SettingsModal from "../Modals/SettingsModal";
+import AccountCircleBlack from "../../assets/account_circle_black.svg"
+import AccountCircleWhite from "../../assets/account_circle_white.svg"
 
 class HomePage extends React.Component {
   USER = 0
@@ -23,7 +25,8 @@ class HomePage extends React.Component {
       loggedIn: false,
       accessToken: "",
       user_id: null,
-      user_type: (localStorage.getItem("type") === null) ? "" : localStorage.getItem("type")
+      user_type: (localStorage.getItem("user_type") === null) ? "" : localStorage.getItem("user_type"),
+      initialMessageSend: false
     }
 
     if (localStorage.getItem("theme") === null) {
@@ -54,14 +57,69 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem("token") && localStorage.getItem("id")) {
-      this.handleLogin(localStorage.getItem("token"), localStorage.getItem("id"))
+    if (localStorage.getItem("token") && localStorage.getItem("id") && localStorage.getItem("user_type")) {
+      this.handleLogin(localStorage.getItem("token"), localStorage.getItem("id"), localStorage.getItem("user_type"))
         .then(() => {
           this.getMessages()
         }).catch(e => {
           console.log(e)
         })
+    } else {
+      if (this.state.responses.length === 0) {
+        this.sendInitialMessage()
+      }
     }
+  }
+
+  sendInitialMessage = () => {
+    fetch("http://localhost:5005/webhooks/rest/webhook", {
+      // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+      method: 'POST',
+      body: JSON.stringify({
+        sender: "",
+        message: "hey"
+      })
+    })
+      .then(r => {
+        return r.json()
+      })
+      .then(d => {
+        let botText = ""
+        let tempArray = this.state.responses
+        let buttons = []
+
+        if (d.length > 0) {
+          for (let i = 0; i < d.length; i++) {
+            botText += d[i].text + " "
+
+            try {
+              if (d[i].buttons.length > 0) {
+                for (let j = 0; j < d[i].buttons.length; j++) {
+                  buttons.push(d[i].buttons[j].title)
+                }
+              }
+            } catch (error) {}
+
+          }
+          tempArray.push({
+            sender: this.BOT,
+            message: botText,
+            buttons: buttons
+          })
+        }
+        this.setState({
+          responses: tempArray
+        })
+
+      })
+      .then(() => {
+        if (localStorage.getItem("sound") === 'true') {
+          this.speak()
+        }
+      })
+      .catch(error => {
+        console.log("Error: " + error)
+      })
   }
 
   getMessages = () => {
@@ -74,6 +132,7 @@ class HomePage extends React.Component {
     }).then(r => {
       return r.json()
     }).then(r => {
+      console.log(r)
       let arr = []
       for (let i = 0; i < r.length; i++) {
         arr.push({
@@ -104,6 +163,12 @@ class HomePage extends React.Component {
   }
 
   sendMessageToBot = (msg) => {
+    if (this.state.isSending) return
+
+    this.setState({
+      isSending: true
+    })
+
     if (this.state.loggedIn) {
       this.addMessageToDatabase(localStorage.getItem("id"), 'sent', msg)
     }
@@ -112,15 +177,12 @@ class HomePage extends React.Component {
     tempArray.push({
       sender: this.USER,
       message: msg,
-      buttons: []
+      buttons: [],
+      date: new Date().toString()
     })
 
-    this.setState({
-      isSending: true
-    })
-
-    // fetch("http://localhost:5005/webhooks/rest/webhook", {
-    fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+    fetch("http://localhost:5005/webhooks/rest/webhook", {
+    // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
       method: 'POST',
       body: JSON.stringify({
         sender: "alex",
@@ -151,7 +213,8 @@ class HomePage extends React.Component {
           tempArray.push({
             sender: this.BOT,
             message: botText,
-            buttons: buttons
+            buttons: buttons,
+            date: new Date().toString()
           })
         }
 
@@ -193,9 +256,9 @@ class HomePage extends React.Component {
     fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
       method: 'POST',
       body: formData
-    }).then(r => {
+    }).then(() => {
       console.log("Message added")
-    }).catch(e => {
+    }).catch(() => {
       console.log("Could not add message")
     })
   }
@@ -238,8 +301,8 @@ class HomePage extends React.Component {
     }, 3000)
   }
 
-  handleLogout = () => {
-    this.setState({
+  handleLogout = async () => {
+    await this.setState({
       accessToken: "",
       user_id: null,
       loggedIn: false,
@@ -247,6 +310,11 @@ class HomePage extends React.Component {
     })
     localStorage.removeItem("token")
     localStorage.removeItem("id")
+    localStorage.removeItem("user_type")
+
+    if (this.state.responses.length === 0) {
+      this.sendInitialMessage()
+    }
   }
 
   handleLogin = async (token, id, type) => {
@@ -257,14 +325,17 @@ class HomePage extends React.Component {
       loggedIn: true,
       responses: []
     })
-    localStorage.setItem("token", token)
-    localStorage.setItem("id", id)
-    localStorage.setItem("type", type)
+
+    await localStorage.setItem("token", token)
+    await localStorage.setItem("id", id)
+    await localStorage.setItem("user_type", type)
     this.closeModal()
     this.getMessages()
   }
 
   render() {
+    console.log(this.state.responses)
+
     let responses = ""
 
     if (this.state.responses.length > 0) {
@@ -279,8 +350,10 @@ class HomePage extends React.Component {
                     className="button"
                     id="buttons"
                     onClick={() => {this.handleOptionClick(button)}}
-                    style={{margin: "2.5px", width: "60%"}}
-                  >{button}</button>
+                    style={{margin: "2.5px", width: "60%", whiteSpace: "normal", wordWrap: "break-word"}}
+                  >
+                    <span>{button}</span>
+                  </button>
                   <br />
                 </div>
               )
@@ -290,15 +363,31 @@ class HomePage extends React.Component {
 
         if (response.sender === this.USER) {
           return (
-            <div key={i} className="user-message">
-              <p><em>You:</em> {response.message}</p>
+            <div className="user-message-container" key={i}>
+              <div key={i} className="user-message">
+                <p><em>You:</em> {response.message}</p>
+              </div>
+              <img
+                src={(localStorage.getItem("theme") === "dark") ?
+                  AccountCircleWhite : AccountCircleBlack}
+                alt="Account Circle"
+                className={`chat-circle  ${localStorage.getItem("theme")}`}
+              />
             </div>
           )
         } else {
           return (
             <div key={i}>
-              <div className="bot-message">
-                <p><em>Bot:</em> {response.message}</p>
+              <div className="bot-message-container">
+                <img
+                  src={(localStorage.getItem("theme") === "dark") ?
+                    AccountCircleWhite : AccountCircleBlack}
+                  alt="Account Circle"
+                  className={`chat-circle  ${localStorage.getItem("theme")}`}
+                />
+                <div className="bot-message">
+                  <p><em>Bot:</em> {response.message}</p>
+                </div>
               </div>
               <div id="message-buttons-container">
                 {buttons}
@@ -310,18 +399,16 @@ class HomePage extends React.Component {
     }
 
     return (
-      <div id="root" className={localStorage.getItem("theme")}>
+      <div id="main-root" className={localStorage.getItem("theme")}>
         <NavBar
           colourTheme={localStorage.getItem("theme")}
-          changeColourTheme={this.changeColourTheme}
-          handleChange={this.handleChange}
           displaySignupModal={this.displaySignupModal}
           displayLoginModal={this.displayLoginModal}
           closeModal={this.closeModal}
           loggedIn={this.state.loggedIn}
           handleLogout={this.handleLogout}
           displaySettingsModal={this.displaySettingsModal}
-          userType={this.state.user_type}
+          userType={localStorage.getItem("user_type")}
         />
 
         <div

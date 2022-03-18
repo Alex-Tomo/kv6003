@@ -6,7 +6,7 @@ stories:
     intent: ask_which_courses
   - action: action_get_courses
   - user: |
-      Computer Science BSc
+      [Computer Science BSc](course)
     intent: select_course
   - action: action_say_course_name
   - user: |
@@ -27,3 +27,27 @@ stories:
       are you a bot?
     intent: bot_challenge
   - action: utter_iamabot
+
+- story: Aspiring Student
+  steps:
+  - user: |
+      hello
+    intent: greet
+  - action: utter_greet
+  - action: action_offer_help
+  - user: |
+      [Aspiring](student_type) Student
+    intent: my_student_type
+  - action: action_student_options
+
+- story: Existing Student
+  steps:
+  - user: |
+      hi
+    intent: greet
+  - action: utter_greet
+  - action: action_offer_help
+  - user: |
+      [Existing](student_type) Student
+    intent: my_student_type
+  - action: action_student_options

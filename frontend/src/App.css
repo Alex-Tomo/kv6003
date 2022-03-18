@@ -5,11 +5,11 @@
   text-align: center;
 }
 
-#root {
+#main-root {
   display: grid;
   height: 100vh;
   width: 100vw;
-  grid-template-columns: auto 80vw;
+  grid-template-columns: 150px auto;
   grid-template-rows: 70px auto 60px;
   grid-template-areas:
     "nav messages-header"
@@ -23,7 +23,6 @@
 
 #messages-header-para {
   text-align: start;
-  margin: 5px 10% 0 10%;
 }
 
 #messages {
@@ -69,6 +68,12 @@
   color: white;
 }
 
+.user-message-container {
+  display: flex;
+  flex-direction: row;
+  margin-right: 10%;
+}
+
 .user-message {
   width: fit-content;
   max-width: 45%;
@@ -77,8 +82,14 @@
   background-color: #D8D8D8;
   color: black;
   border-radius: 8px 0 8px 8px;
-  margin: 5px 10% 5px auto;
+  margin: 5px 5px 5px auto;
   padding: 0 20px;
+}
+
+.bot-message-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10%;
 }
 
 .bot-message {
@@ -89,23 +100,58 @@
   background-color: #ACB9CC;
   color: black;
   border-radius: 0 8px 8px 8px;
-  margin: 5px auto 5px 10%;
+  margin: 5px auto 5px 5px;
   padding: 0 20px;
+}
+
+.chat-circle {
+  background-color: #17141D;
+  margin-bottom: auto;
 }
 
 #settings {
   color: black;
 }
 
+.online {
+  color: green;
+}
+
+.offline {
+  color: red;
+}
+
+.messages-header-banner {
+  margin: 5px 10% 0 10%;
+  display: flex;
+  vertical-align: middle !important;
+}
+
+#messages-header hr {
+  margin: 0;
+}
+
+.messages-header-banner img {
+  margin-right: 10px;
+}
+
 @media only screen and (max-width: 600px) {
-  #root {
+  #main-root {
     grid-template-columns: auto;
-    grid-template-rows: 70px 60px auto 60px;
+    grid-template-rows: 70px 56px auto 60px;
     grid-template-areas:
       "nav"
       "messages-header"
       "messages"
       "message-functionality";
+  }
+
+  #main-root.active-nav {
+    grid-template-columns: auto;
+    grid-template-rows: 70px auto;
+    grid-template-areas:
+      "nav"
+      "mobile-nav";
   }
 
   #message-functionality {
@@ -133,11 +179,19 @@
   }
 
   #messages-header-para {
-    margin: 5px 0 0 0;
+    margin: 0;
   }
 
-  #messages {
-    margin-top: 15px;
+  .user-message-container {
+    margin-right: 5px;
+  }
+
+  .bot-message-container {
+    margin-left: 5px;
+  }
+
+  .messages-header-banner {
+    margin: 5px 0 0 0;
   }
 }
 

@@ -1,6 +1,6 @@
 import React from "react"
-import VoiceButton from "../Widgets/VoiceButton";
-import SendButton from "../Widgets/SendButton";
+import VoiceButton from "../Widgets/VoiceButton"
+import SendButton from "../Widgets/SendButton"
 
 class MessagesFunctions extends React.Component {
   constructor(props) {

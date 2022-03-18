@@ -4,25 +4,51 @@ session_config:
   carry_over_slots_to_new_session: true
 intents:
 - select_course
-- choose_module_type
+- my_student_type
 - interest_in_course
-- ask_which_courses
-- show_modules
-- give_name
+- thank
+- choose_module_type
 - greet
+- show_modules
 - goodbye
 - affirm
 - deny
-- tell_name
-- repeat_name
 - bot_challenge
+- give_name
+- ask_which_courses
 - entry_requirements
-- thank
+- open_days
+- university_facilities
+- campus_map
+- university_scholarships
+- university_loans
+- university_accommodation
+- building_name
+- building_location
+- show_map
+- lecturer_email
+- lecturer_availability
+- lecturer_office
+- half_term
+- when_is_term
+- show_me_the_calendar
+- how_to_apply_for_extension
+- how_to_report_an_absence
+- how_to_file_a_complaint
+- how_to_switch_course
 - how_are_grades_calculated
+- what_support
+- mental_health_support
+- physical_health_support
+- financial_support
+- legal_support
+- struggling
+- discrimination_support
 entities:
 - course
 - courseCode
 - name
+- student_type
 - year
 slots:
   name:
@@ -49,6 +75,12 @@ slots:
     mappings:
     - type: from_entity
       entity: year
+  student_type:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: student_type
 responses:
   utter_greet:
   - text: Hi, welcome to NUChat, I am your helper bot.
@@ -59,6 +91,8 @@ responses:
   - text: Goodbye
   - text: Have a great day!
   - text: Goodbye {name}!
+  utter_student_type:
+  - text: You are a {student_type} student
   utter_which_course:
   - text: Which course?
   utter_iamabot:
@@ -71,14 +105,14 @@ responses:
   - text: 40% of 100 credits from 5th year plus 60% of 100 credits from final year or 100% of final year. Visit <a>https://www.ucas.com/connect/videos/coronavirus/calculated-grades</a> for more information.
 actions:
 - action_get_courses
-- action_get_name
 - action_offer_help
-- action_say_course_name
-- action_say_name
-- action_show_modules
-- action_which_modules
 - action_say_course_entry_requirements
+- action_say_course_name
+- action_show_modules
+- action_student_options
+- action_which_modules
 - utter_ask_name
+- utter_can_i_help
 - utter_goodbye
 - utter_greet
 - utter_which_course

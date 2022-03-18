@@ -6,9 +6,14 @@ stories:
   steps:
     - intent: greet
     - action: utter_greet
-    - action: utter_ask_name
-    - intent: give_name
     - action: action_offer_help
+    - intent: my_student_type
+    - action: action_student_options
+
+- story: give student options
+  steps:
+    - intent: my_student_type
+    - action: action_student_options
 
 - story: User is interested in taking a course
   steps:
@@ -26,6 +31,12 @@ stories:
 - story: Show modules
   steps:
     - intent: show_modules
+    - action: action_which_modules
+    - intent: choose_module_type
+    - action: action_show_modules
+
+- story: Select Module type
+  steps:
     - action: action_which_modules
     - intent: choose_module_type
     - action: action_show_modules
@@ -56,20 +67,61 @@ stories:
     - intent: deny
     - action: utter_goodbye
 
-- story: full interative story 1
+- story: interactive_story_1
   steps:
   - intent: greet
   - action: utter_greet
-  - action: utter_ask_name
-  - intent: give_name
-    entities:
-    - name: Alex
-  - slot_was_set:
-    - name: Alex
   - action: action_offer_help
+  - intent: my_student_type
+    entities:
+    - student_type: aspiring
+  - slot_was_set:
+    - student_type: aspiring
+  - action: action_student_options
   - intent: interest_in_course
   - action: utter_which_course
-  - intent: ask_which_courses
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: action_offer_help
+  - intent: my_student_type
+    entities:
+    - student_type: aspiring
+  - slot_was_set:
+    - student_type: aspiring
+  - action: action_student_options
+  - intent: interest_in_course
+  - action: utter_which_course
+  - action: action_get_courses
+
+- story: interactive_story_2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: action_offer_help
+  - intent: my_student_type
+    entities:
+    - student_type: aspiring
+  - slot_was_set:
+    - student_type: aspiring
+  - action: action_student_options
+  - intent: interest_in_course
+  - action: action_get_courses
+
+- story: interactive_story_4
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: action_offer_help
+  - intent: my_student_type
+    entities:
+    - student_type: aspiring
+  - slot_was_set:
+    - student_type: aspiring
+  - action: action_student_options
+  - intent: interest_in_course
   - action: action_get_courses
   - intent: select_course
     entities:
@@ -77,13 +129,39 @@ stories:
   - slot_was_set:
     - course: Computer Science BSc
   - action: action_say_course_name
+  - slot_was_set:
+    - courseCode: G400
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: action_offer_help
+  - intent: my_student_type
+    entities:
+    - student_type: aspiring
+  - slot_was_set:
+    - student_type: aspiring
+  - action: action_student_options
+  - intent: interest_in_course
+  - action: action_get_courses
+  - intent: select_course
+    entities:
+    - course: Computer Science BSc
+  - slot_was_set:
+    - course: Computer Science BSc
+  - action: action_say_course_name
+  - slot_was_set:
+    - courseCode: G400
   - intent: show_modules
   - action: action_which_modules
   - intent: choose_module_type
     entities:
-    - year: '1'
+    - year: all
+  - slot_was_set:
+    - year: all
   - action: action_show_modules
-  - intent: goodbye
+  - intent: thank
+  - action: utter_can_i_help
+  - intent: deny
   - action: utter_goodbye
-
-
