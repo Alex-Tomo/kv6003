@@ -9,6 +9,12 @@ import MessagesHeader from "../sections/MessagesHeader";
 import SettingsModal from "../Modals/SettingsModal";
 import AccountCircleBlack from "../../assets/account_circle_black.svg"
 import AccountCircleWhite from "../../assets/account_circle_white.svg"
+import RobotBlack from "../../assets/robot_black.svg"
+import RobotWhite from "../../assets/robot_white.svg"
+import MoreBlack from "../../assets/more_black.svg"
+import MoreWhite from "../../assets/more_white.svg"
+
+import Admin from "../sections/Admin";
 
 class HomePage extends React.Component {
   USER = 0
@@ -26,7 +32,8 @@ class HomePage extends React.Component {
       accessToken: "",
       user_id: null,
       user_type: (localStorage.getItem("user_type") === null) ? "" : localStorage.getItem("user_type"),
-      initialMessageSend: false
+      initialMessageSend: false,
+      displayAdmin: false
     }
 
     if (localStorage.getItem("theme") === null) {
@@ -147,9 +154,11 @@ class HomePage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (document.getElementById('messages').lastElementChild != null) {
-      document.getElementById('messages').lastElementChild.scrollIntoView()
-    }
+    try {
+      if (document.getElementById('messages').lastElementChild != null) {
+        document.getElementById('messages').lastElementChild.scrollIntoView()
+      }
+    } catch (e) {}
   }
 
   speak = () => {
@@ -160,6 +169,21 @@ class HomePage extends React.Component {
 
   handleVoice = (voice) => {
     this.sendMessageToBot(voice.toString())
+  }
+
+  addUnknownMessage = (unknownMessage) => {
+    let formData = new FormData()
+    formData.append('add', "true")
+    formData.append('message', unknownMessage)
+
+    fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/admin', {
+      method: 'POST',
+      body: formData
+    }).then(r => {
+      console.log("added message")
+    }).catch(err => {
+      console.log("could not add message")
+    })
   }
 
   sendMessageToBot = (msg) => {
@@ -193,6 +217,10 @@ class HomePage extends React.Component {
         return r.json()
       })
       .then(d => {
+        if (d[0].text === "Sorry, i do not understand...") {
+          this.addUnknownMessage(msg)
+        }
+
         let botText = ""
         let tempArray = this.state.responses
         let buttons = []
@@ -333,9 +361,11 @@ class HomePage extends React.Component {
     this.getMessages()
   }
 
-  render() {
-    console.log(this.state.responses)
+  updateAdmin = async (value) => {
+    this.setState({displayAdmin: value})
+  }
 
+  render() {
     let responses = ""
 
     if (this.state.responses.length > 0) {
@@ -365,7 +395,7 @@ class HomePage extends React.Component {
           return (
             <div className="user-message-container" key={i}>
               <div key={i} className="user-message">
-                <p><em>You:</em> {response.message}</p>
+                <p>{response.message}</p>
               </div>
               <img
                 src={(localStorage.getItem("theme") === "dark") ?
@@ -379,15 +409,44 @@ class HomePage extends React.Component {
           return (
             <div key={i}>
               <div className="bot-message-container">
-                <img
-                  src={(localStorage.getItem("theme") === "dark") ?
-                    AccountCircleWhite : AccountCircleBlack}
-                  alt="Account Circle"
-                  className={`chat-circle  ${localStorage.getItem("theme")}`}
-                />
-                <div className="bot-message">
-                  <p><em>Bot:</em> {response.message}</p>
+                <div style={{ display:"flex", flexDirection: "column", alignItems: "center" }}>
+                  <img
+                    src={(localStorage.getItem("theme") === "dark") ?
+                        RobotWhite : RobotBlack}
+                    alt="Account Circle"
+                    className={`chat-circle  ${localStorage.getItem("theme")}`}
+                    height="24px"
+                    width="24px"
+                  />
+                  <img
+                    src={MoreBlack}
+                    alt="More Icon"
+                    height="24px"
+                    width="24px"
+                    style={{ border: "1px solid #17141D", borderRadius: "2.5px", cursor: "pointer" }}
+                    onClick={() => {
+                      if (document.getElementById(`menu${i}`).classList.contains("is-hidden")) {
+                        document.getElementById(`menu${i}`).classList.remove("is-hidden")
+                      } else {
+                        document.getElementById(`menu${i}`).classList.add("is-hidden")
+                      }
+                    }}
+                  />
+                  <div className="is-hidden" id={`menu${i}`} role="menu">
+                    <div className="dropdown-content">
+                      <div className="dropdown-item">
+                        <button className="button is-radiusless">
+                          Report
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
+                <div className="bot-message">
+                  <p>{response.message}</p>
+                </div>
+
               </div>
               <div id="message-buttons-container">
                 {buttons}
@@ -398,8 +457,10 @@ class HomePage extends React.Component {
       })
     }
 
+    let displayAdmin = (this.state.displayAdmin) ? "admin" : ""
+
     return (
-      <div id="main-root" className={localStorage.getItem("theme")}>
+      <div id="main-root" className={localStorage.getItem("theme") + " " + displayAdmin}>
         <NavBar
           colourTheme={localStorage.getItem("theme")}
           displaySignupModal={this.displaySignupModal}
@@ -409,6 +470,8 @@ class HomePage extends React.Component {
           handleLogout={this.handleLogout}
           displaySettingsModal={this.displaySettingsModal}
           userType={localStorage.getItem("user_type")}
+          displayAdmin={this.state.displayAdmin}
+          updateAdmin={this.updateAdmin}
         />
 
         <div
@@ -425,24 +488,38 @@ class HomePage extends React.Component {
           <p id="success-message" />
         </div>
 
-        <MessagesHeader
-          colourTheme={localStorage.getItem("theme")}
-        />
+        {(this.state.displayAdmin) ?
 
-        <Messages
-          colourTheme={localStorage.getItem("theme")}
-          responses={responses}
-        />
+          <>
+            <Admin />
+          </>
 
-        <MessagesFunctions
-          colourTheme={localStorage.getItem("theme")}
-          handleVoice={this.handleVoice}
-          userInput={this.state.userInput}
-          handleInput={this.handleInput}
-          handleKeyPress={this.handleKeyPress}
-          isSending={this.state.isSending}
-          handleClick={this.handleClick}
-        />
+        :
+
+          <>
+            <MessagesHeader
+              colourTheme={localStorage.getItem("theme")}
+            />
+
+            <Messages
+              colourTheme={localStorage.getItem("theme")}
+              responses={responses}
+            />
+
+            <MessagesFunctions
+              colourTheme={localStorage.getItem("theme")}
+              handleVoice={this.handleVoice}
+              userInput={this.state.userInput}
+              handleInput={this.handleInput}
+              handleKeyPress={this.handleKeyPress}
+              isSending={this.state.isSending}
+              handleClick={this.handleClick}
+            />
+          </>
+
+        }
+
+
 
         {this.state.modal}
 

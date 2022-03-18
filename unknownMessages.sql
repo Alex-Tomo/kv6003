@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS kv6003_unknown_messages (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    message VARCHAR(256)
+);
+

@@ -1,6 +1,6 @@
 import React from "react"
-import AccountCircleBlack from "../../assets/account_circle_black.svg"
-import AccountCircleWhite from "../../assets/account_circle_white.svg"
+import RobotBlack from "../../assets/robot_black.svg"
+import RobotWhite from "../../assets/robot_white.svg"
 
 class MessagesHeader extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class MessagesHeader extends React.Component {
           <div className="messages-header-banner">
             <img
               src={(localStorage.getItem("theme") === "dark") ?
-                AccountCircleWhite : AccountCircleBlack}
+                  RobotWhite : RobotBlack}
               alt="Account Circle"
               className={`${localStorage.getItem("theme")}`}
               height="50px"

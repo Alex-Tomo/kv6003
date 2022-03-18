@@ -13,6 +13,9 @@ switch ($request->getPath()) {
     case "api/authenticate":
         $controller = new ApiAuthenticateController($request, $response);
         break;
+    case "api/admin":
+        $controller = new ApiAdminController($request, $response);
+        break;
     case "api/messages":
         $controller = new ApiMessagesController($request, $response);
         break;

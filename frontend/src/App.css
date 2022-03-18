@@ -17,6 +17,17 @@
     "nav message-functionality";
 }
 
+#main-root.admin {
+  grid-template-areas:
+    "nav admin"
+    "nav admin"
+    "nav admin";
+}
+
+#admin {
+  grid-area: admin;
+}
+
 #messages-header {
   grid-area: messages-header;
 }
@@ -106,7 +117,7 @@
 
 .chat-circle {
   background-color: #17141D;
-  margin-bottom: auto;
+  margin-bottom: 10px;
 }
 
 #settings {
@@ -152,6 +163,14 @@
     grid-template-areas:
       "nav"
       "mobile-nav";
+  }
+
+  #main-root.admin {
+    grid-template-columns: auto;
+    grid-template-rows: 70px auto;
+    grid-template-areas:
+      "nav"
+      "admin";
   }
 
   #message-functionality {

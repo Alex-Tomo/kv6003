@@ -11,6 +11,8 @@ import CloseBlack from "../../assets/close_black.svg"
 import CloseWhite from "../../assets/close_white.svg"
 import AdminBlack from "../../assets/admin_black.svg"
 import AdminWhite from "../../assets/admin_white.svg"
+import HomeBlack from "../../assets/home_black.svg"
+import HomeWhite from "../../assets/home_white.svg"
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -36,12 +38,14 @@ class NavBar extends React.Component {
 
     window.addEventListener("resize", async () => {
       if (window.innerWidth > 600) {
-        document.getElementById("buttons-container").classList.remove("is-hidden")
-        document.getElementById("messages-header").classList.remove("is-hidden")
-        document.getElementById("messages").classList.remove("is-hidden")
-        document.getElementById("message-functionality-container").classList.remove("is-hidden")
-
         await this.setState({ showMenu: false, windowSize: window.innerWidth })
+
+        try {
+          document.getElementById("buttons-container").classList.remove("is-hidden")
+          document.getElementById("messages-header").classList.remove("is-hidden")
+          document.getElementById("messages").classList.remove("is-hidden")
+          document.getElementById("message-functionality-container").classList.remove("is-hidden")
+        } catch (e) {}
       } else {
         await this.showMenu()
         await this.setState({ windowSize: window.innerWidth })
@@ -54,19 +58,31 @@ class NavBar extends React.Component {
   }
 
   showMenu = async () => {
-    if (this.state.showMenu) {
-      document.getElementById("main-root").classList.add("active-nav")
-      document.getElementById("buttons-container").classList.remove("is-hidden")
-      document.getElementById("messages-header").classList.add("is-hidden")
-      document.getElementById("messages").classList.add("is-hidden")
-      document.getElementById("message-functionality-container").classList.add("is-hidden")
-    } else {
-      document.getElementById("main-root").classList.remove("active-nav")
-      document.getElementById("buttons-container").classList.add("is-hidden")
-      document.getElementById("messages-header").classList.remove("is-hidden")
-      document.getElementById("messages").classList.remove("is-hidden")
-      document.getElementById("message-functionality-container").classList.remove("is-hidden")
-    }
+      if (this.state.showMenu) {
+        if (this.props.displayAdmin) {
+          document.getElementById("admin").classList.add("is-hidden")
+          document.getElementById("main-root").classList.remove("admin")
+          document.getElementById("buttons-container").classList.remove("is-hidden")
+        } else {
+          document.getElementById("main-root").classList.add("active-nav")
+          document.getElementById("buttons-container").classList.remove("is-hidden")
+          document.getElementById("messages-header").classList.add("is-hidden")
+          document.getElementById("messages").classList.add("is-hidden")
+          document.getElementById("message-functionality-container").classList.add("is-hidden")
+        }
+      } else {
+        if (this.props.displayAdmin) {
+          document.getElementById("admin").classList.remove("is-hidden")
+          document.getElementById("main-root").classList.add("admin")
+          document.getElementById("buttons-container").classList.add("is-hidden")
+        } else {
+          document.getElementById("main-root").classList.remove("active-nav")
+          document.getElementById("buttons-container").classList.add("is-hidden")
+          document.getElementById("messages-header").classList.remove("is-hidden")
+          document.getElementById("messages").classList.remove("is-hidden")
+          document.getElementById("message-functionality-container").classList.remove("is-hidden")
+        }
+      }
   }
 
   handleSignup = () => {
@@ -99,6 +115,14 @@ class NavBar extends React.Component {
     })
   }
 
+  updateAdmin = (value) => {
+    this.props.updateAdmin(value)
+    if (this.state.windowSize <= 600) {
+      this.setState({showMenu: false})
+      document.getElementById("buttons-container").classList.add("is-hidden")
+    }
+  }
+
   render() {
     let buttons = ""
 
@@ -106,15 +130,25 @@ class NavBar extends React.Component {
       buttons = (
         <div id="buttons-container" className={(this.state.windowSize <= 600) ? "mobile-buttons-container is-hidden" : null}>
           <div>
+            {(localStorage.getItem("user_type") === "admin") ?
+                (this.props.displayAdmin) ?
+                    <button className="button" onClick={() => this.updateAdmin(false)}>
+                      <img className="icons" src={HomeBlack} alt="Home Icon" />
+                      Home
+                    </button>
+
+                    :
+
+                    <button className="button" onClick={() => this.updateAdmin(true)}>
+                    <img className="icons" src={AdminBlack} alt="Admin Icon" />
+                    Admin
+                  </button>
+
+              : null}
             <button className="button" onClick={this.handleSettings}>
               <img className="icons" src={SettingsBlack}  alt="Settings Icon" />
               Settings
             </button>
-            {(localStorage.getItem("user_type") === "admin") ?
-                <button className="button">
-                  <img className="icons" src={AdminBlack} alt="Admin Icon" />
-                  Admin
-                </button> : null}
           </div>
           <div>
             <button className="button" onClick={this.props.handleLogout}>
