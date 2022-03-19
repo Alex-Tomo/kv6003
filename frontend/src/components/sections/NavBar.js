@@ -180,7 +180,7 @@ class NavBar extends React.Component {
         <div id="nav-container" className={this.props.colourTheme}>
           <div id="nav" className={this.props.colourTheme}>
             <div style={{height: "70px"}}>
-              <h1 style={{minHeight: "53px", maxHeight: "53px"}}>NUBot</h1>
+              <h1 id="title" style={{minHeight: "53px", maxHeight: "53px"}}>NUBot</h1>
             </div>
             {buttons}
           </div>
@@ -192,7 +192,7 @@ class NavBar extends React.Component {
           <div id="nav-container" className={this.props.colourTheme}>
             <div id="nav" className={this.props.colourTheme}>
               <div style={{height: "70px"}}>
-                <h1 style={{minHeight: "53px", maxHeight: "53px"}}>NUBot</h1>
+                <h1 id="title" style={{minHeight: "53px", maxHeight: "53px"}}>NUBot</h1>
               </div>
               <div id="mobile-menu">
                 <img

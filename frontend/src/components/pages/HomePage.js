@@ -15,6 +15,7 @@ import MoreBlack from "../../assets/more_black.svg"
 import MoreWhite from "../../assets/more_white.svg"
 
 import Admin from "../sections/Admin";
+import VoiceModal from "../Modals/VoiceModal";
 
 class HomePage extends React.Component {
   USER = 0
@@ -33,7 +34,8 @@ class HomePage extends React.Component {
       user_id: null,
       user_type: (localStorage.getItem("user_type") === null) ? "" : localStorage.getItem("user_type"),
       initialMessageSend: false,
-      displayAdmin: false
+      displayAdmin: false,
+      voiceText: ""
     }
 
     if (localStorage.getItem("theme") === null) {
@@ -139,7 +141,6 @@ class HomePage extends React.Component {
     }).then(r => {
       return r.json()
     }).then(r => {
-      console.log(r)
       let arr = []
       for (let i = 0; i < r.length; i++) {
         arr.push({
@@ -169,6 +170,23 @@ class HomePage extends React.Component {
 
   handleVoice = (voice) => {
     this.sendMessageToBot(voice.toString())
+  }
+
+  addIncorrectMessage = (botMsg, userMsg) => {
+    let formData = new FormData()
+    formData.append('incorrect', "true")
+    formData.append('add', "true")
+    formData.append('user_message', userMsg)
+    formData.append('bot_message', botMsg)
+
+    fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/admin', {
+      method: 'POST',
+      body: formData
+    }).then(r => {
+      console.log("added message")
+    }).catch(err => {
+      console.log("could not add message")
+    })
   }
 
   addUnknownMessage = (unknownMessage) => {
@@ -265,7 +283,15 @@ class HomePage extends React.Component {
         })
       })
       .catch(error => {
-        console.log("Error: " + error)
+        document.getElementById("success-message").innerText = "Could Not Send Message"
+        document.getElementById("notification").classList.add("is-danger")
+        document.getElementById("notification").classList.remove("is-hidden")
+
+        setTimeout(() => {
+          document.getElementById("success-message").innerText = ""
+          document.getElementById("notification").classList.add("is-hidden")
+          document.getElementById("notification").classList.remove("is-danger")
+        }, 3000)
         this.setState({isSending: false})
       })
   }
@@ -309,10 +335,21 @@ class HomePage extends React.Component {
 
   displaySettingsModal = async () => {
     await this.setState({
-      modal: <SettingsModal
-        closeModal={this.closeModal}
+      modal: <SettingsModal closeModal={this.closeModal}
       />
     })
+  }
+
+  displayVoiceModal = async () => {
+    await this.setState({
+      modal: <VoiceModal closeModal={this.closeModal} voiceText={this.state.voiceText}
+      />
+    })
+  }
+
+  updateVoiceModal = async (voiceText) => {
+    console.log(voiceText.toString())
+    document.getElementById("voice-modal-text").innerText = voiceText.toString()
   }
 
   closeModal = () => {
@@ -320,13 +357,7 @@ class HomePage extends React.Component {
   }
 
   accountCreated = () => {
-    document.getElementById("success-message").innerText = "Account Successfully Created!"
-    document.getElementById("success-notification").classList.remove("is-hidden")
 
-    setTimeout(() => {
-      document.getElementById("success-message").innerText = ""
-      document.getElementById("success-notification").classList.add("is-hidden")
-    }, 3000)
   }
 
   handleLogout = async () => {
@@ -339,6 +370,16 @@ class HomePage extends React.Component {
     localStorage.removeItem("token")
     localStorage.removeItem("id")
     localStorage.removeItem("user_type")
+
+    document.getElementById("success-message").innerText = "Logged Out"
+    document.getElementById("notification").classList.add("is-success")
+    document.getElementById("notification").classList.remove("is-hidden")
+
+    setTimeout(() => {
+      document.getElementById("success-message").innerText = ""
+      document.getElementById("notification").classList.add("is-hidden")
+      document.getElementById("notification").classList.remove("is-success")
+    }, 3000)
 
     if (this.state.responses.length === 0) {
       this.sendInitialMessage()
@@ -366,10 +407,16 @@ class HomePage extends React.Component {
   }
 
   render() {
+    try {
+      document.getElementById("title").innerText = "NUBot"
+    } catch (e) {}
+
     let responses = ""
+    let key = 0
 
     if (this.state.responses.length > 0) {
       responses = this.state.responses.map((response, i) => {
+        key = i
         let buttons = ""
         {
           if ((response.buttons !== null) && (response.buttons.length > 0)) {
@@ -409,6 +456,7 @@ class HomePage extends React.Component {
           return (
             <div key={i}>
               <div className="bot-message-container">
+
                 <div style={{ display:"flex", flexDirection: "column", alignItems: "center" }}>
                   <img
                     src={(localStorage.getItem("theme") === "dark") ?
@@ -418,30 +466,44 @@ class HomePage extends React.Component {
                     height="24px"
                     width="24px"
                   />
-                  <img
-                    src={MoreBlack}
-                    alt="More Icon"
-                    height="24px"
-                    width="24px"
-                    style={{ border: "1px solid #17141D", borderRadius: "2.5px", cursor: "pointer" }}
-                    onClick={() => {
-                      if (document.getElementById(`menu${i}`).classList.contains("is-hidden")) {
-                        document.getElementById(`menu${i}`).classList.remove("is-hidden")
-                      } else {
-                        document.getElementById(`menu${i}`).classList.add("is-hidden")
-                      }
-                    }}
-                  />
-                  <div className="is-hidden" id={`menu${i}`} role="menu">
-                    <div className="dropdown-content">
-                      <div className="dropdown-item">
-                        <button className="button is-radiusless">
-                          Report
-                        </button>
-                      </div>
-                    </div>
+
+
+                <div id={`menu${i}`} className="dropdown">
+                  <div className="dropdown-trigger">
+                    <button className="button" aria-haspopup="true" aria-controls="dropdown-menu"
+                      style={{padding: "10px"}}
+                      onClick={() => {
+                        if (document.getElementById(`menu${i}`).classList.contains("is-active")) {
+                          document.getElementById(`menu${i}`).classList.remove("is-active")
+                        } else {
+                          document.getElementById(`menu${i}`).classList.add("is-active")
+                        }
+                      }}
+                      onBlur={() => {
+                        document.getElementById(`menu${i}`).classList.remove("is-active")
+                      }}
+                    >
+                      <span className="icon is-small">
+                        <img
+                          src={MoreBlack}
+                          alt="More Icon"
+                          height="24px"
+                          width="24px"
+                        />
+                      </span>
+                    </button>
+                  </div>
+                  <div className="dropdown-menu" id="dropdown-menu" role="menu" style={{padding: "2px"}}>
+                      <button
+                        className="button is-danger"
+                        onMouseDown={() => {
+                          document.getElementById(`menu${i}`).classList.remove("is-active")
+                          this.addIncorrectMessage(this.state.responses[i].message, this.state.responses[i-1].message)
+                        }}
+                      >This Response is Wrong</button>
                   </div>
 
+                  </div>
                 </div>
                 <div className="bot-message">
                   <p>{response.message}</p>
@@ -455,6 +517,22 @@ class HomePage extends React.Component {
           )
         }
       })
+
+      if (this.state.responses[this.state.responses.length-1].sender === this.USER) {
+        responses.push(
+          <div className="bot-message-container" key={key+1}>
+            <img
+              src={(localStorage.getItem("theme") === "dark") ?
+                AccountCircleWhite : AccountCircleBlack}
+              alt="Account Circle"
+              className={`chat-circle  ${localStorage.getItem("theme")}`}
+            />
+            <div className="bot-message">
+              <p><em>is typing...</em></p>
+            </div>
+          </div>
+        )
+      }
     }
 
     let displayAdmin = (this.state.displayAdmin) ? "admin" : ""
@@ -474,17 +552,7 @@ class HomePage extends React.Component {
           updateAdmin={this.updateAdmin}
         />
 
-        <div
-          id="success-notification"
-          className="notification is-success is-hidden"
-          style={{
-            position: "absolute",
-            top: "75px",
-            left: "10%",
-            height: "fit-content",
-            width: "80%",
-            margin: "auto"
-        }}>
+        <div id="notification" className="notification is-hidden">
           <p id="success-message" />
         </div>
 
@@ -514,12 +582,13 @@ class HomePage extends React.Component {
               handleKeyPress={this.handleKeyPress}
               isSending={this.state.isSending}
               handleClick={this.handleClick}
+              displayVoiceModal={this.displayVoiceModal}
+              closeModal={this.closeModal}
+              updateVoiceModal={this.updateVoiceModal}
             />
           </>
 
         }
-
-
 
         {this.state.modal}
 

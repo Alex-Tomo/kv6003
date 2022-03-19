@@ -12,11 +12,23 @@ class ApiAdminController extends Controller
         if (!parent::isValidRequestMethod("POST")) return "error";
 
         if ($this->getRequest()->getParameter("add") !== null) {
-            $this->getGateway()->insertUnknownMessage($this->getRequest()->getParameter("message"));
+            if ($this->getRequest()->getParameter("unknown") !== null) {
+                $this->getGateway()->insertUnknownMessage($this->getRequest()->getParameter("message"));
+            } else if ($this->getRequest()->getParameter("incorrect") !== null) {
+                $this->getGateway()->insertIncorrectMessage($this->getRequest()->getParameter("user_message"), $this->getRequest()->getParameter("bot_message"));
+            }
         } else if ($this->getRequest()->getParameter("remove") !== null) {
-            $this->getGateway()->removeUnknownMessage($this->getRequest()->getParameter("id"));
+            if ($this->getRequest()->getParameter("unknown") !== null) {
+                $this->getGateway()->removeUnknownMessage($this->getRequest()->getParameter("id"));
+            } else if ($this->getRequest()->getParameter("incorrect") !== null) {
+                $this->getGateway()->removeIncorrectMessage($this->getRequest()->getParameter("id"));
+            }
         } else {
-            $this->getGateway()->getUnknownMessages();
+            if ($this->getRequest()->getParameter("unknown") !== null) {
+                $this->getGateway()->getUnknownMessages();
+            } else if ($this->getRequest()->getParameter("incorrect") !== null) {
+                $this->getGateway()->getIncorrectMessages();
+            }
         }
 
         return $this->getGateway()->getResult();

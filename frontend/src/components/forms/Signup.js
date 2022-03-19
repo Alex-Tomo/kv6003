@@ -3,7 +3,7 @@ import React from "react"
 class Signup extends React.Component {
   render() {
     return (
-        <div id="login">
+        <div id="signup">
           <input
               className={`input ${this.props.usernameClass}`}
               type="text"

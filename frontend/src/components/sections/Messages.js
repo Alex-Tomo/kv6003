@@ -23,7 +23,7 @@ class Messages extends React.Component {
               className={`chat-circle  ${localStorage.getItem("theme")}`}
             />
             <div className="bot-message">
-              <p>...</p>
+              <p><em>is typing...</em></p>
             </div>
           </div>
         }

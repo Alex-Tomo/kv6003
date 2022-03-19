@@ -79,6 +79,16 @@ class SignupModal extends React.Component {
     }).then(() => {
       this.props.accountCreated()
       this.props.closeModal()
+
+      document.getElementById("success-message").innerText = "Account Successfully Created"
+      document.getElementById("notification").classList.add("is-success")
+      document.getElementById("notification").classList.remove("is-hidden")
+
+      setTimeout(() => {
+        document.getElementById("success-message").innerText = ""
+        document.getElementById("notification").classList.add("is-hidden")
+        document.getElementById("notification").classList.remove("is-success")
+      }, 3000)
     }).catch(() => {
       errorMessage.innerHTML = "Could not create account"
       document.getElementById("error-notification").classList.remove("is-hidden")
@@ -90,7 +100,7 @@ class SignupModal extends React.Component {
       <div>
         <div className="modal is-active">
           <div className="modal-background" />
-          <div className="modal-card">
+          <div className="modal-card modal-card-width">
             <header className="modal-card-head">
               <p className="modal-card-title">Sign Up</p>
               <button className="delete" aria-label="close" />

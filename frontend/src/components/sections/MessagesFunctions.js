@@ -10,9 +10,14 @@ class MessagesFunctions extends React.Component {
   render() {
     return (
       <div id="message-functionality-container">
-        <hr />
         <div id="message-functionality" className={this.props.colourTheme}>
-          <VoiceButton props={this.props} handleVoice={this.props.handleVoice}/>
+          <VoiceButton
+            props={this.props}
+            handleVoice={this.props.handleVoice}
+            displayVoiceModal={this.props.displayVoiceModal}
+            closeModal={this.props.closeModal}
+            updateVoiceModal={this.props.updateVoiceModal}
+          />
           <input
             id="input-message"
             style={{width: "100%"}}

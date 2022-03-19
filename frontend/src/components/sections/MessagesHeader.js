@@ -36,7 +36,8 @@ class MessagesHeader extends React.Component {
             id="messages-header"
             className={(hidden) ? "is-hidden " + this.props.colourTheme : "" + this.props.colourTheme}
         >
-          <div className="messages-header-banner">
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="messages-header-banner">
             <img
               src={(localStorage.getItem("theme") === "dark") ?
                   RobotWhite : RobotBlack}
@@ -46,6 +47,10 @@ class MessagesHeader extends React.Component {
               width="50px"
             />
             <p id="messages-header-para">NU Virtual Assistant<br/><span className={this.state.status}><em>{this.state.chatbotAgent}</em></span></p>
+            </div>
+            <div id="listening" className="is-hidden" style={{ display: "flex", alignItems: "center" }}>
+              <p><em>* Listening</em></p>
+            </div>
           </div>
           <hr />
         </div>
