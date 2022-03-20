@@ -18,7 +18,7 @@ class Admin extends React.Component {
   }
 
   componentDidMount() {
-    document.getElementById("title").innerText = "NUBot - Admin"
+    // document.getElementById("title").innerText = "NUBot - Admin"
 
     this.getUnknownMessages()
     this.getIncorrectMessages()

@@ -2,33 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/arrow_down_black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/arrow_down_white.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/arrow_up_black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/arrow_up_white.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/dark_black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/light_black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/mute_black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/sound_black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Modals/VoiceModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/robot_white.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controller/apiadmincontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apiadmincontroller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apiadmingateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apiadmingateway.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/SettingsModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/SettingsModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/SignupModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/SignupModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/forms/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/forms/Settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/forms/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/forms/Signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/Admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/Messages.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/MessagesHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unknownMessages.sql" beforeDir="false" afterPath="$PROJECT_DIR$/unknownMessages.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/nlu.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,13 +64,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/public" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="C:\Users\Alex\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\213.6777.52\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -95,6 +79,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/public" />
       <recent name="C:\Users\Alex\Desktop\rasa_individual\rasa" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -129,6 +114,7 @@
       <workItem from="1647439764777" duration="14927000" />
       <workItem from="1647471306754" duration="12329000" />
       <workItem from="1647516304911" duration="26193000" />
+      <workItem from="1647786032665" duration="6218000" />
     </task>
     <servers />
   </component>

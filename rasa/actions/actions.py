@@ -123,6 +123,8 @@ class ActionWhichModules(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        print("Course: " + str(tracker.get_slot('course')))
+
         modules = []
         modules.append({"title": "All Modules", "payload": "/choose_module_type{\"year\":\"all\"}"})
         modules.append({"title": "Year 1 Modules", "payload": "/choose_module_type{\"year\":\"1\"}"})

@@ -1,4 +1,5 @@
 version: "3.0"
+
 nlu:
 - intent: greet
   examples: |
@@ -190,6 +191,10 @@ nlu:
     - i'm [yolinda](name)
     - name is [yolinda](name)
     - [Alex](name)
+
+# Guides the conversation based on if the user is a
+# current student or an aspiring student
+
 - intent: my_student_type
   examples: |
     - [aspiring](student_type)
@@ -204,18 +209,30 @@ nlu:
     - I am an [existing](student_type) student
     - Im a [existing](student_type) student
     - a [existing](student_type)
+
+# Conversations for an aspiring student
+
+# The user is interested in taking a course or interested in getting
+# information regarding courses
+
+# The user is interested in taking a course but doesnt know which
+# The chat agent will respond with a question asking which course and
+# offering a range of options
 - intent: interest_in_course
   examples: |
+    - I want to know about a course
     - I'm interested in taking a course
     - Im interested in taking a course
     - a course
     - course
-- intent: ask_which_courses
-  examples: |
     - What courses
     - tell me about the available courses
     - what courses are there
     - which courses are there
+# The chat agent has offered a range of courses and the user has selected
+# one by name, this will be stored in a 'course' slot
+# The user can also ask about a specific course instead of just selecting
+# a given button
 - intent: select_course
   examples: |
     - [Computer and Digital Forensics BSc](course)
@@ -224,21 +241,11 @@ nlu:
     - [Computer Science with Artificial Intelligence BSc](course)
     - [Computer Science with Games Development BSc](course)
     - [Computer Science with Web Development BSc](course)
-- intent: choose_module_type
-  examples: |
-    - [all](year) Modules
-    - Year [1](year) Modules
-    - Year [2](year) Modules
-    - Year [3](year) Modules
-    - Year [4](year) Modules
-    - year [1](year)
-    - year [2](year)
-    - year [3](year)
-    - year [4](year)
-    - [1](year)
-    - [2](year)
-    - [3](year)
-    - [4](year)
+    - I am interested in [Computer Science BSc](course)
+    - Tell me about [Computer Science BSc](course)
+    - Do you offer [Computer Science](course)?
+# After choosing a course, the agent will ask what the user wants to know
+# about the course, this intent refers to the what modules the course offers
 - intent: show_modules
   examples: |
     - Show me the modules
@@ -255,99 +262,138 @@ nlu:
     - Modules, please.
     - show me modules
     - what modules are on this course
-- intent: entry_requirements
+    - what modules are on [Computer Science](course)?
+    - [Computer Science](course) modules
+    - show me [Computer Science](course) modules
+# After selecting a course the chat agent will offer a range of choices
+# if the user chooses the module option then the agent will ask which
+# modules (all, 1, 2, 3, 4) where the numbers refer to course year
+- intent: choose_module_type
   examples: |
-    - What are the entry requirements
-    - entry requirements
-    - requirements
-    - entry
-    - what do i need
-    - which grades do i need
-    - what grades do i need
-    - are my grades enough
-    - do i have the right grades
-- intent: open_days
-  examples: |
-    - When are the opens days
-- intent: university_facilities
-  examples: |
-    - What facilities do you offer
-- intent: campus_map
-  examples: |
-    - Show me the campus map
-- intent: university_scholarships
-  examples: |
-    - What scholarships are there
-- intent: university_loans
-  examples: |
-    - What loans is there
-- intent: university_accommodation
-  examples: |
-    - I need accommodation
-- intent: building_name
-  examples: |
-    - what is EBA
-- intent: building_location
-  examples: |
-    - where is EBA
-- intent: show_map
-  examples: |
-    - show me the map
-- intent: lecturer_email
-  examples: |
-    - what is x email?
-- intent: lecturer_availability
-  examples: |
-    - When is x available
-- intent: lecturer_office
-  examples: |
-    - Where is x office
-- intent: half_term
-  examples: |
-    - when is half term?
-- intent: when_is_term
-  examples: |
-    - When is term 1
-- intent: show_me_the_calendar
-  examples: |
-    - Show me the university calendar
-- intent: how_to_apply_for_extension
-  examples: |
-    - how do i apply for an extension
-- intent: how_to_report_an_absence
-  examples: |
-    - how do i report an absence
-- intent: how_to_file_a_complaint
-  examples: |
-    - how do i submit a complaint
-- intent: how_to_switch_course
-  examples: |
-    - how do i swap courses
-- intent: how_are_grades_calculated
-  examples: |
-    - how are my grades calculated
-    - how is my final mark calculated
-    - final grade
-    - final mark
-    - how is my final grade worked out
-- intent: what_support
-  examples: |
-    - what support do you offer
-- intent: mental_health_support
-  examples: |
-    - I feel anxious
-- intent: physical_health_support
-  examples: |
-    - I need to see a doctor
-- intent: financial_support
-  examples: |
-    - I need financial support
-- intent: legal_support
-  examples: |
-    - I need legal support
-- intent: struggling
-  examples: |
-    - I am struggling with my course
-- intent: discrimination_support
-  examples: |
-    - I feel i am being discriminated against
+    - [all](year) Modules
+    - Year [1](year) Modules
+    - Year [2](year) Modules
+    - Year [3](year) Modules
+    - Year [4](year) Modules
+    - year [1](year)
+    - year [2](year)
+    - year [3](year)
+    - year [4](year)
+    - [1](year)
+    - [2](year)
+    - [3](year)
+    - [4](year)
+    - show me [all](year) the modules for [Computer Science](course)
+    - show me year [1](year) modules for [Computer Science](course)
+    - show me year [2](year) modules for [Computer Science](course)
+    - show me year [3](year) modules for [Computer Science](course)
+    - show me year [4](year) modules for [Computer Science](course)
+
+
+
+#- intent: entry_requirements
+#  examples: |
+#    - What are the entry requirements
+#    - entry requirements
+#    - requirements
+#    - entry
+#    - what do i need
+#    - which grades do i need
+#    - what grades do i need
+#    - are my grades enough
+#    - do i have the right grades
+#
+## University facilities
+#
+#- intent: open_days
+#  examples: |
+#    - When are the opens days
+#- intent: university_facilities
+#  examples: |
+#    - What facilities do you offer
+#- intent: campus_map
+#  examples: |
+#    - Show me the campus map
+#- intent: university_scholarships
+#  examples: |
+#    - What scholarships are there
+#- intent: university_loans
+#  examples: |
+#    - What loans is there
+#
+## Accomodation conversation
+#
+#- intent: university_accommodation
+#  examples: |
+#    - I need accommodation
+#
+#
+## Below are conversations for an existing student
+#
+#- intent: building_name
+#  examples: |
+#    - what is EBA
+#- intent: building_location
+#  examples: |
+#    - where is EBA
+#- intent: show_map
+#  examples: |
+#    - show me the map
+#- intent: lecturer_email
+#  examples: |
+#    - what is x email?
+#- intent: lecturer_availability
+#  examples: |
+#    - When is x available
+#- intent: lecturer_office
+#  examples: |
+#    - Where is x office
+#- intent: half_term
+#  examples: |
+#    - when is half term?
+#- intent: when_is_term
+#  examples: |
+#    - When is term 1
+#- intent: show_me_the_calendar
+#  examples: |
+#    - Show me the university calendar
+#- intent: how_to_apply_for_extension
+#  examples: |
+#    - how do i apply for an extension
+#- intent: how_to_report_an_absence
+#  examples: |
+#    - how do i report an absence
+#- intent: how_to_file_a_complaint
+#  examples: |
+#    - how do i submit a complaint
+#- intent: how_to_switch_course
+#  examples: |
+#    - how do i swap courses
+#- intent: how_are_grades_calculated
+#  examples: |
+#    - how are my grades calculated
+#    - how is my final mark calculated
+#    - final grade
+#    - final mark
+#    - how is my final grade worked out
+#- intent: what_support
+#  examples: |
+#    - what support do you offer
+#- intent: mental_health_support
+#  examples: |
+#    - I feel anxious
+#- intent: physical_health_support
+#  examples: |
+#    - I need to see a doctor
+#- intent: financial_support
+#  examples: |
+#    - I need financial support
+#- intent: legal_support
+#  examples: |
+#    - I need legal support
+#- intent: struggling
+#  examples: |
+#    - I am struggling with my course
+#- intent: discrimination_support
+#  examples: |
+#    - I feel i am being discriminated against
