@@ -32,4 +32,12 @@ class ApiCoursesGateway extends Gateway
         $result = $this->getDatabase()->executeSQL($sql, $params);
         $this->setResult($result);
     }
+
+    public function getEntryRequirements($courseCode) {
+        $sql = "SELECT * FROM kv6003_entry_requirements
+                WHERE kv6003_entry_requirements.course_code = :course_code";
+        $params = [":course_code" => $courseCode];
+        $result = $this->getDatabase()->executeSQL($sql, $params);
+        $this->setResult($result);
+    }
 }

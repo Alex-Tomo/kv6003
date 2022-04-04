@@ -1,6 +1,6 @@
 import React from "react"
-import AccountCircleWhite from "../../assets/account_circle_white.svg";
-import AccountCircleBlack from "../../assets/account_circle_black.svg";
+import RobotBlack from "../../assets/robot_black.svg"
+import RobotWhite from "../../assets/robot_white.svg"
 
 class Messages extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class Messages extends React.Component {
           <div className="bot-message-container">
             <img
               src={(localStorage.getItem("theme") === "dark") ?
-                AccountCircleWhite : AccountCircleBlack}
+                RobotWhite : RobotBlack}
               alt="Account Circle"
               className={`chat-circle  ${localStorage.getItem("theme")}`}
             />

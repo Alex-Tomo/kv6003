@@ -13,14 +13,14 @@ class MessagesHeader extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:5005/webhooks/rest/webhook", {
-      method: 'POST',
-      body: JSON.stringify({
-        sender: "temp",
-        message: "hey"
-      })
-    })
-      // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook")
+    // fetch("http://localhost:5005/webhooks/rest/webhook", {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     sender: "temp",
+    //     message: "hey"
+    //   })
+    // })
+      fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook")
       .then(() => this.setState({chatbotAgent: "Online", status: "online"}))
       .catch(() => this.setState({chatbotAgent: "Offline", status: "offline"}))
   }

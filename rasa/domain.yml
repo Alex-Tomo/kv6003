@@ -3,29 +3,36 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-- select_course
+- buildings
+- building_codes_option
+- greet
 - my_student_type
+- building_name
+- show_map
+- building_location
+- building_location_option
+- deny
+- apply_for_course
+- university_accommodation
 - interest_in_course
+- affirm
+- select_course
+- university_facilities
+- visit_campus
+- open_days
+- campus_map
+- show_modules
+- entry_requirements
+- course_fees
+- choose_modules_for_specific_course
 - thank
 - choose_module_type
-- greet
-- show_modules
 - goodbye
-- affirm
-- deny
 - bot_challenge
 - give_name
 - ask_which_courses
-- entry_requirements
-- open_days
-- university_facilities
-- campus_map
 - university_scholarships
 - university_loans
-- university_accommodation
-- building_name
-- building_location
-- show_map
 - lecturer_email
 - lecturer_availability
 - lecturer_office
@@ -44,12 +51,15 @@ intents:
 - legal_support
 - struggling
 - discrimination_support
+- lecturers_option
 entities:
+- building_code
 - course
 - courseCode
 - name
 - student_type
 - year
+- lecturer
 slots:
   name:
     type: text
@@ -58,8 +68,14 @@ slots:
     - type: from_entity
       entity: name
   course:
-    type: text
-    influence_conversation: true
+    type: categorical
+    values:
+      - Computer and Digital Forensics BSc
+      - Computer Networks and Cyber Security BSc
+      - Computer Science BSc
+      - Computer Science with Artificial Intelligence BSc
+      - Computer Science with Games Development BSc
+      - Computer Science with Web Development BSc
     mappings:
     - type: from_entity
       entity: course
@@ -81,6 +97,21 @@ slots:
     mappings:
     - type: from_entity
       entity: student_type
+  building_code:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: building_code
+  lecturer:
+    type: categorical
+    values:
+      - Jeremy Ellman
+      - Christina Vasiliou
+      - Kay Rogage
+    mappings:
+    - type: from_entity
+      entity: lecturer
 responses:
   utter_greet:
   - text: Hi, welcome to NUChat, I am your helper bot.
@@ -90,29 +121,57 @@ responses:
   - text: Bye
   - text: Goodbye
   - text: Have a great day!
-  - text: Goodbye {name}!
   utter_student_type:
   - text: You are a {student_type} student
-  utter_which_course:
-  - text: Which course?
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_can_i_help:
   - text: Is there anything else I can help with?
   utter_default:
   - text: Sorry, i do not understand...
+  utter_accomodation:
+  - text: Northumbria offers a range of student accomodation. Visit https://www.northumbria.ac.uk/study-at-northumbria/accommodation/?gclid=Cj0KCQjw3IqSBhCoARIsAMBkTb2zQJMARbWTKZaCBOFFpAhNehqGP-QnM33p9T3m_UrRAVjjQt0Mw80aArOMEALw_wcB&gclsrc=aw.ds for more information.
   utter_grades_calculated:
   - text: 40% of 100 credits from 5th year plus 60% of 100 credits from final year or 100% of final year. Visit <a>https://www.ucas.com/connect/videos/coronavirus/calculated-grades</a> for more information.
+  utter_course_fees:
+  - text: Current course fees for UK students is £9,250 per year. Current course fees for international students is £16,500 per year.
+  utter_how_to_apply:
+  - text: The admissions team can be contacted on 0191 406 0901 or at bc.applicantservices@northumbria.ac.uk via email.
+  utter_open_days:
+  - text: There are two types of open days, virtual and on-campus. Visit https://app.geckoform.com/public/?_gl=1*fjwu5l*_gcl_aw*R0NMLjE2NDg1NjE1ODAuQ2owS0NRanczSXFTQmhDb0FSSXNBTUJrVGIxQUVIWjhhakVjNmpIejlfS0xQRm5nNE5ZbDlMS3pmaE9qQlFTVjl5SnRLWS1LX1VPX0hyTWFBa2IzRUFMd193Y0I.*_gcl_dc*R0NMLjE2NDg1NjE1ODAuQ2owS0NRanczSXFTQmhDb0FSSXNBTUJrVGIxQUVIWjhhakVjNmpIejlfS0xQRm5nNE5ZbDlMS3pmaE9qQlFTVjl5SnRLWS1LX1VPX0hyTWFBa2IzRUFMd193Y0I.&_ga=2.241359426.1395756847.1648549005-1643827260.1647389419&_gac=1.27663694.1648561580.Cj0KCQjw3IqSBhCoARIsAMBkTb1AEHZ8ajEc6jHz9_KLPFng4NYl9LKzfhOjBQSV9yJtKY-K_UO_HrMaAkb3EALw_wcB#/modern/21FO0085r8wa8l00908qnh8haw for more information.
+  utter_campus_facilities:
+  - text: Northumbria offers a range of facilities. Visit https://www.northumbria.ac.uk/study-at-northumbria/coming-to-northumbria/creative/our-facilities/ for more information.
+  utter_campus_map:
+  - text: Here is the campus map
+    image: https://northumbria-cdn.azureedge.net/-/media/services/campus-services/documents/pdf/city-campus-map-sept-2020-master.pdf?modified=20201116104043
+  utter_which_building_location:
+  - text: Which building do you want to find?
+  utter_which_email:
+  - text: Whose email do you want to see?
 actions:
+- action_ask_about_buildings
+- action_ask_for_building_code
+- action_get_building_location
+- action_get_building_name
 - action_get_courses
 - action_offer_help
 - action_say_course_entry_requirements
 - action_say_course_name
 - action_show_modules
+- action_show_modules_for_specific_course
 - action_student_options
+- action_visit_campus
 - action_which_modules
+- utter_accomodation
 - utter_ask_name
+- utter_campus_facilities
+- utter_campus_map
 - utter_can_i_help
+- utter_course_fees
 - utter_goodbye
 - utter_greet
-- utter_which_course
+- utter_how_to_apply
+- utter_open_days
+- utter_which_building_location
+- action_lecturer_options
+- action_get_lecturer_email

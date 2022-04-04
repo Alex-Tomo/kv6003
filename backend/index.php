@@ -22,6 +22,9 @@ switch ($request->getPath()) {
     case "api/courses":
         $controller = new ApiCoursesController($request, $response);
         break;
+    case "api/buildings":
+        $controller = new ApiBuildingsController($request, $response);
+        break;
     default:
         $controller = new ErrorController($request, $response);
         break;

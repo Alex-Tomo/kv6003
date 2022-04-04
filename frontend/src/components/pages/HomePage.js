@@ -81,8 +81,8 @@ class HomePage extends React.Component {
   }
 
   sendInitialMessage = () => {
-    fetch("http://localhost:5005/webhooks/rest/webhook", {
-      // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+    // fetch("http://localhost:5005/webhooks/rest/webhook", {
+      fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
       method: 'POST',
       body: JSON.stringify({
         sender: "",
@@ -223,8 +223,8 @@ class HomePage extends React.Component {
       date: new Date().toString()
     })
 
-    fetch("http://localhost:5005/webhooks/rest/webhook", {
-    // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+    // fetch("http://localhost:5005/webhooks/rest/webhook", {
+    fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
       method: 'POST',
       body: JSON.stringify({
         sender: "alex",

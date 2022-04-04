@@ -1,5 +1,4 @@
 version: "3.0"
-
 nlu:
 - intent: greet
   examples: |
@@ -191,10 +190,6 @@ nlu:
     - i'm [yolinda](name)
     - name is [yolinda](name)
     - [Alex](name)
-
-# Guides the conversation based on if the user is a
-# current student or an aspiring student
-
 - intent: my_student_type
   examples: |
     - [aspiring](student_type)
@@ -209,15 +204,6 @@ nlu:
     - I am an [existing](student_type) student
     - Im a [existing](student_type) student
     - a [existing](student_type)
-
-# Conversations for an aspiring student
-
-# The user is interested in taking a course or interested in getting
-# information regarding courses
-
-# The user is interested in taking a course but doesnt know which
-# The chat agent will respond with a question asking which course and
-# offering a range of options
 - intent: interest_in_course
   examples: |
     - I want to know about a course
@@ -229,10 +215,6 @@ nlu:
     - tell me about the available courses
     - what courses are there
     - which courses are there
-# The chat agent has offered a range of courses and the user has selected
-# one by name, this will be stored in a 'course' slot
-# The user can also ask about a specific course instead of just selecting
-# a given button
 - intent: select_course
   examples: |
     - [Computer and Digital Forensics BSc](course)
@@ -244,8 +226,6 @@ nlu:
     - I am interested in [Computer Science BSc](course)
     - Tell me about [Computer Science BSc](course)
     - Do you offer [Computer Science](course)?
-# After choosing a course, the agent will ask what the user wants to know
-# about the course, this intent refers to the what modules the course offers
 - intent: show_modules
   examples: |
     - Show me the modules
@@ -265,9 +245,6 @@ nlu:
     - what modules are on [Computer Science](course)?
     - [Computer Science](course) modules
     - show me [Computer Science](course) modules
-# After selecting a course the chat agent will offer a range of choices
-# if the user chooses the module option then the agent will ask which
-# modules (all, 1, 2, 3, 4) where the numbers refer to course year
 - intent: choose_module_type
   examples: |
     - [all](year) Modules
@@ -283,117 +260,139 @@ nlu:
     - [2](year)
     - [3](year)
     - [4](year)
+- intent: choose_modules_for_specific_course
+  examples: |
     - show me [all](year) the modules for [Computer Science](course)
     - show me year [1](year) modules for [Computer Science](course)
     - show me year [2](year) modules for [Computer Science](course)
     - show me year [3](year) modules for [Computer Science](course)
     - show me year [4](year) modules for [Computer Science](course)
-
-
-
-#- intent: entry_requirements
-#  examples: |
-#    - What are the entry requirements
-#    - entry requirements
-#    - requirements
-#    - entry
-#    - what do i need
-#    - which grades do i need
-#    - what grades do i need
-#    - are my grades enough
-#    - do i have the right grades
-#
-## University facilities
-#
-#- intent: open_days
-#  examples: |
-#    - When are the opens days
-#- intent: university_facilities
-#  examples: |
-#    - What facilities do you offer
-#- intent: campus_map
-#  examples: |
-#    - Show me the campus map
-#- intent: university_scholarships
-#  examples: |
-#    - What scholarships are there
-#- intent: university_loans
-#  examples: |
-#    - What loans is there
-#
-## Accomodation conversation
-#
-#- intent: university_accommodation
-#  examples: |
-#    - I need accommodation
-#
-#
-## Below are conversations for an existing student
-#
-#- intent: building_name
-#  examples: |
-#    - what is EBA
-#- intent: building_location
-#  examples: |
-#    - where is EBA
-#- intent: show_map
-#  examples: |
-#    - show me the map
-#- intent: lecturer_email
-#  examples: |
-#    - what is x email?
-#- intent: lecturer_availability
-#  examples: |
-#    - When is x available
-#- intent: lecturer_office
-#  examples: |
-#    - Where is x office
-#- intent: half_term
-#  examples: |
-#    - when is half term?
-#- intent: when_is_term
-#  examples: |
-#    - When is term 1
-#- intent: show_me_the_calendar
-#  examples: |
-#    - Show me the university calendar
-#- intent: how_to_apply_for_extension
-#  examples: |
-#    - how do i apply for an extension
-#- intent: how_to_report_an_absence
-#  examples: |
-#    - how do i report an absence
-#- intent: how_to_file_a_complaint
-#  examples: |
-#    - how do i submit a complaint
-#- intent: how_to_switch_course
-#  examples: |
-#    - how do i swap courses
-#- intent: how_are_grades_calculated
-#  examples: |
-#    - how are my grades calculated
-#    - how is my final mark calculated
-#    - final grade
-#    - final mark
-#    - how is my final grade worked out
-#- intent: what_support
-#  examples: |
-#    - what support do you offer
-#- intent: mental_health_support
-#  examples: |
-#    - I feel anxious
-#- intent: physical_health_support
-#  examples: |
-#    - I need to see a doctor
-#- intent: financial_support
-#  examples: |
-#    - I need financial support
-#- intent: legal_support
-#  examples: |
-#    - I need legal support
-#- intent: struggling
-#  examples: |
-#    - I am struggling with my course
-#- intent: discrimination_support
-#  examples: |
-#    - I feel i am being discriminated against
+- intent: entry_requirements
+  examples: |
+    - What are the entry requirements
+    - entry requirements
+    - requirements
+    - entry
+    - what do i need
+    - which grades do i need
+    - what grades do i need
+    - are my grades enough
+    - do i have the right grades
+- intent: course_fees
+  examples: |
+    - what are the fees
+    - how much does the course cost
+    - how much is it for international students
+    - how much is it for uk students
+- intent: apply_for_course
+  examples: |
+    - how do i apply for this course?
+    - I want to apply for this course
+    - can i apply for this course?
+- intent: university_accommodation
+  examples: |
+    - I need accommodation
+    - where can i find accomodation
+    - what accomodation is there
+    - how much is university accomodation
+    - do you offer accomodation
+- intent: visit_campus
+  examples: |
+    - visit campus
+    - tell me about campus
+    - tell me about northumbria campus
+- intent: open_days
+  examples: |
+    - When are the opens days
+    - I want to visit university campus
+    - i want to come to campus
+    - when i can i visit campus
+    - campus open days
+- intent: university_facilities
+  examples: |
+    - What facilities do you offer
+    - does northumbria have a vr room
+    - does northumbria have a computer building
+    - does northumbria have a library
+    - facilities
+- intent: campus_map
+  examples: |
+    - Show me the campus map
+    - campus map
+    - northumbria map
+    - northumbria campus map
+    - northumbria university map
+- intent: buildings
+  examples: |
+    - tell me about the buildings
+    - buildings
+    - i want to know about buildings
+- intent: building_codes_option
+  examples: |
+    - building codes
+    - location codes
+    - buildings codes
+    - building code
+- intent: building_name
+  examples: |
+    - what is [CCE1](building_code)
+    - what building is [CCE2](building_code)
+    - [CIS](building_code)
+    - what is [EBA](building_code)
+    - what building is [EBB](building_code)
+    - [EBC](building_code)
+    - what is [EBD](building_code)
+    - what building is [EBE](building_code)
+    - [LIP](building_code)
+    - what is [NB](building_code)
+    - what building is [SAN](building_code)
+    - [SQX](building_code)
+    - what is [SQ](building_code)
+    - what building is [SQW](building_code)
+    - [SUB](building_code)
+    - what is [WJB](building_code)
+    - [CCE1](building_code)
+- intent: building_location_option
+  examples: |
+    - building location
+    - buildings location
+    - building locations
+    - i want to find a building location
+- intent: building_location
+  examples: |
+    - where is [CCE1](building_code)
+    - wheres [CCE2](building_code)
+    - where is [CIS](building_code)
+    - wheres [EBA](building_code)
+    - where is [EBB](building_code)
+    - wheres [EBC](building_code)
+    - where is [EBD](building_code)
+    - wheres [EBE](building_code)
+    - where is [LIP](building_code)
+    - wheres [NB](building_code)
+    - where is [SAN](building_code)
+    - wheres [SQX](building_code)
+    - where is [SQ](building_code)
+    - wheres [SQW](building_code)
+    - where is [SUB](building_code)
+    - wheres [WJB](building_code)
+    - where is [CCE2](building_code)
+- intent: show_map
+  examples: |
+    - show me the map
+    - show me the map for the buildings
+    - show me map
+    - show map
+    - building map
+- intent: lecturers_option
+  examples: |
+    - lecturer
+    - lecturers
+    - tell me about lecturers
+    - show me lecturers
+- intent: lecturer_email
+  examples: |
+    - what is Dr [Jeremy Ellman](lecturer) email?
+    - show me Dr [Christina Vasiliou](lecturer) email?
+    - whats Dr [Kay Rogage](lecturer) email?
+    - What is [Jeremy Ellman](lecturer) email

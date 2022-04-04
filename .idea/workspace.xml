@@ -2,17 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/public/robot_white.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/controller/apibuildingscontroller.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fees.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/Admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apicoursescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apicoursescontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apicoursesgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apicoursesgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/Messages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/MessagesHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesHeader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rasa/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rasa/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/nlu.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/data/rules.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/rules.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/data/stories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/stories.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/domain.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/story_graph.dot" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/story_graph.dot" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +71,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
@@ -114,7 +121,13 @@
       <workItem from="1647439764777" duration="14927000" />
       <workItem from="1647471306754" duration="12329000" />
       <workItem from="1647516304911" duration="26193000" />
-      <workItem from="1647786032665" duration="6218000" />
+      <workItem from="1647786032665" duration="6814000" />
+      <workItem from="1647881978594" duration="320000" />
+      <workItem from="1648376775478" duration="101000" />
+      <workItem from="1648376905695" duration="8743000" />
+      <workItem from="1648388512132" duration="2510000" />
+      <workItem from="1648548904381" duration="10188000" />
+      <workItem from="1648566956225" duration="1613000" />
     </task>
     <servers />
   </component>
