@@ -2,24 +2,58 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/controller/apibuildingscontroller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fees.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/autoloader.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/autoloader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/constants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/errorhandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/errorhandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/config/exceptionhandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config/exceptionhandler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apiadmincontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apiadmincontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apiauthenticatecontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apiauthenticatecontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apibuildingscontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apibuildingscontroller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/controller/apicoursescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apicoursescontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apimessagescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apimessagescontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apisignupcontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apisignupcontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/errorcontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/errorcontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/database/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/database/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apiadmingateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apiadmingateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apiauthenticategateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apiauthenticategateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/gateway/apicoursesgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apicoursesgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apimessagesgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apimessagesgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apisignupgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apisignupgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/gateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/gateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/request/request.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/request/request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/response/jsonresponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/response/jsonresponse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildings.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_files/buildings.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entry_requirements.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_files/entry_requirements.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fees.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_files/fees.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/LoginModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/SettingsModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/SettingsModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/SignupModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/SignupModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/VoiceModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/VoiceModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Widgets/SendButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Widgets/SendButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/forms/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/forms/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/forms/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/forms/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/forms/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/forms/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/pages/ErrorPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/ErrorPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/Admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/Messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/Messages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/MessagesHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/actions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/nlu.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/data/rules.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/rules.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/data/stories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/stories.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/domain.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/story_graph.dot" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/story_graph.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reportWebVitals.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reportWebVitals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/setupTests.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/setupTests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unknownMessages.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql_files/unknownMessages.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +162,7 @@
       <workItem from="1648388512132" duration="2510000" />
       <workItem from="1648548904381" duration="10188000" />
       <workItem from="1648566956225" duration="1613000" />
+      <workItem from="1649779716594" duration="10510000" />
     </task>
     <servers />
   </component>

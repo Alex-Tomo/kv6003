@@ -1,6 +1,15 @@
 import React from "react"
 import Signup from "../forms/Signup"
 
+/**
+ * The SignupModal class contains the modal for the signup form
+ * The SignupModal gets the users username and password, checks
+ * the details. Then sends the details to the API to be validated
+ * and to create the account
+ *
+ * @author - Alex Thompson, W19007452
+ */
+
 class SignupModal extends React.Component {
   constructor(props) {
     super(props)
@@ -15,25 +24,52 @@ class SignupModal extends React.Component {
     }
   }
 
+  /**
+   * Keeps track of what the user has typed in the
+   * username input field
+   *
+   * @param event String - what the user has typed in
+   *                       the username input field
+   */
   handleUsername = (event) => {
     this.setState({
       username: event.target.value
     })
   }
 
+  /**
+   * Keeps track of what the user has typed in the
+   * password input field
+   *
+   * @param event String - what the user has typed in
+   *                       the password input field
+   */
   handlePassword = (event) => {
     this.setState({
       password: event.target.value
     })
   }
 
+  /**
+   * Keeps track of what the user has typed in the
+   * repeated password input field
+   *
+   * @param event String - what the user has typed in
+   *                       the repeated password input field
+   */
   handleRepeatPassword = (event) => {
     this.setState({
       repeatPassword: event.target.value
     })
   }
 
-  handleSignup = () => {
+  /**
+   * Checks the input fields contain valid information
+   * if not display a relevant error to the user
+   *
+   * @returns {boolean} - true is there are errors
+   */
+  checkUserDetails = () => {
     let errorMessage = document.getElementById("error-message")
     errorMessage.innerHTML = ""
     document.getElementById("error-notification").classList.add("is-hidden")
@@ -66,8 +102,19 @@ class SignupModal extends React.Component {
 
     if (usernameError || passwordError || repeatPasswordError) {
       document.getElementById("error-notification").classList.remove("is-hidden")
-      return
+      return true
     }
+    return false
+  }
+
+  /**
+   * Send the users details to the signup API endpoint,
+   * if the details are valid create a new user account,
+   * otherwise display an error to the user
+   */
+  handleSignup = () => {
+    // checks if the user has entered valid details
+    if (this.checkUserDetails()) return
 
     let formData = new FormData()
     formData.append('username', this.state.username)
@@ -80,18 +127,24 @@ class SignupModal extends React.Component {
       this.props.accountCreated()
       this.props.closeModal()
 
-      document.getElementById("success-message").innerText = "Account Successfully Created"
-      document.getElementById("notification").classList.add("is-success")
-      document.getElementById("notification").classList.remove("is-hidden")
+      let message = document.getElementById("success-message")
+      let notification = document.getElementById("notification")
+
+      message.innerText = "Account Successfully Created"
+      notification.classList.add("is-success")
+      notification.classList.remove("is-hidden")
 
       setTimeout(() => {
-        document.getElementById("success-message").innerText = ""
-        document.getElementById("notification").classList.add("is-hidden")
-        document.getElementById("notification").classList.remove("is-success")
+        message.innerText = ""
+        notification.classList.add("is-hidden")
+        notification.classList.remove("is-success")
       }, 3000)
     }).catch(() => {
-      errorMessage.innerHTML = "Could not create account"
-      document.getElementById("error-notification").classList.remove("is-hidden")
+      let message = document.getElementById("error-message")
+      let notification = document.getElementById("error-notification")
+
+      message.innerHTML = "Could not create account"
+      notification.classList.remove("is-hidden")
     })
   }
 
@@ -119,7 +172,12 @@ class SignupModal extends React.Component {
               />
             </section>
             <footer className="modal-card-foot">
-              <button className="button is-success" onClick={this.handleSignup}>Create Account</button>
+              <button
+                className="button is-success"
+                onClick={this.handleSignup}
+              >
+                Create Account
+              </button>
               <button className="button cancel">Cancel</button>
             </footer>
           </div>

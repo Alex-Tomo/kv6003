@@ -2,26 +2,31 @@
 
 abstract class Gateway
 {
-    private $database;
-    private $result;
+  private $database;
+  private $result;
 
-    protected function setDatabase()
-    {
-        $this->database = new Database();
-    }
+  public function __construct()
+  {
+    $this->setDatabase();
+  }
 
-    protected function getDatabase()
-    {
-        return $this->database;
-    }
+  protected function setDatabase()
+  {
+    $this->database = new Database();
+  }
 
-    protected function setResult($result)
-    {
-        $this->result = $result;
-    }
+  protected function getDatabase()
+  {
+    return $this->database;
+  }
 
-    public function getResult()
-    {
-        return $this->result;
-    }
+  protected function setResult($result)
+  {
+    $this->result = $result;
+  }
+
+  public function getResult()
+  {
+    return $this->result;
+  }
 }

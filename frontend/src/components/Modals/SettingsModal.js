@@ -1,6 +1,14 @@
 import React from "react"
-import Settings from "../forms/Settings";
+import Settings from "../forms/Settings"
 
+/**
+ * The SettingsModal class contains the modal for the settings form
+ * The SettingsModal gets the users colour theme preference and sound
+ * preference. The user can update either of the details which will be
+ * saved in localstorage for later user
+ *
+ * @author - Alex Thompson, W19007452
+ */
 
 class SettingsModal extends React.Component {
   sound = (localStorage.getItem("sound") === 'true')
@@ -17,15 +25,26 @@ class SettingsModal extends React.Component {
     }
   }
 
+  /**
+   * Handle change when the user checked the sound checkbox.
+   * The sound is a boolean and can therefore only be set to
+   * true or false
+   */
   handleChange = () => {
     if (this.state.soundChecked) {
       localStorage.setItem("sound", false)
     } else {
       localStorage.setItem("sound", true)
     }
-    this.setState({ soundChecked: !this.state.soundChecked })
+    this.setState({
+      soundChecked: !this.state.soundChecked
+    })
   }
 
+  /**
+   * Handle change when the user checked the colourTheme checkbox.
+   * The colourTheme can currently hold two string values, light or dark.
+   */
   changeColourTheme = () => {
     // Change to light theme
     if (this.state.colourTheme === "dark") {
@@ -38,16 +57,23 @@ class SettingsModal extends React.Component {
     }
   }
 
+  /**
+   * Closes the settings modal and displays an updated settings notification
+   * if the user has updated either of there settings
+   */
   closeModal = () => {
+    let message = document.getElementById("success-message")
+    let notification = document.getElementById("notification")
+
     if (this.colourTheme !== this.state.colourTheme || this.sound !== this.state.soundChecked) {
-      document.getElementById("success-message").innerText = `Settings Updated`
-      document.getElementById("notification").classList.add("is-success")
-      document.getElementById("notification").classList.remove("is-hidden")
+      message.innerText = `Settings Updated`
+      notification.classList.add("is-success")
+      notification.classList.remove("is-hidden")
 
       setTimeout(() => {
-        document.getElementById("success-message").innerText = ""
-        document.getElementById("notification").classList.add("is-hidden")
-        document.getElementById("notification").classList.remove("is-success")
+        message.innerText = ""
+        notification.classList.add("is-hidden")
+        notification.classList.remove("is-success")
       }, 3000)
     }
 
@@ -73,7 +99,12 @@ class SettingsModal extends React.Component {
             />
           </section>
           <footer className="modal-card-foot">
-            <button className="button is-success" onClick={this.closeModal}>Apply</button>
+            <button
+              className="button is-success"
+              onClick={this.closeModal}
+            >
+              Apply
+            </button>
           </footer>
         </div>
       </div>

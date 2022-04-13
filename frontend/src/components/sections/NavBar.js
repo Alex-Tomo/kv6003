@@ -2,17 +2,20 @@ import React from "react"
 
 // Icons
 import SettingsBlack from "../../assets/settings_black.svg"
-import SettingsWhite from "../../assets/settings_white.svg"
 import LogoutBlack from "../../assets/logout_black.svg"
-import LogoutWhite from "../../assets/logout_white.svg"
 import MenuBlack from "../../assets/menu_black.svg"
 import MenuWhite from "../../assets/menu_white.svg"
 import CloseBlack from "../../assets/close_black.svg"
 import CloseWhite from "../../assets/close_white.svg"
 import AdminBlack from "../../assets/admin_black.svg"
-import AdminWhite from "../../assets/admin_white.svg"
 import HomeBlack from "../../assets/home_black.svg"
-import HomeWhite from "../../assets/home_white.svg"
+
+/**
+ * The NavBar class will be displayed on all pages
+ * allowing the user to manipulate settings, log in and signup
+ *
+ * @author - Alex Thompson, W19007452
+ */
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -24,12 +27,22 @@ class NavBar extends React.Component {
     }
   }
 
+  /**
+   * Display either the desktop version of the navbar or the mobile version
+   * of the navbar. Set a resize listener to show the correct version of the
+   * navbar on window resize.
+   */
   async componentDidMount() {
+    let buttonContainer = document.getElementById("buttons-container")
+    let messagesHeader = document.getElementById("messages-header")
+    let messages = document.getElementById("messages")
+    let messageFunctionalityContainer = document.getElementById("message-functionality-container")
+
     if (window.innerWidth > 600) {
-      document.getElementById("buttons-container").classList.remove("is-hidden")
-      document.getElementById("messages-header").classList.remove("is-hidden")
-      document.getElementById("messages").classList.remove("is-hidden")
-      document.getElementById("message-functionality-container").classList.remove("is-hidden")
+      buttonContainer.classList.remove("is-hidden")
+      messagesHeader.classList.remove("is-hidden")
+      messages.classList.remove("is-hidden")
+      messageFunctionalityContainer.classList.remove("is-hidden")
 
       await this.setState({ showMenu: false })
     } else {
@@ -38,13 +51,16 @@ class NavBar extends React.Component {
 
     window.addEventListener("resize", async () => {
       if (window.innerWidth > 600) {
-        await this.setState({ showMenu: false, windowSize: window.innerWidth })
+        await this.setState({
+          showMenu: false,
+          windowSize: window.innerWidth
+        })
 
         try {
-          document.getElementById("buttons-container").classList.remove("is-hidden")
-          document.getElementById("messages-header").classList.remove("is-hidden")
-          document.getElementById("messages").classList.remove("is-hidden")
-          document.getElementById("message-functionality-container").classList.remove("is-hidden")
+          buttonContainer.classList.remove("is-hidden")
+          messagesHeader.classList.remove("is-hidden")
+          messages.classList.remove("is-hidden")
+          messageFunctionalityContainer.classList.remove("is-hidden")
         } catch (e) {}
       } else {
         await this.showMenu()
@@ -53,38 +69,59 @@ class NavBar extends React.Component {
     })
   }
 
+  /**
+   * For the mobile view.
+   * on menu click, show the mobile menu, otherwise hide it
+   */
   changeMenu = async () => {
-    await this.setState({ showMenu: !this.state.showMenu })
+    await this.setState({
+      showMenu: !this.state.showMenu
+    })
   }
 
+  /**
+   * For the mobile view.
+   * on menu click, show the mobile menu, otherwise hide it
+   */
   showMenu = async () => {
-      if (this.state.showMenu) {
+    let admin = document.getElementById("admin")
+    let mainRoot = document.getElementById("main-root")
+    let buttonContainer = document.getElementById("buttons-container")
+    let messagesHeader = document.getElementById("messages-header")
+    let messages = document.getElementById("messages")
+    let messageFunctionalityContainer =
+        document.getElementById("message-functionality-container")
+
+    if (this.state.showMenu) {
         if (this.props.displayAdmin) {
-          document.getElementById("admin").classList.add("is-hidden")
-          document.getElementById("main-root").classList.remove("admin")
-          document.getElementById("buttons-container").classList.remove("is-hidden")
+          admin.classList.add("is-hidden")
+          mainRoot.classList.remove("admin")
+          buttonContainer.classList.remove("is-hidden")
         } else {
-          document.getElementById("main-root").classList.add("active-nav")
-          document.getElementById("buttons-container").classList.remove("is-hidden")
-          document.getElementById("messages-header").classList.add("is-hidden")
-          document.getElementById("messages").classList.add("is-hidden")
-          document.getElementById("message-functionality-container").classList.add("is-hidden")
+          mainRoot.classList.add("active-nav")
+          buttonContainer.classList.remove("is-hidden")
+          messagesHeader.classList.add("is-hidden")
+          messages.classList.add("is-hidden")
+          messageFunctionalityContainer.classList.add("is-hidden")
         }
       } else {
         if (this.props.displayAdmin) {
-          document.getElementById("admin").classList.remove("is-hidden")
-          document.getElementById("main-root").classList.add("admin")
-          document.getElementById("buttons-container").classList.add("is-hidden")
+          admin.classList.remove("is-hidden")
+          mainRoot.classList.add("admin")
+          buttonContainer.classList.add("is-hidden")
         } else {
-          document.getElementById("main-root").classList.remove("active-nav")
-          document.getElementById("buttons-container").classList.add("is-hidden")
-          document.getElementById("messages-header").classList.remove("is-hidden")
-          document.getElementById("messages").classList.remove("is-hidden")
-          document.getElementById("message-functionality-container").classList.remove("is-hidden")
+          mainRoot.classList.remove("active-nav")
+          buttonContainer.classList.add("is-hidden")
+          messagesHeader.classList.remove("is-hidden")
+          messages.classList.remove("is-hidden")
+          messageFunctionalityContainer.classList.remove("is-hidden")
         }
       }
   }
 
+  /**
+   * Display the signup modal
+   */
   handleSignup = () => {
     this.props.displaySignupModal().then(() => {
       document.querySelectorAll(('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .cancel') || []).forEach((close) => {
@@ -95,6 +132,9 @@ class NavBar extends React.Component {
     })
   }
 
+  /**
+   * Display the login modal
+   */
   handleLogin = () => {
     this.props.displayLoginModal().then(() => {
       document.querySelectorAll(('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .cancel') || []).forEach((close) => {
@@ -105,6 +145,9 @@ class NavBar extends React.Component {
     })
   }
 
+  /**
+   * Display the settings modal
+   */
   handleSettings = () => {
     this.props.displaySettingsModal().then(() => {
       document.querySelectorAll(('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .cancel') || []).forEach((close) => {
@@ -115,6 +158,12 @@ class NavBar extends React.Component {
     })
   }
 
+  /**
+   * If param is true then display the admin button
+   * otherwise dont display the admin button
+   *
+   * @param value boolean
+   */
   updateAdmin = (value) => {
     this.props.updateAdmin(value)
     if (this.state.windowSize <= 600) {

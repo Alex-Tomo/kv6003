@@ -1,5 +1,13 @@
 import React from "react"
-import Login from "../forms/Login";
+import Login from "../forms/Login"
+
+/**
+ * The LoginModal class contains the modal for the login form
+ * The LoginModal gets the users username and password then makes
+ * an API call in an attempt to log the user in
+ *
+ * @author - Alex Thompson, W19007452
+ */
 
 class LoginModal extends React.Component {
   constructor(props) {
@@ -11,19 +19,39 @@ class LoginModal extends React.Component {
     }
   }
 
+  /**
+   * Keeps track of what the user has typed in the
+   * username input field
+   *
+   * @param event String - what the user has typed in
+   *                       the username input field
+   */
   handleUsername = (event) => {
     this.setState({
       username: event.target.value
     })
   }
 
+  /**
+   * Keeps track of what the user has typed in the
+   * password input field
+   *
+   * @param event String - what the user has typed in
+   *                       the password input field
+   */
   handlePassword = (event) => {
     this.setState({
       password: event.target.value
     })
   }
 
-  handleLogin = () => {
+  /**
+   * Checks the input fields contain valid information
+   * if not display a relevant error to the user
+   *
+   * @returns {boolean} - true is there are errors
+   */
+  checkUserDetails = () => {
     let errorMessage = document.getElementById("error-message")
     errorMessage.innerHTML = ""
     document.getElementById("error-notification").classList.add("is-hidden")
@@ -48,8 +76,20 @@ class LoginModal extends React.Component {
 
     if (usernameError || passwordError) {
       document.getElementById("error-notification").classList.remove("is-hidden")
-      return
+      return true
     }
+
+    return false
+  }
+
+  /**
+   * Send the users details to the authentication API endpoint,
+   * if the details are valid log the user in, otherwise display
+   * an error to the user
+   */
+  handleLogin = () => {
+    // check the input fields contain valid information
+    if (this.checkUserDetails()) return
 
     let formData = new FormData()
     formData.append('username', this.state.username)
@@ -66,29 +106,48 @@ class LoginModal extends React.Component {
       }
     }).then(r => {
       this.accept(r)
-    }).catch((error) => {
-      document.getElementById("error-notification").innerText = "Could Not Log In"
-      document.getElementById("error-notification").classList.remove("is-hidden")
+    }).catch(() => {
+      let errorNotification = document.getElementById("error-notification")
+      errorNotification.innerText = "Could Not Log In"
+      errorNotification.classList.remove("is-hidden")
     })
   }
 
+  /**
+   * if the authentication is successful, run the accept method.
+   * displays a success message to the user, closes the modal and
+   * saves the users information in localstorage
+   *
+   * @param results object - the returned object from the
+   *                         authentication API endpoint
+   */
   accept = (results) => {
+    // logs the user in, saves the user details, closes the modal
     this.props.handleLogin(results.token, results.id, results.type)
 
-    document.getElementById("success-message").innerText = `Welcome ${this.state.username}!`
-    document.getElementById("notification").classList.add("is-success")
-    document.getElementById("notification").classList.remove("is-hidden")
+    let successMessage = document.getElementById("success-message")
+    let notification = document.getElementById("notification")
+
+    successMessage.innerText = `Welcome ${this.state.username}!`
+    notification.classList.add("is-success")
+    notification.classList.remove("is-hidden")
 
     setTimeout(() => {
-      document.getElementById("success-message").innerText = ""
-      document.getElementById("notification").classList.add("is-hidden")
-      document.getElementById("notification").classList.remove("is-success")
+      successMessage.innerText = ""
+      notification.classList.add("is-hidden")
+      notification.classList.remove("is-success")
     }, 3000)
   }
 
+  /**
+   * if the authentication is not successful, run the reject method.
+   * displays an error message to the user
+   */
   reject = () => {
-    document.getElementById("error-notification").innerText = "Could Not Log In"
-    document.getElementById("error-notification").classList.remove("is-hidden")
+    let notification = document.getElementById("error-notification")
+
+    notification.innerText = "Could Not Log In"
+    notification.classList.remove("is-hidden")
   }
 
   render() {
@@ -110,7 +169,12 @@ class LoginModal extends React.Component {
             />
           </section>
           <footer className="modal-card-foot">
-            <button className="button is-success" onClick={this.handleLogin}>Log In</button>
+            <button
+              className="button is-success"
+              onClick={this.handleLogin}
+            >
+              Log In
+            </button>
             <button className="button cancel">Cancel</button>
           </footer>
         </div>

@@ -1,5 +1,12 @@
 import React from "react"
 
+/**
+ * The Signup class contains the signup form information
+ * The Signup class component should be used in the signup model
+ *
+ * @author - Alex Thompson, W19007452
+ */
+
 class Signup extends React.Component {
   render() {
     return (

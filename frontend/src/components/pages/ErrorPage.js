@@ -1,5 +1,12 @@
 import React from "react"
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
+
+/**
+ * The Error page will be displayed if the user
+ * attempts to access a none existing page
+ *
+ * @author - Alex Thompson, W19007452
+ */
 
 class ErrorPage extends React.Component {
   render() {

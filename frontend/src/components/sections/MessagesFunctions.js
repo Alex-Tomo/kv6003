@@ -2,11 +2,16 @@ import React from "react"
 import VoiceButton from "../Widgets/VoiceButton"
 import SendButton from "../Widgets/SendButton"
 
+/**
+ * The MessagesFunctions displays the bottom of the messages
+ * panel. This displays an input field so the user can type and
+ * send a message, this also includes a voice button so the user
+ * can speak a message instead.
+ *
+ * @author - Alex Thompson, W19007452
+ */
+
 class MessagesFunctions extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  
   render() {
     return (
       <div id="message-functionality-container">

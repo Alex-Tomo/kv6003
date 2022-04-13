@@ -5,6 +5,8 @@
   text-align: center;
 }
 
+/* Reference the switch stuff and put in to its own file */
+
 .switch {
   position: relative;
   display: inline-block;
@@ -62,6 +64,12 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/* end of switch */
+
+html {
+  overflow: hidden;
 }
 
 #main-root {
@@ -171,8 +179,9 @@ input:checked + .slider:before {
   background-color: #ACB9CC;
   color: black;
   border-radius: 0 8px 8px 8px;
-  margin: 5px auto 5px 5px;
+  margin: 0 auto 5px 5px;
   padding: 0 20px;
+  min-height: 69px;
 }
 
 .bot-message p {
@@ -228,6 +237,20 @@ input:checked + .slider:before {
 
 #listening {
   margin: 0 10% 0 0;
+}
+
+#voice-modal-text {
+  color: black;
+}
+
+.voice-button {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#send-button {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 @media only screen and (max-width: 768px) {

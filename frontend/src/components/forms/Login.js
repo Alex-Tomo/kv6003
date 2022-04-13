@@ -1,5 +1,12 @@
 import React from "react"
 
+/**
+ * The Login class contains the login form information
+ * The Login class component should be used in the login model
+ *
+ * @author - Alex Thompson, W19007452
+ */
+
 class Login extends React.Component {
   render() {
     return (

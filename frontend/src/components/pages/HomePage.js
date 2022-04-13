@@ -5,17 +5,25 @@ import Messages from "../sections/Messages"
 import MessagesFunctions from "../sections/MessagesFunctions"
 import SignupModal from "../Modals/SignupModal"
 import LoginModal from "../Modals/LoginModal"
-import MessagesHeader from "../sections/MessagesHeader";
-import SettingsModal from "../Modals/SettingsModal";
+import MessagesHeader from "../sections/MessagesHeader"
+import SettingsModal from "../Modals/SettingsModal"
 import AccountCircleBlack from "../../assets/account_circle_black.svg"
 import AccountCircleWhite from "../../assets/account_circle_white.svg"
 import RobotBlack from "../../assets/robot_black.svg"
 import RobotWhite from "../../assets/robot_white.svg"
 import MoreBlack from "../../assets/more_black.svg"
-import MoreWhite from "../../assets/more_white.svg"
 
-import Admin from "../sections/Admin";
-import VoiceModal from "../Modals/VoiceModal";
+import Admin from "../sections/Admin"
+import VoiceModal from "../Modals/VoiceModal"
+
+/**
+ * The Home page will be displayed is the main page
+ * this is where the user can converse with the chat agent,
+ * log in, sign up and admins will be able to access admin
+ * features.
+ *
+ * @author - Alex Thompson, W19007452
+ */
 
 class HomePage extends React.Component {
   USER = 0
@@ -81,8 +89,8 @@ class HomePage extends React.Component {
   }
 
   sendInitialMessage = () => {
-    // fetch("http://localhost:5005/webhooks/rest/webhook", {
-      fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+    fetch("http://localhost:5005/webhooks/rest/webhook", {
+      // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
       method: 'POST',
       body: JSON.stringify({
         sender: "",
@@ -223,8 +231,8 @@ class HomePage extends React.Component {
       date: new Date().toString()
     })
 
-    // fetch("http://localhost:5005/webhooks/rest/webhook", {
-    fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+    fetch("http://localhost:5005/webhooks/rest/webhook", {
+    // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
       method: 'POST',
       body: JSON.stringify({
         sender: "alex",
@@ -418,25 +426,25 @@ class HomePage extends React.Component {
       responses = this.state.responses.map((response, i) => {
         key = i
         let buttons = ""
-        {
-          if ((response.buttons !== null) && (response.buttons.length > 0)) {
-            buttons = response.buttons.map((button, i) => {
-              return (
-                <div key={i}>
-                  <button
-                    className="button"
-                    id="buttons"
-                    onClick={() => {this.handleOptionClick(button)}}
-                    style={{margin: "2.5px", width: "60%", whiteSpace: "normal", wordWrap: "break-word"}}
-                  >
-                    <span>{button}</span>
-                  </button>
-                  <br />
-                </div>
-              )
-            })
-          }
-        }
+        if ((response.buttons !== null) && (response.buttons.length > 0)) {
+          buttons = response.buttons.map((button, i) => {
+            return (
+              <div key={i}>
+                <button
+                  className="button"
+                  id="buttons"
+                  onClick={() => {this.handleOptionClick(button)}}
+                  style={{margin: "2.5px", width: "60%", whiteSpace: "normal", wordWrap: "break-word"}}
+                >
+                  <span>{button}</span>
+                </button>
+                <br />
+              </div>
+            )
+          })}
+
+        response.message = response.message.replaceAll("&#13;", "")
+        response.message = response.message.replaceAll("&#10;", "\n")
 
         if (response.sender === this.USER) {
           return (
@@ -527,7 +535,7 @@ class HomePage extends React.Component {
               alt="Account Circle"
               className={`chat-circle  ${localStorage.getItem("theme")}`}
             />
-            <div className="bot-message">
+            <div className="bot-message" style={{minHeight: "30px"}}>
               <p><em>is typing...</em></p>
             </div>
           </div>

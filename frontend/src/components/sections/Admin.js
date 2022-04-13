@@ -4,8 +4,14 @@ import ArrowDownBlack from "../../assets/arrow_down_black.svg"
 import ArrowDownWhite from "../../assets/arrow_down_white.svg"
 import ArrowUpBlack from "../../assets/arrow_up_black.svg"
 import ArrowUpWhite from "../../assets/arrow_up_white.svg"
-import ClearBlack from "../../assets/clear_black.svg"
 import ClearWhite from "../../assets/clear_white.svg"
+
+/**
+ * The Admin page is only available to admin users, this stores
+ * and displays messages with unknown or incorrect responses.
+ *
+ * @author - Alex Thompson, W19007452
+ */
 
 class Admin extends React.Component {
   constructor(props) {
@@ -18,8 +24,6 @@ class Admin extends React.Component {
   }
 
   componentDidMount() {
-    // document.getElementById("title").innerText = "NUBot - Admin"
-
     this.getUnknownMessages()
     this.getIncorrectMessages()
   }
