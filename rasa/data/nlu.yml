@@ -218,11 +218,18 @@ nlu:
 - intent: select_course
   examples: |
     - [Computer and Digital Forensics BSc](course)
+    - [Computer and Digital Forensics](course)
     - [Computer Networks and Cyber Security BSc](course)
     - [Computer Science BSc](course)
     - [Computer Science with Artificial Intelligence BSc](course)
     - [Computer Science with Games Development BSc](course)
     - [Computer Science with Web Development BSc](course)
+    - [web development](course)
+    - [game development](course)
+    - [games development](course)
+    - [cyber security](course)
+    - [digital forensics](course)
+    - [artificial intelligence](course)
     - I am interested in [Computer Science BSc](course)
     - Tell me about [Computer Science BSc](course)
     - Do you offer [Computer Science](course)?

@@ -514,7 +514,7 @@ class HomePage extends React.Component {
                   </div>
                 </div>
                 <div className="bot-message">
-                  <p>{response.message}</p>
+                  <span>{response.message}</span>
                 </div>
 
               </div>

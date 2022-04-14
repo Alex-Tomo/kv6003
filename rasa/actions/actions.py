@@ -4,20 +4,24 @@ import requests
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
+from .courses import getCourses, getMostLikelyCourse
 
 
 class ActionOfferHelp(Action):
-
     def name(self) -> Text:
         return "action_offer_help"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        buttons = []
-
-        buttons.append({"title": "aspiring student", "payload": "/my_student_type{\"student_type\":\"aspiring\"}"})
-        buttons.append({"title": "existing student", "payload": "/my_student_type{\"student_type\":\"existing\"}"})
+        buttons = [{
+                "title": "aspiring student",
+                "payload": "/my_student_type{\"student_type\":\"aspiring\"}"
+            },
+            {
+                "title": "existing student",
+                "payload": "/my_student_type{\"student_type\":\"existing\"}"
+            }]
 
         dispatcher.utter_message(text="Are you an...?", buttons=buttons)
         return []
@@ -57,15 +61,8 @@ class ActionGetCourses(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        response = requests.get("http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses")
-        courses = []
-        for i in range(0, len(response.json())):
-            title = str(response.json()[i]['course_title'])
-            courses.append({
-                "title": title,
-                "payload": "/select_course{\"course\":\"" + title + "\"}"
-            })
 
+        courses = getCourses()
         dispatcher.utter_message(text="Here are the courses I found:", buttons=courses)
         return []
 
@@ -79,37 +76,25 @@ class ActionSayCourseName(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        course = str(tracker.get_slot("course"))
-        print("Choosen Course: " + str(tracker.get_slot("course")))
+        course = getMostLikelyCourse(str(tracker.get_slot("course")).lower(), getCourses())
+        print(tracker.get_slot("course"))
 
-        if course == "Computer and Digital Forensics BSc":
-            courseCode = "GF44"
-        elif course == "Computer Networks and Cyber Security BSc":
-            courseCode = "G4W3"
-        elif course == "Computer Science BSc":
-            courseCode = "G400"
-        elif course == "Computer Science with Artificial Intelligence BSc":
-            courseCode = "G403"
-        elif course == "Computer Science with Games Development BSc":
-            courseCode = "G405"
-        elif course == "Computer Science with Web Development BSc":
-            courseCode = "G404"
-        else:
-            courseCode = None
-
-        if course is not None and courseCode is not None:
-            buttons = []
-
-            buttons.append({"title": "modules", "payload": "/show_modules"})
-            buttons.append({"title": "entry requirements", "payload": "/entry_requirements"})
-            buttons.append({"title": "fees", "payload": "/course_fees"})
-            buttons.append({"title": "apply", "payload": "/apply"})
-
-            dispatcher.utter_message(text=f"What would you like to know about {course}?", buttons=buttons)
-        else:
+        if course['ratio'] is not None and course['ratio'] < 0.4:
             dispatcher.utter_message(text="Sorry, I cannot find that course")
+        elif course['ratio'] is not None and course['ratio'] < 0.8:
+            dispatcher.utter_message(text=f"Did you mean {course['course']}?",
+                                     buttons=[{"title": "Yes", "payload": "/affirm"},
+                                              {"title": "No", "payload": "/deny"}])
+        elif course['course'] is not None and course['courseCode'] is not None:
+            buttons = [
+                {"title": "modules", "payload": "/show_modules"},
+                {"title": "entry requirements", "payload": "/entry_requirements"},
+                {"title": "fees", "payload": "/course_fees"},
+                {"title": "apply", "payload": "/apply"}
+            ]
+            dispatcher.utter_message(text=f"What would you like to know about {course['course']}?", buttons=buttons)
 
-        return [SlotSet("courseCode", courseCode)]
+        return [SlotSet("courseCode", course['courseCode'])]
 
 
 class ActionWhichModules(Action):
@@ -120,14 +105,13 @@ class ActionWhichModules(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        print("Course: " + str(tracker.get_slot('course')))
-
-        modules = []
-        modules.append({"title": "All Modules", "payload": "/choose_module_type{\"year\":\"all\"}"})
-        modules.append({"title": "Year 1 Modules", "payload": "/choose_module_type{\"year\":\"1\"}"})
-        modules.append({"title": "Year 2 Modules", "payload": "/choose_module_type{\"year\":\"2\"}"})
-        modules.append({"title": "Year 3 Modules", "payload": "/choose_module_type{\"year\":\"3\"}"})
-        modules.append({"title": "Year 4 Modules", "payload": "/choose_module_type{\"year\":\"4\"}"})
+        modules = [
+            {"title": "All Modules", "payload": "/choose_module_type{\"year\":\"all\"}"},
+            {"title": "Year 1 Modules", "payload": "/choose_module_type{\"year\":\"1\"}"},
+            {"title": "Year 2 Modules", "payload": "/choose_module_type{\"year\":\"2\"}"},
+            {"title": "Year 3 Modules", "payload": "/choose_module_type{\"year\":\"3\"}"},
+            {"title": "Year 4 Modules", "payload": "/choose_module_type{\"year\":\"4\"}"}
+        ]
 
         dispatcher.utter_message(text="Which modules would you like to see?", buttons=modules)
         return []
@@ -141,6 +125,7 @@ class ActionShowModules(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         courseCode = str(tracker.get_slot("courseCode"))
         year = str(tracker.get_slot("year"))
         print("Year Chosen: " + str(tracker.get_slot("year")))
@@ -198,7 +183,7 @@ class ActionShowModulesForSpecificCourse(Action):
         year = str(tracker.get_slot("year"))
 
         if year is None or courseCode is None:
-            dispatcher.utter_message(text="Sorry, I could not find that course. ")
+            dispatcher.utter_message(text="Sorry, I could not find that course. \n")
             ActionGetCourses.run(self, dispatcher, tracker, domain)
             return []
 
@@ -232,7 +217,7 @@ class ActionSayCourseEntryRequirements(Action):
         course = str(tracker.get_slot("course"))
 
         if course is None:
-            dispatcher.utter_message(text="Sorry, I could not find that course. ")
+            dispatcher.utter_message(text="Sorry, I could not find that course. \n")
             ActionGetCourses.run(self, dispatcher, tracker, domain)
             return []
 
@@ -373,7 +358,6 @@ class ActionLecturerOptions(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         buttons = []
         buttons.append({"title": "Emails", "payload": "/lecturer_email"})
         # buttons.append({"title": "Offices", "payload": "/lecturer_office"})
@@ -403,4 +387,3 @@ class ActionGetLecturerEmail(Action):
             dispatcher.utter_message(text=lecturer + " email is " + email)
         else:
             dispatcher.utter_message(text="could not find lecturer ")
-
