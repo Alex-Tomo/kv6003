@@ -14,6 +14,7 @@ class ActionOfferHelp(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         buttons = [{
                 "title": "aspiring student",
                 "payload": "/my_student_type{\"student_type\":\"aspiring\"}"
@@ -36,15 +37,13 @@ class ActionStudentOptions(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        print(str(tracker.get_slot("student_type")))
-
         buttons = []
 
-        if str(tracker.get_slot("student_type")) == "aspiring":
+        if str(tracker.get_slot("student_type")) is "aspiring":
             buttons.append({"title": "courses", "payload": "/interest_in_course"})
             buttons.append({"title": "accommodation", "payload": "/university_accommodation"})
             buttons.append({"title": "visit campus", "payload": "/visit_campus"})
-        elif str(tracker.get_slot("student_type")) == "existing":
+        elif str(tracker.get_slot("student_type")) is "existing":
             buttons.append({"title": "buildings", "payload": "/buildings"})
             buttons.append({"title": "lecturers", "payload": "/lecturers_option"})
             buttons.append({"title": "calendar", "payload": "/show_me_the_calendar"})
@@ -63,6 +62,7 @@ class ActionGetCourses(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         courses = getCourses()
+
         dispatcher.utter_message(text="Here are the courses I found:", buttons=courses)
         return []
 
@@ -77,7 +77,6 @@ class ActionSayCourseName(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         course = getMostLikelyCourse(str(tracker.get_slot("course")).lower(), getCourses())
-        print(tracker.get_slot("course"))
 
         if course['ratio'] is not None and course['ratio'] < 0.4:
             dispatcher.utter_message(text="Sorry, I cannot find that course")
@@ -105,6 +104,7 @@ class ActionWhichModules(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         modules = [
             {"title": "All Modules", "payload": "/choose_module_type{\"year\":\"all\"}"},
             {"title": "Year 1 Modules", "payload": "/choose_module_type{\"year\":\"1\"}"},
@@ -128,7 +128,6 @@ class ActionShowModules(Action):
 
         courseCode = str(tracker.get_slot("courseCode"))
         year = str(tracker.get_slot("year"))
-        print("Year Chosen: " + str(tracker.get_slot("year")))
 
         if courseCode is None:
             dispatcher.utter_message(text="You have not selected a course:")
@@ -160,8 +159,6 @@ class ActionShowModulesForSpecificCourse(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        print("trigger action show modules for specific course")
 
         course = str(tracker.get_slot("course"))
 
@@ -263,10 +260,12 @@ class ActionVisitCampus(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        modules = []
-        modules.append({"title": "Open Days", "payload": "/utter_open_days"})
-        modules.append({"title": "University Facilities", "payload": "/utter_campus_facilities"})
-        modules.append({"title": "Campus Map", "payload": "/utter_campus_map"})
+
+        modules = [
+            {"title": "Open Days", "payload": "/utter_open_days"},
+            {"title": "University Facilities", "payload": "/utter_campus_facilities"},
+            {"title": "Campus Map", "payload": "/utter_campus_map"}
+        ]
 
         dispatcher.utter_message(text="What would you like to know about university campus?", buttons=modules)
         return []
@@ -280,17 +279,17 @@ class ActionGetBuildingName(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         buildingCode = str(tracker.get_slot("building_code"))
 
         response = requests.get(
             "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?building_code=" + buildingCode)
 
         dispatcher.utter_message(text=buildingCode + " is " + str(response.json()[0]['building_name']))
-
         return []
 
 
-class ActionGetBuildingName(Action):
+class ActionAskBuildingCode(Action):
 
     def name(self) -> Text:
         return "action_ask_for_building_code"
@@ -298,9 +297,8 @@ class ActionGetBuildingName(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        response = requests.get(
-            "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings"
-        )
+
+        response = requests.get("http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings")
 
         buildingCodes = []
         for i in range(0, len(response.json())):
@@ -311,6 +309,7 @@ class ActionGetBuildingName(Action):
             })
 
         dispatcher.utter_message(text="What is the building code?", buttons=buildingCodes)
+        return []
 
 
 class ActionAskAboutBuildings(Action):
@@ -321,12 +320,15 @@ class ActionAskAboutBuildings(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        buttons = []
-        buttons.append({"title": "Building Codes", "payload": "/building_codes_option"})
-        buttons.append({"title": "Building Locations", "payload": "/building_location_option"})
-        buttons.append({"title": "Building Map", "payload": "/show_map"})
+
+        buttons = [
+            {"title": "Building Codes", "payload": "/building_codes_option"},
+            {"title": "Building Locations", "payload": "/building_location_option"},
+            {"title": "Building Map", "payload": "/show_map"}
+        ]
 
         dispatcher.utter_message(text=f"How can i help you with buildings?", buttons=buttons)
+        return []
 
 
 class ActionGetBuildingLocation(Action):
@@ -337,17 +339,18 @@ class ActionGetBuildingLocation(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         buildingCode = str(tracker.get_slot("building_code"))
 
-        response = requests.get(
-            "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true&building_code=" + buildingCode
-        )
+        response = requests.get(f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
+                                f"&building_code={buildingCode}")
 
         buildingNumber = str(response.json()[0]['building_number'])
         buildingName = str(response.json()[0]['building_name'])
 
         dispatcher.utter_message(text=buildingName + " is number " + buildingNumber + " on the map",
                                  image="https://northumbria-cdn.azureedge.net/-/media/services/campus-services/documents/pdf/city-campus-map-sept-2020-master.pdf?modified=20201116104043")
+        return []
 
 
 class ActionLecturerOptions(Action):
@@ -358,11 +361,14 @@ class ActionLecturerOptions(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        buttons = []
-        buttons.append({"title": "Emails", "payload": "/lecturer_email"})
-        # buttons.append({"title": "Offices", "payload": "/lecturer_office"})
+
+        buttons = [{
+            "title": "Emails",
+            "payload": "/lecturer_email"
+        }]
 
         dispatcher.utter_message(text="What would you like to know?", buttons=buttons)
+        return []
 
 
 class ActionGetLecturerEmail(Action):
@@ -375,6 +381,7 @@ class ActionGetLecturerEmail(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         lecturer = str(tracker.get_slot("lecturer"))
+        email = None
 
         if lecturer == "Jeremy Ellman":
             email = "jeremy.ellman@northumbria.ac.uk"
@@ -384,6 +391,8 @@ class ActionGetLecturerEmail(Action):
             email = "kay.rogage@northumbria.ac.uk"
 
         if lecturer is not None and email is not None:
-            dispatcher.utter_message(text=lecturer + " email is " + email)
+            dispatcher.utter_message(text=lecturer + "s email is " + email)
         else:
-            dispatcher.utter_message(text="could not find lecturer ")
+            dispatcher.utter_message(text="I could not find lecturer ")
+
+        return []
