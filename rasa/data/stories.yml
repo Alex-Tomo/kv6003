@@ -869,3 +869,27 @@ stories:
   - slot_was_set:
     - lecturer: Jeremy Ellman
   - action: action_get_lecturer_email
+
+
+- story: interactive_story_1
+  steps:
+  - intent: entry_requirements_for_course
+    entities:
+    - course: computer networks
+  - slot_was_set:
+    - course: computer networks
+  - action: action_say_course_entry_requirements
+  - action: utter_can_i_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: interactive_story_2
+  steps:
+  - intent: select_course
+    entities:
+    - course: web development
+  - slot_was_set:
+    - course: web development
+  - action: action_say_course_name
+  - intent: affirm
+  - action: action_confirm_course_name

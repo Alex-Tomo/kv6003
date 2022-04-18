@@ -241,6 +241,7 @@ nlu:
     - I am interested in [Computer Science BSc](course)
     - Tell me about [Computer Science BSc](course)
     - Do you offer [Computer Science](course)?
+    - [web development](course)
 - intent: show_modules
   examples: |
     - Show me the modules
@@ -293,6 +294,16 @@ nlu:
     - what grades do i need
     - are my grades enough
     - do i have the right grades
+- intent: entry_requirements_for_course
+  examples: |
+    - show me entry requirements for [Computer Science](course)
+    - entry requirements for [Computer Science with Artificial Intelligence BSc](course)
+    - [Computer Science with Games Development BSc](course) entry requirements
+    - what are entry requirements for [Computer Science with Web Development BSc](course)
+    - what are the entry requirements for [computer Networks and cyber security bsc](course)
+    - show me entry requirements for [computer and digital forensics bsc](course)
+    - entry requirements for [computer network security](course)
+    - entry requirements for [computer networks](course)
 - intent: course_fees
   examples: |
     - what are the fees

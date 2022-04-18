@@ -3,6 +3,10 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
+- affirm
+- deny
+- entry_requirements_for_course
+- select_course
 - buildings
 - building_codes_option
 - greet
@@ -11,12 +15,9 @@ intents:
 - show_map
 - building_location
 - building_location_option
-- deny
 - apply_for_course
 - university_accommodation
 - interest_in_course
-- affirm
-- select_course
 - university_facilities
 - visit_campus
 - open_days
@@ -56,10 +57,10 @@ entities:
 - building_code
 - course
 - courseCode
+- lecturer
 - name
 - student_type
 - year
-- lecturer
 slots:
   name:
     type: text
@@ -69,16 +70,17 @@ slots:
       entity: name
   course:
     type: categorical
-    values:
-      - Computer and Digital Forensics BSc
-      - Computer Networks and Cyber Security BSc
-      - Computer Science BSc
-      - Computer Science with Artificial Intelligence BSc
-      - Computer Science with Games Development BSc
-      - Computer Science with Web Development BSc
+    influence_conversation: true
     mappings:
     - type: from_entity
       entity: course
+    values:
+    - computer and digital forensics bsc
+    - computer networks and cyber security bsc
+    - computer science bsc
+    - computer science with artificial intelligence bsc
+    - computer science with games development bsc
+    - computer science with web development bsc
   courseCode:
     type: text
     influence_conversation: true
@@ -105,13 +107,14 @@ slots:
       entity: building_code
   lecturer:
     type: categorical
-    values:
-      - Jeremy Ellman
-      - Christina Vasiliou
-      - Kay Rogage
+    influence_conversation: true
     mappings:
     - type: from_entity
       entity: lecturer
+    values:
+    - jeremy ellman
+    - christina vasiliou
+    - kay rogage
 responses:
   utter_greet:
   - text: Hi, welcome to NUChat, I am your helper bot.
@@ -154,6 +157,8 @@ actions:
 - action_get_building_location
 - action_get_building_name
 - action_get_courses
+- action_get_lecturer_email
+- action_lecturer_options
 - action_offer_help
 - action_say_course_entry_requirements
 - action_say_course_name
@@ -173,5 +178,4 @@ actions:
 - utter_how_to_apply
 - utter_open_days
 - utter_which_building_location
-- action_lecturer_options
-- action_get_lecturer_email
+- action_confirm_course_name

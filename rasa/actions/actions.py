@@ -1,5 +1,5 @@
 """
-The main actions file, this is used in conjucture with
+The main actions file, this is used in conjuncture with
 Rasa. When the user gives specific intents a class is run.
 
 @author Alex Thompson, W19007452
@@ -11,7 +11,7 @@ import requests
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
-from .courses import getCourses, getMostLikelyCourse
+from .courses import getCourses, getMostLikelyCourse, getCourseModulesByYear, getCourseEntryRequirements
 from .constants import *
 
 
@@ -22,7 +22,6 @@ class ActionOfferHelp(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(text="Are you an...?",
                                  buttons=STUDENT_TYPE_BUTTONS)
         return []
@@ -57,7 +56,6 @@ class ActionGetCourses(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(text="Here are the courses I found:",
                                  buttons=getCourses())
         return []
@@ -80,10 +78,36 @@ class ActionSayCourseName(Action):
             dispatcher.utter_message(text=f"Did you mean {course['course']}?",
                                      buttons=YES_NO_BUTTONS)
         elif course['course'] is not None and course['courseCode'] is not None:
+            SlotSet("course", course['course'])
             dispatcher.utter_message(text=f"What would you like to know about {course['course']}?",
                                      buttons=COURSE_INFORMATION_BUTTONS)
 
         return [SlotSet("courseCode", course['courseCode'])]
+
+
+class ActionConfirmCourseName(Action):
+
+    def name(self) -> Text:
+        return "action_confirm_course_name"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        courseCode = str(tracker.get_slot("courseCode"))
+        print(courseCode)
+        course = str(tracker.get_slot("course"))
+
+        response = requests.get("http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses")
+
+        for i in range(0, len(response.json())):
+            if courseCode == str(response.json()[i]['course_code']):
+                SlotSet("course", str(response.json()[i]['course_title']))
+                course = str(response.json()[i]['course_title'])
+
+        dispatcher.utter_message(text=f"What would you like to know about {course}?",
+                                 buttons=COURSE_INFORMATION_BUTTONS)
+        return []
 
 
 class ActionWhichModules(Action):
@@ -94,7 +118,6 @@ class ActionWhichModules(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(text="Which modules would you like to see?",
                                  buttons=MODULE_YEAR_BUTTONS)
         return []
@@ -108,7 +131,6 @@ class ActionShowModules(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         courseCode = str(tracker.get_slot("courseCode"))
         year = str(tracker.get_slot("year"))
 
@@ -116,21 +138,10 @@ class ActionShowModules(Action):
             dispatcher.utter_message(text="You have not selected a course:")
             return []
 
-        if year.lower() == "all":
-            response = requests.get(
-                "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&year=all")
-        else:
-            response = requests.get(
-                "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&year=" + year)
+        moduleButtons = getCourseModulesByYear(courseCode, year)
 
-        modules = []
-        modulesTemp = ""
-        for i in range(0, len(response.json())):
-            modulesTemp += response.json()[i]['module_title'] + "\n"
-            modules.append({"title": response.json()[i]['module_title']})
-
-        dispatcher.utter_message(text="Here are the modules:\n" + modulesTemp)
-
+        dispatcher.utter_message(text="Here are the modules i found:\n",
+                                 buttons=moduleButtons)
         return []
 
 
@@ -145,43 +156,24 @@ class ActionShowModulesForSpecificCourse(Action):
 
         course = str(tracker.get_slot("course"))
 
-        if course == "Computer and Digital Forensics BSc":
-            courseCode = "GF44"
-        elif course == "Computer Networks and Cyber Security BSc":
-            courseCode = "G4W3"
-        elif course == "Computer Science BSc":
-            courseCode = "G400"
-        elif course == "Computer Science with Artificial Intelligence BSc":
-            courseCode = "G403"
-        elif course == "Computer Science with Games Development BSc":
-            courseCode = "G405"
-        elif course == "Computer Science with Web Development BSc":
-            courseCode = "G404"
-        else:
-            courseCode = None
-
-        year = str(tracker.get_slot("year"))
-
-        if year is None or courseCode is None:
+        if course is None:
             dispatcher.utter_message(text="Sorry, I could not find that course. \n")
             ActionGetCourses.run(self, dispatcher, tracker, domain)
             return []
 
-        if year.lower() == "all":
-            response = requests.get(
-                "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&year=all")
-        else:
-            response = requests.get(
-                "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&year=" + year)
+        courseDetails = getMostLikelyCourse(course, getCourses())
 
-        modules = []
-        modulesTemp = ""
-        for i in range(0, len(response.json())):
-            modulesTemp += response.json()[i]['module_title'] + "\n"
-            modules.append({"title": response.json()[i]['module_title']})
+        year = str(tracker.get_slot("year"))
 
-        dispatcher.utter_message(text="Here are the modules:\n" + modulesTemp)
+        if year is None or courseDetails['courseCode'] is None:
+            dispatcher.utter_message(text="Sorry, I could not find that course. \n")
+            ActionGetCourses.run(self, dispatcher, tracker, domain)
+            return []
 
+        moduleButtons = getCourseModulesByYear(courseDetails['courseCode'], year)
+
+        dispatcher.utter_message(text="Here are the modules:\n",
+                                 buttons=moduleButtons)
         return []
 
 
@@ -201,37 +193,16 @@ class ActionSayCourseEntryRequirements(Action):
             ActionGetCourses.run(self, dispatcher, tracker, domain)
             return []
 
-        if course == "Computer and Digital Forensics BSc":
-            courseCode = "GF44"
-        elif course == "Computer Networks and Cyber Security BSc":
-            courseCode = "G4W3"
-        elif course == "Computer Science BSc":
-            courseCode = "G400"
-        elif course == "Computer Science with Artificial Intelligence BSc":
-            courseCode = "G403"
-        elif course == "Computer Science with Games Development BSc":
-            courseCode = "G405"
-        elif course == "Computer Science with Web Development BSc":
-            courseCode = "G404"
-        else:
-            courseCode = None
+        courseDetails = getMostLikelyCourse(course, getCourses())
 
-        if courseCode is None:
+        if courseDetails['courseCode'] is None:
             dispatcher.utter_message(text="Sorry, I could not find that course. ")
             ActionGetCourses.run(self, dispatcher, tracker, domain)
             return []
 
-        response = requests.get(
-            "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&entry_requirements=true")
+        entryRequirements = getCourseEntryRequirements(courseDetails['courseCode'])
 
-        entry_requirements = ""
-        entry_requirements += response.json()[0]['tariff_points'] + "\n"
-        entry_requirements += response.json()[0]['subject_requirements'] + "\n"
-        entry_requirements += response.json()[0]['gcse_requirements'] + "\n"
-        entry_requirements += response.json()[0]['english_requirements'] + "\n"
-
-        dispatcher.utter_message(text="The entry requirements for " + course + " are: \n" + entry_requirements)
-
+        dispatcher.utter_message(text="The entry requirements for " + courseDetails['course'] + " are: \n" + entryRequirements)
         return []
 
 
@@ -243,7 +214,6 @@ class ActionVisitCampus(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(text="What would you like to know about university campus?",
                                  buttons=VISIT_CAMPUS_BUTTONS)
         return []
@@ -257,7 +227,6 @@ class ActionGetBuildingName(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         buildingCode = str(tracker.get_slot("building_code"))
 
         response = requests.get(
@@ -275,7 +244,6 @@ class ActionAskBuildingCode(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         response = requests.get("http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings")
 
         buildingCodes = []
@@ -298,7 +266,6 @@ class ActionAskAboutBuildings(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(text=f"How can i help you with buildings?",
                                  buttons=BUILDING_BUTTONS)
         return []
@@ -312,7 +279,6 @@ class ActionGetBuildingLocation(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         buildingCode = str(tracker.get_slot("building_code"))
 
         response = requests.get(f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
@@ -334,7 +300,6 @@ class ActionLecturerOptions(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(text="What would you like to know?",
                                  buttons=LECTURER_BUTTONS)
         return []
