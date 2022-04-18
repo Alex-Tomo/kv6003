@@ -25,12 +25,12 @@ const VoiceButton = (props) => {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition()
 
-  // document.querySelectorAll(('.modal-background') || []).forEach((close) => {
-  //   close.addEventListener('click', () => {
-  //     props.closeModal()
-  //     resetTranscript()
-  //   })
-  // })
+  document.querySelectorAll(('.modal-background') || []).forEach((close) => {
+    close.addEventListener('click', () => {
+      props.closeModal()
+      resetTranscript()
+    })
+  })
 
   // if the browser does not support speech recognition
   // alert the user
@@ -41,13 +41,6 @@ const VoiceButton = (props) => {
 
   useEffect(() => {
     if (supportedBrowser) {
-      // if (listening) {
-      //   wait(500).then(() => {
-      //     console.log(transcript)
-      //     props.updateVoiceModal(transcript)
-      //   })
-      // }
-
       let listeningPara = document.getElementById("listening")
 
       if (listening) {
@@ -72,7 +65,7 @@ const VoiceButton = (props) => {
       className="voice-button"
       onClick={() => {
         SpeechRecognition.startListening()
-        // props.displayVoiceModal()
+        props.displayVoiceModal()
       }}
     >
       <img src={MicrophoneWhite} alt="Microphone Icon" />

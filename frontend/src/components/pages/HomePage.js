@@ -12,7 +12,6 @@ import AccountCircleWhite from "../../assets/account_circle_white.svg"
 import RobotBlack from "../../assets/robot_black.svg"
 import RobotWhite from "../../assets/robot_white.svg"
 import MoreBlack from "../../assets/more_black.svg"
-
 import Admin from "../sections/Admin"
 import VoiceModal from "../Modals/VoiceModal"
 
@@ -101,13 +100,21 @@ class HomePage extends React.Component {
         return r.json()
       })
       .then(d => {
-        let botText = ""
+        let botText = []
         let tempArray = this.state.responses
         let buttons = []
 
         if (d.length > 0) {
           for (let i = 0; i < d.length; i++) {
-            botText += d[i].text + " "
+            if (d[i].text !== undefined) {
+              botText.push({"text": d[i].text, "image": undefined})
+            }
+
+            try {
+              if (d[i].image !== undefined) {
+                botText.push({"image": d[i].image, "text": undefined})
+              }
+            } catch (error) {}
 
             try {
               if (d[i].buttons.length > 0) {
@@ -121,7 +128,7 @@ class HomePage extends React.Component {
           tempArray.push({
             sender: this.BOT,
             message: botText,
-            buttons: buttons
+            buttons: buttons,
           })
         }
         this.setState({
@@ -153,7 +160,7 @@ class HomePage extends React.Component {
       for (let i = 0; i < r.length; i++) {
         arr.push({
           sender: (r[i].type === 'sent') ? this.USER : this.BOT,
-          message: r[i].message,
+          message: [{"text": r[i].message, "image": undefined}],
           buttons: []
         })
       }
@@ -172,8 +179,14 @@ class HomePage extends React.Component {
 
   speak = () => {
     let msg = new SpeechSynthesisUtterance()
-    msg.text = this.state.responses[this.state.responses.length - 1].message
-    window.speechSynthesis.speak(msg)
+
+    for (let i = 0; i < this.state.responses[this.state.responses.length - 1].message.length; i++) {
+      if (this.state.responses[this.state.responses.length - 1].message[i].text !== undefined) {
+        msg.text = this.state.responses[this.state.responses.length - 1].message[i].text
+
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(msg.text))
+      }
+    }
   }
 
   handleVoice = (voice) => {
@@ -191,7 +204,7 @@ class HomePage extends React.Component {
       method: 'POST',
       body: formData
     }).then(r => {
-      console.log("added message")
+      // console.log("added message")
     }).catch(err => {
       console.log("could not add message")
     })
@@ -206,7 +219,7 @@ class HomePage extends React.Component {
       method: 'POST',
       body: formData
     }).then(r => {
-      console.log("added message")
+      // console.log("added message")
     }).catch(err => {
       console.log("could not add message")
     })
@@ -214,6 +227,8 @@ class HomePage extends React.Component {
 
   sendMessageToBot = (msg) => {
     if (this.state.isSending) return
+
+    this.closeModal()
 
     this.setState({
       isSending: true
@@ -226,7 +241,7 @@ class HomePage extends React.Component {
     let tempArray = this.state.responses
     tempArray.push({
       sender: this.USER,
-      message: msg,
+      message: [{"text": msg, "image": undefined}],
       buttons: [],
       date: new Date().toString()
     })
@@ -247,13 +262,21 @@ class HomePage extends React.Component {
           this.addUnknownMessage(msg)
         }
 
-        let botText = ""
+        let botText = []
         let tempArray = this.state.responses
         let buttons = []
 
         if (d.length > 0) {
           for (let i = 0; i < d.length; i++) {
-            botText += d[i].text + " "
+            if (d[i].text !== undefined) {
+              botText.push({"text": d[i].text, "image": undefined})
+            }
+
+            try {
+              if (d[i].image !== undefined) {
+                botText.push({"image": d[i].image, "text": undefined})
+              }
+            } catch (error) {}
 
             try {
               if (d[i].buttons.length > 0) {
@@ -308,6 +331,17 @@ class HomePage extends React.Component {
   // type => 'sent' or 'received'
   // msg => the message => do not include buttons
   addMessageToDatabase = (id, type, msg) => {
+    if (typeof msg == "object") {
+      for (let i = 0; i < msg.length; i++) {
+        if (msg[i].text !== undefined) {
+          this.addMessageToDatabase(id, type, msg[i].text)
+        }
+      }
+      return
+    }
+
+
+
     let formData = new FormData()
     formData.append('add', true)
     formData.append('id', id)
@@ -319,7 +353,7 @@ class HomePage extends React.Component {
       method: 'POST',
       body: formData
     }).then(() => {
-      console.log("Message added")
+      // console.log("Message added")
     }).catch(() => {
       console.log("Could not add message")
     })
@@ -356,7 +390,7 @@ class HomePage extends React.Component {
   }
 
   updateVoiceModal = async (voiceText) => {
-    console.log(voiceText.toString())
+    // console.log(voiceText.toString())
     document.getElementById("voice-modal-text").innerText = voiceText.toString()
   }
 
@@ -375,18 +409,22 @@ class HomePage extends React.Component {
       loggedIn: false,
       responses: []
     })
+
     localStorage.removeItem("token")
     localStorage.removeItem("id")
     localStorage.removeItem("user_type")
 
-    document.getElementById("success-message").innerText = "Logged Out"
-    document.getElementById("notification").classList.add("is-success")
-    document.getElementById("notification").classList.remove("is-hidden")
+    let msg = document.getElementById("success-message")
+    let notification = document.getElementById("notification")
+
+    msg.innerText = "Logged Out"
+    notification.classList.add("is-success")
+    notification.classList.remove("is-hidden")
 
     setTimeout(() => {
-      document.getElementById("success-message").innerText = ""
-      document.getElementById("notification").classList.add("is-hidden")
-      document.getElementById("notification").classList.remove("is-success")
+      msg.innerText = ""
+      notification.classList.add("is-hidden")
+      notification.classList.remove("is-success")
     }, 3000)
 
     if (this.state.responses.length === 0) {
@@ -406,6 +444,7 @@ class HomePage extends React.Component {
     await localStorage.setItem("token", token)
     await localStorage.setItem("id", id)
     await localStorage.setItem("user_type", type)
+
     this.closeModal()
     this.getMessages()
   }
@@ -415,10 +454,6 @@ class HomePage extends React.Component {
   }
 
   render() {
-    try {
-      document.getElementById("title").innerText = "NUBot"
-    } catch (e) {}
-
     let responses = ""
     let key = 0
 
@@ -434,7 +469,12 @@ class HomePage extends React.Component {
                   className="button"
                   id="buttons"
                   onClick={() => {this.handleOptionClick(button)}}
-                  style={{margin: "2.5px", width: "60%", whiteSpace: "normal", wordWrap: "break-word"}}
+                  style={{
+                    margin: "2.5px",
+                    width: "fit-content",
+                    whiteSpace: "normal",
+                    wordWrap: "break-word"
+                  }}
                 >
                   <span>{button}</span>
                 </button>
@@ -443,14 +483,38 @@ class HomePage extends React.Component {
             )
           })}
 
-        response.message = response.message.replaceAll("&#13;", "")
-        response.message = response.message.replaceAll("&#10;", "\n")
+        let message = response.message.map((message, i) => {
+          if (message.text !== undefined) {
+            message.text = message.text.replaceAll("&#13;", "")
+            message.text = message.text.replaceAll("&#10;", "\n")
+
+            return (
+              <div className="bot-message" key={i}>
+                <p>{message.text}</p>
+              </div>
+            )
+          } else if (message.image !== undefined) {
+            return (
+            <img
+              className="image"
+              src={message.image}
+              alt="map"
+              style={{
+                width: "80%",
+                border: "1px solid grey",
+                borderRadius: "2.5px",
+                marginBottom: "5px"
+              }}
+            />
+            )
+          }
+        })
 
         if (response.sender === this.USER) {
           return (
             <div className="user-message-container" key={i}>
               <div key={i} className="user-message">
-                <p>{response.message}</p>
+                <p>{response.message[0].text}</p>
               </div>
               <img
                 src={(localStorage.getItem("theme") === "dark") ?
@@ -474,49 +538,47 @@ class HomePage extends React.Component {
                     height="24px"
                     width="24px"
                   />
-
-
-                <div id={`menu${i}`} className="dropdown">
-                  <div className="dropdown-trigger">
-                    <button className="button" aria-haspopup="true" aria-controls="dropdown-menu"
-                      style={{padding: "10px"}}
-                      onClick={() => {
-                        if (document.getElementById(`menu${i}`).classList.contains("is-active")) {
-                          document.getElementById(`menu${i}`).classList.remove("is-active")
-                        } else {
-                          document.getElementById(`menu${i}`).classList.add("is-active")
-                        }
-                      }}
-                      onBlur={() => {
-                        document.getElementById(`menu${i}`).classList.remove("is-active")
-                      }}
-                    >
-                      <span className="icon is-small">
-                        <img
-                          src={MoreBlack}
-                          alt="More Icon"
-                          height="24px"
-                          width="24px"
-                        />
-                      </span>
-                    </button>
-                  </div>
-                  <div className="dropdown-menu" id="dropdown-menu" role="menu" style={{padding: "2px"}}>
-                      <button
-                        className="button is-danger"
-                        onMouseDown={() => {
-                          document.getElementById(`menu${i}`).classList.remove("is-active")
-                          this.addIncorrectMessage(this.state.responses[i].message, this.state.responses[i-1].message)
+                  <div id={`menu${i}`} className="dropdown">
+                    <div className="dropdown-trigger">
+                      <button className="button" aria-haspopup="true" aria-controls="dropdown-menu"
+                        style={{padding: "10px"}}
+                        onClick={() => {
+                          if (document.getElementById(`menu${i}`).classList.contains("is-active")) {
+                            document.getElementById(`menu${i}`).classList.remove("is-active")
+                          } else {
+                            document.getElementById(`menu${i}`).classList.add("is-active")
+                          }
                         }}
-                      >This Response is Wrong</button>
-                  </div>
-
+                        onBlur={() => {
+                          document.getElementById(`menu${i}`).classList.remove("is-active")
+                        }}
+                      >
+                        <span className="icon is-small">
+                          <img
+                            src={MoreBlack}
+                            alt="More Icon"
+                            height="24px"
+                            width="24px"
+                          />
+                        </span>
+                      </button>
+                    </div>
+                    <div className="dropdown-menu" id="dropdown-menu" role="menu" style={{padding: "2px"}}>
+                        <button
+                          className="button is-danger"
+                          onMouseDown={() => {
+                            document.getElementById(`menu${i}`).classList.remove("is-active")
+                            this.addIncorrectMessage(this.state.responses[i].message, this.state.responses[i-1].message)
+                          }}
+                        >This Response is Wrong</button>
+                    </div>
                   </div>
                 </div>
-                <div className="bot-message">
-                  <span>{response.message}</span>
+                <div style={{display: "flex",
+                  flexDirection: "column",
+                  width: "100%"}}>
+                  {message}
                 </div>
-
               </div>
               <div id="message-buttons-container">
                 {buttons}
@@ -531,7 +593,7 @@ class HomePage extends React.Component {
           <div className="bot-message-container" key={key+1}>
             <img
               src={(localStorage.getItem("theme") === "dark") ?
-                AccountCircleWhite : AccountCircleBlack}
+                RobotWhite : RobotBlack}
               alt="Account Circle"
               className={`chat-circle  ${localStorage.getItem("theme")}`}
             />
@@ -565,13 +627,7 @@ class HomePage extends React.Component {
         </div>
 
         {(this.state.displayAdmin) ?
-
-          <>
-            <Admin />
-          </>
-
-        :
-
+          <><Admin /></> :
           <>
             <MessagesHeader
               colourTheme={localStorage.getItem("theme")}
@@ -595,7 +651,6 @@ class HomePage extends React.Component {
               updateVoiceModal={this.updateVoiceModal}
             />
           </>
-
         }
 
         {this.state.modal}

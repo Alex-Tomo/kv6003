@@ -1,5 +1,6 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
 @import './css/navbar.css';
+@import './css/voice.css';
 
 .App {
   text-align: center;
@@ -253,6 +254,15 @@ html {
   border-top-left-radius: 0;
 }
 
+#message-buttons-container {
+  margin: 0 10%;
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
 @media only screen and (max-width: 768px) {
   .modal-card-width {
     width: 60%;
@@ -297,6 +307,8 @@ html {
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;
+    flex-wrap: nowrap;
+    flex-direction: row;
   }
 
   #buttons {
@@ -307,10 +319,12 @@ html {
 
   .user-message {
     margin: 5px 5px 5px auto;
+    width: 100% !important;
   }
 
   .bot-message {
     margin: 5px auto 5px 5px;
+    width: 100% !important;
   }
 
   #messages-header-para {
@@ -339,6 +353,10 @@ html {
 
   #listening {
     margin: 0 10px 0 0;
+  }
+
+  .image {
+    width: 93% !important;
   }
 }
 

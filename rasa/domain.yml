@@ -138,12 +138,12 @@ responses:
   utter_how_to_apply:
   - text: The admissions team can be contacted on 0191 406 0901 or at bc.applicantservices@northumbria.ac.uk via email.
   utter_open_days:
-  - text: There are two types of open days, virtual and on-campus. Visit https://app.geckoform.com/public/?_gl=1*fjwu5l*_gcl_aw*R0NMLjE2NDg1NjE1ODAuQ2owS0NRanczSXFTQmhDb0FSSXNBTUJrVGIxQUVIWjhhakVjNmpIejlfS0xQRm5nNE5ZbDlMS3pmaE9qQlFTVjl5SnRLWS1LX1VPX0hyTWFBa2IzRUFMd193Y0I.*_gcl_dc*R0NMLjE2NDg1NjE1ODAuQ2owS0NRanczSXFTQmhDb0FSSXNBTUJrVGIxQUVIWjhhakVjNmpIejlfS0xQRm5nNE5ZbDlMS3pmaE9qQlFTVjl5SnRLWS1LX1VPX0hyTWFBa2IzRUFMd193Y0I.&_ga=2.241359426.1395756847.1648549005-1643827260.1647389419&_gac=1.27663694.1648561580.Cj0KCQjw3IqSBhCoARIsAMBkTb1AEHZ8ajEc6jHz9_KLPFng4NYl9LKzfhOjBQSV9yJtKY-K_UO_HrMaAkb3EALw_wcB#/modern/21FO0085r8wa8l00908qnh8haw for more information.
+  - text: There are two types of open days, virtual and on-campus. Visit https://app.geckoform.com/public/?_gl=1*fjwu5l*_gcl_aw*R0NMLjE2NDg1NjE1ODAuQ2owS0NRanczSXFTQmhDb0FSSXNBTUJrVGIxQUVIWjhhakVjNmpIejlfS0xQRm5nNE5ZbDlMS3pmaE9qQlFTVjl5SnRLWS1LX1VPX0hyTWFBa2IzRUFMd193Y0I.*_gcl_dc*R0NMLjE2NDg1NjE1ODAuQ2owS0NRanczSXFTQmhDb0FSSXNBTUJrVGIxQUVIWjhhakVjNmpIejlfS0xQRm5nNE5ZbDlMS3pmaE9qQlFTVjl5SnRLWS1LX1VPX0hyTWFBa2IzRUFMd193Y0I.&_ga=2.241359426.1395756847.1648549005-1643827260.1647389419&_gac=1.27663694.1648561580.Cj0KCQjw3IqSBhCoARIsAMBkTb1AEHZ8ajEc6jHz9_KLPFng4NYl9LKzfhOjBQSV9yJtKY-K_UO_HrMaAkb3EALw_wcB#/modern/21FO0085r8wa8l00908qnh8haw to register.
   utter_campus_facilities:
   - text: Northumbria offers a range of facilities. Visit https://www.northumbria.ac.uk/study-at-northumbria/coming-to-northumbria/creative/our-facilities/ for more information.
   utter_campus_map:
   - text: Here is the campus map
-    image: https://northumbria-cdn.azureedge.net/-/media/services/campus-services/documents/pdf/city-campus-map-sept-2020-master.pdf?modified=20201116104043
+    image: http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map
   utter_which_building_location:
   - text: Which building do you want to find?
   utter_which_email:

@@ -16,7 +16,19 @@ class VoiceModal extends React.Component {
         <div className="modal-background"/>
         <div className="modal-card modal-card-width">
           <section className="modal-card-body">
-            <h1 id="voice-modal-text">Speak</h1>
+            <h1 style={{color: "black"}}>Speak Now</h1>
+            <div className='speech-bar'>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+              <div className='bar'/>
+            </div>
           </section>
         </div>
       </div>

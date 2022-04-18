@@ -24,9 +24,15 @@ switch ($request->getPath()) {
   case "api/buildings":
     $controller = new ApiBuildingsController($request, $response);
     break;
+  case "campus_map":
+    header("Content-type: image/png");
+    readfile("images/campus_map.png");
+    break;
   default:
     $controller = new ErrorController($request, $response);
     break;
 }
 
-echo $response->getData();
+if ($response != null) {
+  echo $response->getData();
+}

@@ -2,8 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rasa/actions/constants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/images/campus_map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/css/voice.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rasa_individual.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rasa_individual.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modals/VoiceModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Modals/VoiceModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/courses.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/courses.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/nlu.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/domain.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,10 +33,21 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="CSS File" />
       </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
     </option>
   </component>
   <component name="Git.Settings">
@@ -61,7 +88,7 @@
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="tasks.timeTracking" />
     <property name="ts.external.directory.path" value="C:\Users\Alex\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\213.6777.52\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -74,11 +101,11 @@
       <recent name="C:\Users\Alex\Desktop\rasa_individual\rasa" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend" />
+      <recent name="$PROJECT_DIR$/rasa/actions/images" />
+      <recent name="$PROJECT_DIR$/backend/images" />
       <recent name="C:\Users\Alex\Desktop\Uni Third Year\KV6003 Individual Computing Project\chatbot\kv6003\sql_files" />
       <recent name="$PROJECT_DIR$/frontend/src/assets" />
-      <recent name="C:\Users\Alex\Desktop\Uni Third Year\KV6003 Individual Computing Project\chatbot\kv6003\frontend\src\assets" />
-      <recent name="C:\Users\Alex\Desktop\Uni Third Year\KV6003 Individual Computing Project\chatbot\kv6003\frontend\src\components" />
-      <recent name="C:\Users\Alex\Desktop\Uni Third Year\KV6003 Individual Computing Project\chatbot\kv6003\frontend\src\components\form" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

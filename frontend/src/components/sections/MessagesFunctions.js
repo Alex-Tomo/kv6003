@@ -21,7 +21,6 @@ class MessagesFunctions extends React.Component {
             handleVoice={this.props.handleVoice}
             displayVoiceModal={this.props.displayVoiceModal}
             closeModal={this.props.closeModal}
-            updateVoiceModal={this.props.updateVoiceModal}
           />
           <input
             id="input-message"
