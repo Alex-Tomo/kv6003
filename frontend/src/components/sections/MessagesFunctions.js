@@ -17,6 +17,7 @@ class MessagesFunctions extends React.Component {
       <div id="message-functionality-container">
         <div id="message-functionality" className={this.props.colourTheme}>
           <VoiceButton
+            isSending={this.props.isSending}
             props={this.props}
             handleVoice={this.props.handleVoice}
             displayVoiceModal={this.props.displayVoiceModal}

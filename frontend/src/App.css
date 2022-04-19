@@ -256,6 +256,7 @@ html {
 
 #message-buttons-container {
   margin: 0 10%;
+  margin-left: 0;
   display: flex;
   overflow-y: hidden;
   overflow-x: auto;
@@ -266,6 +267,22 @@ html {
 @media only screen and (max-width: 768px) {
   .modal-card-width {
     width: 60%;
+  }
+
+  #message-buttons-container {
+    margin: 0 25px;
+    margin-left: 0;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+
+  #buttons {
+    margin: 20px 0 20px 2.5px !important;
+    width: fit-content !important;
+    white-space: nowrap !important;
   }
 }
 
@@ -304,6 +321,7 @@ html {
 
   #message-buttons-container {
     margin: 0 25px;
+    margin-left: 0;
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;

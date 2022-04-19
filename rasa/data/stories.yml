@@ -75,7 +75,7 @@ stories:
 - story: ask how final grade is calculated
   steps:
     - intent: how_are_grades_calculated
-    - action: utter_grades_calculated
+    - action: action_grades
     - action: utter_can_i_help
 
 - story: can i help (yes)
@@ -327,7 +327,7 @@ stories:
     - student_type: aspiring
   - action: action_student_options
   - intent: university_accommodation
-  - action: utter_accomodation
+  - action: action_accommodation
   - action: utter_can_i_help
   - intent: deny
   - action: utter_goodbye
@@ -362,7 +362,7 @@ stories:
   - action: utter_campus_map
   - action: utter_can_i_help
   - intent: open_days
-  - action: utter_open_days
+  - action: action_open_days
   - action: utter_can_i_help
   - intent: deny
   - action: utter_goodbye
@@ -379,21 +379,21 @@ stories:
     - student_type: aspiring
   - action: action_student_options
   - intent: university_accommodation
-  - action: utter_accomodation
+  - action: action_accommodation
   - action: utter_can_i_help
   - intent: affirm
   - action: action_student_options
   - intent: visit_campus
   - action: action_visit_campus
   - intent: open_days
-  - action: utter_open_days
+  - action: action_open_days
   - action: utter_can_i_help
   - intent: affirm
   - action: action_student_options
   - intent: visit_campus
   - action: action_visit_campus
   - intent: university_facilities
-  - action: utter_campus_facilities
+  - action: action_campus_facilities
   - action: utter_can_i_help
   - intent: deny
   - action: utter_goodbye
@@ -439,7 +439,7 @@ stories:
   - intent: affirm
   - action: action_student_options
   - intent: university_accommodation
-  - action: utter_accomodation
+  - action: action_accommodation
   - action: utter_can_i_help
   - intent: deny
   - action: utter_goodbye
@@ -601,7 +601,7 @@ stories:
     - intent: buildings
     - action: action_ask_about_buildings
     - intent: building_location
-    - action: action_get_building_location
+    - action: action_ask_for_building_name
 - story: interactive_story_1
   steps:
   - intent: greet
@@ -616,7 +616,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
   - intent: building_location
     entities:
     - building_code: CCE1
@@ -652,7 +652,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
   - intent: building_location
     entities:
     - building_code: EBA
@@ -674,7 +674,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
   - intent: building_location
     entities:
     - building_code: CCE1
@@ -721,7 +721,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
   - intent: building_location
     entities:
     - building_code: EBB
@@ -741,7 +741,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
 
 - story: interactive_story_1
   steps:
@@ -754,7 +754,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
   - intent: building_location
     entities:
     - building_code: EBB
@@ -776,7 +776,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
   - intent: building_location
     entities:
     - building_code: EBE
@@ -794,7 +794,7 @@ stories:
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
-  - action: utter_which_building_location
+  - action: action_ask_for_building_name
   - intent: building_location
     entities:
     - building_code: CCE2
@@ -893,3 +893,14 @@ stories:
   - action: action_say_course_name
   - intent: affirm
   - action: action_confirm_course_name
+
+- story: interactive_story_1
+  steps:
+  - intent: building_name
+    entities:
+    - building_code: cce1
+  - slot_was_set:
+    - building_code: cce1
+  - action: action_get_building_name
+  - intent: show_building_on_map
+  - action: action_get_building_location

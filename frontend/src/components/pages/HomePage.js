@@ -88,6 +88,8 @@ class HomePage extends React.Component {
   }
 
   sendInitialMessage = () => {
+    this.setState({isSending: true})
+
     fetch("http://localhost:5005/webhooks/rest/webhook", {
       // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
       method: 'POST',
@@ -107,12 +109,12 @@ class HomePage extends React.Component {
         if (d.length > 0) {
           for (let i = 0; i < d.length; i++) {
             if (d[i].text !== undefined) {
-              botText.push({"text": d[i].text, "image": undefined})
+              botText.push({"text": d[i].text, "image": undefined, "buttons": [], "link": undefined})
             }
 
             try {
               if (d[i].image !== undefined) {
-                botText.push({"image": d[i].image, "text": undefined})
+                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
               }
             } catch (error) {}
 
@@ -121,14 +123,14 @@ class HomePage extends React.Component {
                 for (let j = 0; j < d[i].buttons.length; j++) {
                   buttons.push(d[i].buttons[j].title)
                 }
+                botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
               }
             } catch (error) {}
 
           }
           tempArray.push({
             sender: this.BOT,
-            message: botText,
-            buttons: buttons,
+            message: botText
           })
         }
         this.setState({
@@ -137,6 +139,8 @@ class HomePage extends React.Component {
 
       })
       .then(() => {
+        this.setState({isSending: false})
+
         if (localStorage.getItem("sound") === 'true') {
           this.speak()
         }
@@ -160,8 +164,7 @@ class HomePage extends React.Component {
       for (let i = 0; i < r.length; i++) {
         arr.push({
           sender: (r[i].type === 'sent') ? this.USER : this.BOT,
-          message: [{"text": r[i].message, "image": undefined}],
-          buttons: []
+          message: [{"text": r[i].message, "image": undefined, "buttons": []}],
         })
       }
 
@@ -241,7 +244,7 @@ class HomePage extends React.Component {
     let tempArray = this.state.responses
     tempArray.push({
       sender: this.USER,
-      message: [{"text": msg, "image": undefined}],
+      message: [{"text": msg, "image": undefined, "buttons": [], "link": undefined}],
       buttons: [],
       date: new Date().toString()
     })
@@ -258,6 +261,7 @@ class HomePage extends React.Component {
         return r.json()
       })
       .then(d => {
+        console.log(d)
         if (d[0].text === "Sorry, i do not understand...") {
           this.addUnknownMessage(msg)
         }
@@ -269,12 +273,18 @@ class HomePage extends React.Component {
         if (d.length > 0) {
           for (let i = 0; i < d.length; i++) {
             if (d[i].text !== undefined) {
-              botText.push({"text": d[i].text, "image": undefined})
+              botText.push({"text": d[i].text, "image": undefined, "buttons": [], "link": undefined})
             }
 
             try {
+              if (d[i].custom.link !== null) {
+                botText[botText.length-1].link = d[i].custom.link
+              }
+            } catch (e) {}
+
+            try {
               if (d[i].image !== undefined) {
-                botText.push({"image": d[i].image, "text": undefined})
+                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
               }
             } catch (error) {}
 
@@ -283,14 +293,17 @@ class HomePage extends React.Component {
                 for (let j = 0; j < d[i].buttons.length; j++) {
                   buttons.push(d[i].buttons[j].title)
                 }
+              botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
               }
             } catch (error) {}
 
           }
+
+          console.log(botText)
+
           tempArray.push({
             sender: this.BOT,
             message: botText,
-            buttons: buttons,
             date: new Date().toString()
           })
         }
@@ -461,32 +474,49 @@ class HomePage extends React.Component {
       responses = this.state.responses.map((response, i) => {
         key = i
         let buttons = ""
-        if ((response.buttons !== null) && (response.buttons.length > 0)) {
-          buttons = response.buttons.map((button, i) => {
-            return (
-              <div key={i}>
-                <button
-                  className="button"
-                  id="buttons"
-                  onClick={() => {this.handleOptionClick(button)}}
-                  style={{
-                    margin: "2.5px",
-                    width: "fit-content",
-                    whiteSpace: "normal",
-                    wordWrap: "break-word"
-                  }}
-                >
-                  <span>{button}</span>
-                </button>
-                <br />
-              </div>
-            )
-          })}
+
+        if (response.message.length > 0) {
+          response.message.forEach(message => {
+            if ((message.buttons !== null) && (message.buttons.length > 0)) {
+              buttons = message.buttons.map((button, i) => {
+                return (
+                  <div key={i}>
+                    <button
+                      className="button"
+                      id="buttons"
+                      onClick={() => {
+                        this.handleOptionClick(button)
+                      }}
+                      style={{
+                        margin: "2.5px",
+                        width: "fit-content",
+                        whiteSpace: "normal",
+                        wordWrap: "break-word"
+                      }}
+                    >
+                      <span>{button}</span>
+                    </button>
+                    <br/>
+                  </div>
+                )
+              })
+            }
+          })
+        }
 
         let message = response.message.map((message, i) => {
           if (message.text !== undefined) {
             message.text = message.text.replaceAll("&#13;", "")
             message.text = message.text.replaceAll("&#10;", "\n")
+
+            if (message.link !== undefined) {
+              let text = message.text.split("{?}")
+              return (
+                <div className="bot-message" key={i}>
+                  <p>{text[0]}<a href={message.link}>this link</a>{text[1]}</p>
+                </div>
+              )
+            }
 
             return (
               <div className="bot-message" key={i}>
@@ -506,6 +536,12 @@ class HomePage extends React.Component {
                 marginBottom: "5px"
               }}
             />
+            )
+          } else if (message.buttons.length > 0) {
+            return (
+              <div key={i} id="message-buttons-container">
+                {buttons}
+              </div>
             )
           }
         })
@@ -574,14 +610,9 @@ class HomePage extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div style={{display: "flex",
-                  flexDirection: "column",
-                  width: "100%"}}>
+                <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
                   {message}
                 </div>
-              </div>
-              <div id="message-buttons-container">
-                {buttons}
               </div>
             </div>
           )

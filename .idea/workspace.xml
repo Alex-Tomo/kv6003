@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rasa/actions/custom_slots.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b6514c22-87a1-4fca-a942-f2beb5d7fd35.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/baaf32ee-c482-44c2-a974-fea2c5e801ed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/baaf32ee-c482-44c2-a974-fea2c5e801ed.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Widgets/VoiceButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sections/MessagesFunctions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rasa/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/actions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/actions/courses.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/courses.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rasa/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/nlu.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rasa/data/stories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/stories.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rasa/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/domain.yml" afterDir="false" />
@@ -25,8 +35,8 @@
       <list>
         <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="Python Script" />
         <option value="CSS File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -68,21 +78,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="tasks.timeTracking" />
-    <property name="ts.external.directory.path" value="C:\Users\Alex\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\213.6777.52\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
   <component name="ReaderModeSettings">
     <option name="showLigatures" value="true" />
   </component>
@@ -136,6 +138,7 @@
       <workItem from="1650016973033" duration="33000" />
       <workItem from="1650020506703" duration="2691000" />
       <workItem from="1650147602084" duration="7310000" />
+      <workItem from="1650360800539" duration="11415000" />
     </task>
     <servers />
   </component>

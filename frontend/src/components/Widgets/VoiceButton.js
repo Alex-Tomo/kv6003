@@ -67,6 +67,7 @@ const VoiceButton = (props) => {
         SpeechRecognition.startListening()
         props.displayVoiceModal()
       }}
+      disabled={props.isSending}
     >
       <img src={MicrophoneWhite} alt="Microphone Icon" />
     </Button>

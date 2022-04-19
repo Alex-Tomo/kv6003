@@ -241,7 +241,6 @@ nlu:
     - I am interested in [Computer Science BSc](course)
     - Tell me about [Computer Science BSc](course)
     - Do you offer [Computer Science](course)?
-    - [web development](course)
 - intent: show_modules
   examples: |
     - Show me the modules
@@ -276,8 +275,10 @@ nlu:
     - [2](year)
     - [3](year)
     - [4](year)
+    - [2](year): Show on Ma
 - intent: choose_modules_for_specific_course
   examples: |
+    - [computer network security] modules
     - show me [all](year) the modules for [Computer Science](course)
     - show me year [1](year) modules for [Computer Science](course)
     - show me year [2](year) modules for [Computer Science](course)
@@ -296,6 +297,7 @@ nlu:
     - do i have the right grades
 - intent: entry_requirements_for_course
   examples: |
+    - [computer network security](course) entry requirements
     - show me entry requirements for [Computer Science](course)
     - entry requirements for [Computer Science with Artificial Intelligence BSc](course)
     - [Computer Science with Games Development BSc](course) entry requirements
@@ -306,6 +308,7 @@ nlu:
     - entry requirements for [computer networks](course)
 - intent: course_fees
   examples: |
+    - fees
     - what are the fees
     - how much does the course cost
     - how much is it for international students
@@ -336,6 +339,7 @@ nlu:
     - campus open days
 - intent: university_facilities
   examples: |
+    - university facilities
     - What facilities do you offer
     - does northumbria have a vr room
     - does northumbria have a computer building
@@ -378,6 +382,7 @@ nlu:
     - [SUB](building_code)
     - what is [WJB](building_code)
     - [CCE1](building_code)
+    - [cce1](building_code)
 - intent: building_location_option
   examples: |
     - building location
@@ -403,6 +408,24 @@ nlu:
     - where is [SUB](building_code)
     - wheres [WJB](building_code)
     - where is [CCE2](building_code)
+- intent: show_building_on_map
+  examples: |
+    - show [CCE1](building_code) on map
+    - show [CCE2](building_code) on map
+    - show [CIS](building_code) on map
+    - show [EBA](building_code) on map
+    - show [EBB](building_code) on map
+    - show [EBC](building_code) on map
+    - show [EBD](building_code) on map
+    - show [EBE](building_code) on map
+    - show [LIP](building_code) on map
+    - show [NB](building_code) on map
+    - show [SAN](building_code) on map
+    - show [SQX](building_code) on map
+    - show [SQ](building_code) on map
+    - show [SQW](building_code) on map
+    - show [SUB](building_code) on map
+    - show [WJB](building_code) on map
 - intent: show_map
   examples: |
     - show me the map

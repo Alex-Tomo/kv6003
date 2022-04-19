@@ -13,7 +13,7 @@ class ApiBuildingsGateway extends Gateway
 
   public function getAllBuildingCodes()
   {
-    $sql = "SELECT building_code FROM kv6003_buildings";
+    $sql = "SELECT building_code, building_name FROM kv6003_buildings";
     $result = $this->getDatabase()->executeSQL($sql);
     $this->setResult($result);
   }
