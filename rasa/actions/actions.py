@@ -14,6 +14,8 @@ from rasa_sdk.executor import CollectingDispatcher
 from .courses import getCourses, getMostLikelyCourse, getCourseModulesByYear, getCourseEntryRequirements
 from .constants import *
 from .custom_slots import *
+from .lecturers import getMostLikelyLecturer
+from .buildings import getAllBuildings, getMostLikelyBuildingByCode, getMostLikelyBuildingByName
 
 # Custom slots is used to keep track of the current slots
 customSlots = CustomSlots()
@@ -26,7 +28,6 @@ class ActionOfferHelp(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
             text="Are you an...?",
             buttons=STUDENT_TYPE_BUTTONS
@@ -137,7 +138,6 @@ class ActionWhichModules(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
             text="Which modules would you like to see?",
             buttons=MODULE_YEAR_BUTTONS
@@ -168,7 +168,7 @@ class ActionShowModules(Action):
             return []
 
         if year == "None":
-            ActionWhichModules.run(self, dispatcher, domain)
+            ActionWhichModules.run(self, dispatcher, tracker, domain)
             return []
 
         moduleButtons = getCourseModulesByYear(courseCode, year)
@@ -266,7 +266,6 @@ class ActionVisitCampus(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
             text="What would you like to know about university campus?",
             buttons=VISIT_CAMPUS_BUTTONS
@@ -292,7 +291,7 @@ class ActionGetBuildingName(Action):
         if len(response.json()) > 0:
             dispatcher.utter_message(
                 text=f"{buildingCode} is {str(response.json()[0]['building_name'])}",
-                buttons=[{"title": "Get Directions"}, {"title": f"Show on {buildingCode} Map"}]
+                buttons=[{"title": "Get Directions"}, {"title": "Show on Map"}]
             )
         else:
             dispatcher.utter_message(
@@ -310,7 +309,6 @@ class ActionAskBuildingCode(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         response = requests.get(
             "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings"
         )
@@ -336,9 +334,8 @@ class ActionAskBuildingName(Action):
         return "action_ask_for_building_name"
 
     def run(self, dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         response = requests.get(
             "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings"
         )
@@ -381,19 +378,188 @@ class ActionGetBuildingLocation(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         buildingCode = str(tracker.get_slot("building_code"))
+        buildingName = str(tracker.get_slot("building_name"))
+
+        buildings = getAllBuildings()
+
+        origin = []
+
+        if buildingCode != "None":
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
+        elif buildingName != "None":
+            origin = getMostLikelyBuildingByName(buildingName, buildings)
+        else:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
 
         response = requests.get(
             f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
-            f"&building_code={buildingCode}"
+            f"&building_code={origin['code']}"
         )
 
         buildingNumber = str(response.json()[0]['building_number'])
         buildingName = str(response.json()[0]['building_name'])
 
         dispatcher.utter_message(
-            text=f"{buildingName} is number {buildingNumber} on the map",
+            text=f"{buildingName} is number {buildingNumber} on the map below",
             image="http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map"
         )
+        return []
+
+
+class ActionBuildingMap(Action):
+
+    def name(self) -> Text:
+        return "action_building_map"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        buildingCode = str(tracker.get_slot("building_code"))
+        buildingName = str(tracker.get_slot("building_name"))
+
+        buildings = getAllBuildings()
+
+        origin = []
+
+        if buildingCode != "None":
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
+        elif buildingName != "None":
+            origin = getMostLikelyBuildingByName(buildingName, buildings)
+        else:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
+
+        response = requests.get(
+            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
+            f"&building_code={origin['code']}"
+        )
+
+        dispatcher.utter_message(
+            text=f"Heres what i found for {str(response.json()[0]['building_name'])}",
+            json_message={
+                "map": [{
+                    "lat": str(response.json()[0]['building_lat']),
+                    "lng": str(response.json()[0]['building_lng']),
+                    "name": str(response.json()[0]['building_name'])
+                }]
+            }
+        )
+
+        return []
+
+
+class ActionMyLocationToBuildingMap(Action):
+
+    def name(self) -> Text:
+        return "action_my_location_to_building_map"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        buildingCode = str(tracker.get_slot("building_code"))
+        buildingName = str(tracker.get_slot("building_name"))
+
+        buildings = getAllBuildings()
+
+        origin = []
+
+        if buildingCode != "None":
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
+        elif buildingName != "None":
+            origin = getMostLikelyBuildingByName(buildingName, buildings)
+        else:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
+
+        response = requests.get(
+            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
+            f"&building_code={origin['code']}"
+        )
+
+        dispatcher.utter_message(
+            text=f"Your location to {str(response.json()[0]['building_name'])}",
+            json_message={
+                "my_location": True,
+                "map": [{
+                    "lat": str(response.json()[0]['building_lat']),
+                    "lng": str(response.json()[0]['building_lng']),
+                    "name": str(response.json()[0]['building_name'])
+                }]
+            }
+        )
+
+        return []
+
+
+class ActionBuildingToBuildingMap(Action):
+
+    def name(self) -> Text:
+        return "action_building_to_building_map"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        buildingCode = str(tracker.get_slot("building_code"))
+        buildingCodeDestination = str(tracker.get_slot("building_code_destination"))
+        buildingName = str(tracker.get_slot("building_name"))
+        buildingNameDestination = str(tracker.get_slot("building_name_destination"))
+
+        buildings = getAllBuildings()
+
+        origin = []
+        destination = []
+
+        if buildingCode != "None":
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
+        elif buildingName != "None":
+            origin = getMostLikelyBuildingByName(buildingName, buildings)
+        else:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
+
+        if buildingCodeDestination != "None":
+            destination = getMostLikelyBuildingByCode(buildingCodeDestination, buildings)
+        elif buildingNameDestination != "None":
+            destination = getMostLikelyBuildingByName(buildingNameDestination, buildings)
+        else:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
+
+
+
+        response = requests.get(
+            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
+            f"&building_code={origin['code']}"
+        )
+
+        responseDestination = requests.get(
+            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
+            f"&building_code={destination['code']}"
+        )
+
+        dispatcher.utter_message(
+            text=f"{str(destination['name'])} to {str(origin['name'])}",
+            json_message={
+                "my_location": True,
+                "map": [
+                    {
+                        "lat": str(responseDestination.json()[0]['building_lat']),
+                        "lng": str(responseDestination.json()[0]['building_lng']),
+                        "name": str(responseDestination.json()[0]['building_name'])
+                    },
+                    {
+                        "lat": str(response.json()[0]['building_lat']),
+                        "lng": str(response.json()[0]['building_lng']),
+                        "name": str(response.json()[0]['building_name'])
+                    }
+                ]
+            }
+        )
+
         return []
 
 
@@ -405,7 +571,6 @@ class ActionLecturerOptions(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
             text="What would you like to know?",
             buttons=LECTURER_BUTTONS
@@ -423,18 +588,12 @@ class ActionGetLecturerEmail(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         lecturer = str(tracker.get_slot("lecturer"))
-        email = None
 
-        if lecturer == "Jeremy Ellman":
-            email = "jeremy.ellman@northumbria.ac.uk"
-        elif lecturer == "Christina Vasiliou":
-            email = "christina.vasiliou@northumbria.ac.uk"
-        elif lecturer == "Kay Rogage":
-            email = "kay.rogage@northumbria.ac.uk"
+        lecturerDetails = getMostLikelyLecturer(lecturer)
 
-        if lecturer != "None" and email != "None":
+        if lecturer != "None" and lecturerDetails is not None:
             dispatcher.utter_message(
-                text=f"{lecturer}s email is {email}"
+                text=f"{lecturerDetails['lecturerName']}s email is {lecturerDetails['lecturerEmail']}"
             )
         else:
             dispatcher.utter_message(
@@ -452,7 +611,6 @@ class ActionAccommodation(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
             text="Northumbria offers a range of student accomodation. Visit {?} for more information.",
             json_message={
@@ -471,7 +629,6 @@ class ActionGrades(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
             text="40% of 100 credits from 5th year plus 60% of 100 credits from final year or 100% of final year. Visit {?} for more information.",
             json_message={
@@ -490,7 +647,6 @@ class ActionOpenDays(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
             text="There are two types of open days, virtual and on-campus. Visit {?} to register.",
             json_message={
@@ -509,11 +665,28 @@ class ActionCampusFacilities(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(
-            text="Northumbria offers a range of facilities. Visit  for more information.",
+            text="Northumbria offers a range of facilities. Visit {?} for more information.",
             json_message={
                 "link": "https://www.northumbria.ac.uk/study-at-northumbria/coming-to-northumbria/creative/our-facilities/"
+            }
+        )
+
+        return []
+
+
+class ActionGetCalendar(Action):
+
+    def name(self) -> Text:
+        return "action_get_calendar"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(
+            text="View {?} for the semester calendar.",
+            json_message={
+                "link": "https://www.northumbria.ac.uk/about-us/university-services/student-library-and-academic-services/registry-records-and-returns/academic-calendars/2021-2022-calendar/"
             }
         )
 

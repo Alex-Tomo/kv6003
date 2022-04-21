@@ -14,6 +14,7 @@ import RobotWhite from "../../assets/robot_white.svg"
 import MoreBlack from "../../assets/more_black.svg"
 import Admin from "../sections/Admin"
 import VoiceModal from "../Modals/VoiceModal"
+import Map from "../Widgets/Map"
 
 /**
  * The Home page will be displayed is the main page
@@ -261,13 +262,14 @@ class HomePage extends React.Component {
         return r.json()
       })
       .then(d => {
-        console.log(d)
         if (d[0].text === "Sorry, i do not understand...") {
           this.addUnknownMessage(msg)
         }
 
         let botText = []
         let tempArray = this.state.responses
+        let newMap = false
+
         let buttons = []
 
         if (d.length > 0) {
@@ -277,8 +279,23 @@ class HomePage extends React.Component {
             }
 
             try {
-              if (d[i].custom.link !== null) {
+              if (d[i].custom.link !== undefined) {
                 botText[botText.length-1].link = d[i].custom.link
+              }
+            } catch (e) {}
+
+            try {
+              if (d[i].custom.my_location !== undefined) {
+                botText[botText.length-1].my_location = true
+                botText[botText.length-1].coordinates = d[i].custom.map
+                newMap = true
+              }
+            } catch (e) {}
+
+            try {
+              if (d[i].custom.map !== undefined) {
+                botText[botText.length-1].coordinates = d[i].custom.map
+                newMap = true
               }
             } catch (e) {}
 
@@ -299,7 +316,15 @@ class HomePage extends React.Component {
 
           }
 
-          console.log(botText)
+          // only display 1 google map at a time
+          if (newMap) {
+            for (let i = 0; i < tempArray.length; i++) {
+              if (tempArray[i].message[0].coordinates !== undefined) {
+                tempArray[i].message[0].coordinates = undefined
+                tempArray[i].message[0].my_location = undefined
+              }
+            }
+          }
 
           tempArray.push({
             sender: this.BOT,
@@ -514,6 +539,28 @@ class HomePage extends React.Component {
               return (
                 <div className="bot-message" key={i}>
                   <p>{text[0]}<a href={message.link}>this link</a>{text[1]}</p>
+                </div>
+              )
+            }
+
+            if (message.my_location !== undefined) {
+              return (
+                <div key={i}>
+                  <div className="bot-message">
+                    <p>{message.text}</p>
+                  </div>
+                  <Map my_location={true} coordinates={message.coordinates} />
+                </div>
+              )
+            }
+
+            if (message.coordinates !== undefined) {
+              return (
+                <div key={i}>
+                  <div className="bot-message">
+                    <p>{message.text}</p>
+                  </div>
+                  <Map my_location={undefined} coordinates={message.coordinates} />
                 </div>
               )
             }

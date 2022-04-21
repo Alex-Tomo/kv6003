@@ -31,7 +31,7 @@ COURSE_INFORMATION_BUTTONS = [
     {"title": "modules", "payload": "/show_modules"},
     {"title": "entry requirements", "payload": "/entry_requirements"},
     {"title": "fees", "payload": "/course_fees"},
-    {"title": "apply", "payload": "/apply"}
+    {"title": "how to apply", "payload": "/apply"}
 ]
 
 YES_NO_BUTTONS = [

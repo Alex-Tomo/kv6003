@@ -264,6 +264,10 @@ html {
   flex-direction: row;
 }
 
+.info-window {
+  color: black;
+}
+
 @media only screen and (max-width: 768px) {
   .modal-card-width {
     width: 60%;

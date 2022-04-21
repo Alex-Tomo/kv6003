@@ -620,6 +620,7 @@ stories:
   - intent: building_location
     entities:
     - building_code: CCE1
+    - building_name: City Campus East 1
   - action: action_get_building_location
 
 - story: interactive_story_2
@@ -656,8 +657,10 @@ stories:
   - intent: building_location
     entities:
     - building_code: EBA
+    - building_name: Ellison Building A Block
   - slot_was_set:
     - building_code: EBA
+    - building_name: Ellison Building A Block
   - action: action_get_building_location
 
 - story: interactive_story_1
@@ -678,8 +681,10 @@ stories:
   - intent: building_location
     entities:
     - building_code: CCE1
+    - building_name: City Campus East 1
   - slot_was_set:
     - building_code: CCE1
+    - building_name: City Campus East 1
   - action: action_get_building_location
   - action: utter_can_i_help
   - intent: deny
@@ -725,8 +730,10 @@ stories:
   - intent: building_location
     entities:
     - building_code: EBB
+    - building_name: Ellison Building B Block
   - slot_was_set:
     - building_code: EBB
+    - building_name: Ellison Building B Block
   - action: action_get_building_location
 
 - story: Building codes
@@ -758,8 +765,10 @@ stories:
   - intent: building_location
     entities:
     - building_code: EBB
+    - building_name: Ellison Building B Block
   - slot_was_set:
     - building_code: EBB
+    - building_name: Ellison Building B Block
   - action: action_get_building_location
 
 - story: interactive_story_1
@@ -780,6 +789,10 @@ stories:
   - intent: building_location
     entities:
     - building_code: EBE
+    - building_name: Ellison Building E Block
+  - slot_was_set:
+    - building_code: EBE
+    - building_name: Ellison Building E Block
   - action: action_get_building_name
   - action: utter_can_i_help
 
@@ -798,8 +811,10 @@ stories:
   - intent: building_location
     entities:
     - building_code: CCE2
+    - building_name: City Campus East 2
   - slot_was_set:
     - building_code: CCE2
+    - building_name: City Campus East 2
   - action: action_get_building_location
 
 - story: interactive_story_1
@@ -904,3 +919,142 @@ stories:
   - action: action_get_building_name
   - intent: show_building_on_map
   - action: action_get_building_location
+
+- story: calendar
+  steps:
+  - intent: calendar
+  - action: action_get_calendar
+  - action: utter_can_i_help
+- story: interactive_story_1
+  steps:
+  - intent: building_name
+    entities:
+    - building_code: CCE1
+  - slot_was_set:
+    - building_code: CCE1
+  - action: action_get_building_name
+  - intent: show_building_on_map
+  - action: action_get_building_location
+
+- story: interactive_story_2
+  steps:
+  - intent: building_name
+    entities:
+    - building_code: EBA
+  - slot_was_set:
+    - building_code: EBA
+  - action: action_get_building_name
+  - intent: show_building_on_map
+  - action: action_get_building_location
+
+- story: interactive_story_3
+  steps:
+  - intent: building_name
+    entities:
+    - building_code: CCE1
+  - slot_was_set:
+    - building_code: CCE1
+  - action: action_get_building_name
+  - intent: show_building_on_map
+  - action: action_get_building_location
+
+- story: get directions on google maps
+  steps:
+  - intent: building_name
+    entities:
+    - building_code: CCE1
+  - slot_was_set:
+    - building_code: CCE1
+  - action: action_get_building_name
+  - intent: get_directions
+  - action: action_building_map
+
+- story: get directions on google maps
+  steps:
+    - intent: building_name
+      entities:
+      - building_code: EBA
+    - slot_was_set:
+      - building_code: EBA
+    - action: action_get_building_name
+    - intent: get_directions
+    - action: action_building_map
+
+- story: get my location to building directions on google maps
+  steps:
+    - intent: get_directions_from_my_location
+      entities:
+        - building_code: EBA
+        - building_name: Ellison Building A Block
+    - slot_was_set:
+        - building_code: EBA
+        - building_name: Ellison Building A Block
+    - action: action_my_location_to_building_map
+
+- story: get my location to building directions on google maps 2
+  steps:
+    - intent: get_directions_from_my_location
+      entities:
+        - building_code: CIS
+        - building_name: CIS Building
+    - slot_was_set:
+        - building_code: CIS
+        - building_name: CIS Building
+    - action: action_my_location_to_building_map
+
+- story: get my location to building directions on google maps 3
+  steps:
+    - intent: get_directions_from_my_location
+      entities:
+        - building_code: LIP
+        - building_name: Lipman Building
+    - slot_was_set:
+        - building_code: LIP
+        - building_name: Lipman Building
+    - action: action_my_location_to_building_map
+
+- story: get building to building directions on google maps 1
+  steps:
+    - intent: get_directions_from_another_building
+      entities:
+        - building_code: LIP
+        - building_name: Lipman Building
+        - building_code_destination: EBA
+        - building_name_destination: Ellison Building A Block
+    - slot_was_set:
+        - building_code: LIP
+        - building_name: Lipman Building
+        - building_code_destination: EBA
+        - building_name_destination: Ellison Building A Block
+
+    - action: action_building_to_building_map
+
+- story: get building to building directions on google maps 2
+  steps:
+    - intent: get_directions_from_another_building
+      entities:
+        - building_code: CIS
+        - building_name: CIS Building
+        - building_code_destination: SAN
+        - building_name_destination: Sandyford Building
+    - slot_was_set:
+        - building_code: CIS
+        - building_name: CIS Building
+        - building_code_destination: SAN
+        - building_name_destination: Sandyford Building
+    - action: action_building_to_building_map
+
+- story: get building to building directions on google maps 3
+  steps:
+    - intent: get_directions_from_another_building
+      entities:
+        - building_code: CCE1
+        - building_name: City Campus East 1
+        - building_code_destination: SQ
+        - building_name_destination: Squires Building
+    - slot_was_set:
+        - building_code: CCE1
+        - building_name: City Campus East 1
+        - building_code_destination: SQ
+        - building_name_destination: Squires Building
+    - action: action_building_to_building_map

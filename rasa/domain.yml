@@ -3,19 +3,19 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
+- buildings
 - building_name
+- building_location_option
 - choose_module_type
 - affirm
 - deny
 - entry_requirements_for_course
 - select_course
-- buildings
 - building_codes_option
 - greet
 - my_student_type
 - show_map
 - building_location
-- building_location_option
 - apply_for_course
 - university_accommodation
 - interest_in_course
@@ -54,8 +54,15 @@ intents:
 - discrimination_support
 - lecturers_option
 - show_building_on_map
+- calendar
+- get_directions
+- get_directions_from_my_location
+- get_directions_from_another_building
 entities:
 - building_code
+- building_code_destination
+- building_name
+- building_name_destination
 - course
 - courseCode
 - lecturer
@@ -106,6 +113,24 @@ slots:
     mappings:
     - type: from_entity
       entity: building_code
+  building_code_destination:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: building_code_destination
+  building_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: building_name
+  building_name_destination:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: building_name_destination
   lecturer:
     type: categorical
     influence_conversation: true
@@ -116,6 +141,7 @@ slots:
     - jeremy ellman
     - christina vasiliou
     - kay rogage
+    - alex thompson
 responses:
   utter_greet:
   - text: Hi, welcome to NUChat, I am your helper bot.
@@ -149,6 +175,7 @@ actions:
 - action_confirm_course_name
 - action_get_building_location
 - action_get_building_name
+- action_get_calendar
 - action_get_courses
 - action_get_lecturer_email
 - action_grades
@@ -168,3 +195,6 @@ actions:
 - utter_goodbye
 - utter_greet
 - utter_how_to_apply
+- action_building_map
+- action_my_location_to_building_map
+- action_building_to_building_map

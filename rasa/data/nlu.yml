@@ -276,6 +276,9 @@ nlu:
     - [3](year)
     - [4](year)
     - [2](year): Show on Ma
+    - [2](year): Show [CCE1](building_code) on Ma
+    - [2](year): Show [EBA](building_code) on Ma
+    - [2](year): [City](course) Campus East
 - intent: choose_modules_for_specific_course
   examples: |
     - [computer network security] modules
@@ -383,6 +386,8 @@ nlu:
     - what is [WJB](building_code)
     - [CCE1](building_code)
     - [cce1](building_code)
+    - [CCE1](building_code)
+    - [EBA](building_code)
 - intent: building_location_option
   examples: |
     - building location
@@ -392,40 +397,43 @@ nlu:
 - intent: building_location
   examples: |
     - where is [CCE1](building_code)
+    - where is [City Campus East 1](building_name)
     - wheres [CCE2](building_code)
+    - wheres [City Campus East 2](building_name)
     - where is [CIS](building_code)
+    - where is [CIS Building](building_name)
     - wheres [EBA](building_code)
+    - wheres [Ellison Building A Block](building_name)
     - where is [EBB](building_code)
+    - where is [Ellison Building B Block](building_name)
     - wheres [EBC](building_code)
+    - wheres [Ellison Building C Block](building_name)
     - where is [EBD](building_code)
+    - where is [Ellison Building D Block](building_name)
     - wheres [EBE](building_code)
+    - wheres [Ellison Building E Block](building_name)
     - where is [LIP](building_code)
+    - where is [Lipman Building](building_name)
     - wheres [NB](building_code)
+    - wheres [Northumberland Building](building_name)
     - where is [SAN](building_code)
+    - where is [Sandyford Building](building_name)
     - wheres [SQX](building_code)
+    - wheres [Squires Annexe](building_name)
     - where is [SQ](building_code)
+    - where is [Squires Building](building_name)
     - wheres [SQW](building_code)
+    - wheres [Squires Workshops](building_name)
     - where is [SUB](building_code)
+    - where is [Sutherland](building_name)
     - wheres [WJB](building_code)
+    - wheres [Wynne-Jones Building](building_name)
     - where is [CCE2](building_code)
 - intent: show_building_on_map
   examples: |
-    - show [CCE1](building_code) on map
-    - show [CCE2](building_code) on map
-    - show [CIS](building_code) on map
-    - show [EBA](building_code) on map
-    - show [EBB](building_code) on map
-    - show [EBC](building_code) on map
-    - show [EBD](building_code) on map
-    - show [EBE](building_code) on map
-    - show [LIP](building_code) on map
-    - show [NB](building_code) on map
-    - show [SAN](building_code) on map
-    - show [SQX](building_code) on map
-    - show [SQ](building_code) on map
-    - show [SQW](building_code) on map
-    - show [SUB](building_code) on map
-    - show [WJB](building_code) on map
+    - show on campus map
+    - show on map
+    - show map location
 - intent: show_map
   examples: |
     - show me the map
@@ -433,6 +441,39 @@ nlu:
     - show me map
     - show map
     - building map
+- intent: get_directions
+  examples: |
+    - get directions
+    - directions
+    - how do i get to building
+    - show building on google maps
+    - show directions on google maps
+    - show directions
+    - show on maps
+    - show directions on maps
+- intent: get_directions_from_my_location
+  examples: |
+    - how long will it take me to get to [CCE1](building_code)
+    - my location to [EBA](building_code)
+    - how far away is [CIS](building_code)
+    - how do i get to [EBE](building_code)
+    - how long will it take me to get to [City Campus East 1](building_name)
+    - my location to [City Campus East 2](building_name)
+    - how far away is [Sutherland](building_name)
+    - how do i get to [Sandyford Building](building_name)
+    - how do i get to [Lipman Building](building_name)
+- intent: get_directions_from_another_building
+  examples: |
+    - how long does it take to get from [EBA](building_code) to [CCE1](building_code_destination)
+    - how long will it take me to get from [EBA](building_code) to [SAN](building_code_destination)
+    - distance from [CIS](building_code) to [CCE1](building_code_destination)
+    - [CIS](building_code) to [EBB](building_code_destination)
+    - show [CIS](building_code) and [EBB](building_code_destination)
+    - how long does it take to get from [City Campus East 1](building_name) to [Wynne-Jones Building](building_name_destination)
+    - how long will it take me to get from [City Campus East 2](building_name) to [CIS Building](building_name_destination)
+    - distance from [Sutherland](building_name) to [Ellison Building A Block](building_name_destination)
+    - [Sandyford Building](building_name) to [Northumberland Building](building_name_destination)
+    - show [Lipman Building](building_name) and [Squires Workshops](building_name_destination)
 - intent: lecturers_option
   examples: |
     - lecturer
@@ -445,3 +486,12 @@ nlu:
     - show me Dr [Christina Vasiliou](lecturer) email?
     - whats Dr [Kay Rogage](lecturer) email?
     - What is [Jeremy Ellman](lecturer) email
+    - [christina vasiliou](lecturer) email?
+    - [kay rogage](lecturer) email
+    - [jeremy ellman](lecturer) email
+    - [alex thompson](lecturer) email
+- intent: calendar
+  examples: |
+    - calendar
+    - show calendar
+    - calendar dates

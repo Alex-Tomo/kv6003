@@ -24,12 +24,6 @@ def getCourses():
 
 
 def getMostLikelyCourse(course, courses):
-    # courseCode = None
-    #
-    # for i in range(len(courses)):
-    #     if course is courses[i]['title']:
-    #         courseCode = courses[i]['code']
-
     mostLikelyCourseTitle = None
     mostLikelyCourseCode = None
     ratio = None
