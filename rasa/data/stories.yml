@@ -1058,3 +1058,174 @@ stories:
         - building_code_destination: SQ
         - building_name_destination: Squires Building
     - action: action_building_to_building_map
+
+- story: directions from my location 1
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_code: CIS
+  - slot_was_set:
+    - building_code: CIS
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 2
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_code: EBB
+  - slot_was_set:
+    - building_code: EBB
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 3
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_code: EBA
+  - slot_was_set:
+    - building_code: EBA
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 4
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_code: cce1
+  - slot_was_set:
+    - building_code: cce1
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 5
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_name: lipman
+  - slot_was_set:
+    - building_name: lipman
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 6
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_name: city campus east
+  - slot_was_set:
+      - building_name: city campus east
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 7
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_name: Squire workshops
+  - slot_was_set:
+      - building_name: Squire workshops
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 8
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_name: Wynne Jones
+  - slot_was_set:
+    - building_name: Wynne Jones
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 9
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_code: cis2
+  - slot_was_set:
+    - building_code: cis2
+  - action: action_my_location_to_building_map
+
+- story: directions from my location 10
+  steps:
+    - intent: get_directions_from_my_location
+      entities:
+        - building_name: sandyford
+    - slot_was_set:
+        - building_name: sandyford
+    - action: action_my_location_to_building_map
+
+- story: directions from my location 11
+  steps:
+    - intent: get_directions_from_my_location
+      entities:
+        - building_name: Squires Workshops
+    - slot_was_set:
+        - building_name: Squires Workshops
+    - action: action_my_location_to_building_map
+
+- story: directions from building to building 1
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_code: EBA
+    - building_name_destination: city campus east
+  - slot_was_set:
+      - building_code: EBA
+  - slot_was_set:
+      - building_name_destination: city campus east
+  - action: action_building_to_building_map
+
+- story: directions from building to building 2
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_code_destination: EBA
+    - building_code: cce1
+  - slot_was_set:
+      - building_code_destination: EBA
+  - slot_was_set:
+      - building_code: cce1
+  - action: action_building_to_building_map
+
+- story: directions from building to building 3
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_name: sutherland
+    - building_code_destination: EBA
+  - slot_was_set:
+    - building_code_destination: EBA
+  - slot_was_set:
+    - building_name: sutherland
+  - action: action_building_to_building_map
+
+- story: directions from building to building 4
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_code: cis
+    - building_name_destination: elison building c block
+  - slot_was_set:
+      - building_code: cis
+  - slot_was_set:
+      - building_name_destination: elison building c block
+  - action: action_building_to_building_map
+
+- story: directions from building to building 5
+  steps:
+    - intent: get_directions_from_another_building
+      entities:
+        - building_name: city campus east
+        - building_name_destination: sandyford
+    - slot_was_set:
+        - building_name: city campus east
+    - slot_was_set:
+        - building_name_destination: sandyford
+    - action: action_building_to_building_map
+
+- story: directions from building to building 5
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_code_destination: SQW
+    - building_name: CIS building
+  - slot_was_set:
+      - building_code_destination: SQW
+  - slot_was_set:
+      - building_name: CIS building
+  - action: action_building_to_building_map

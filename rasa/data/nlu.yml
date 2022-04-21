@@ -386,7 +386,6 @@ nlu:
     - what is [WJB](building_code)
     - [CCE1](building_code)
     - [cce1](building_code)
-    - [CCE1](building_code)
     - [EBA](building_code)
 - intent: building_location_option
   examples: |
@@ -462,6 +461,17 @@ nlu:
     - how far away is [Sutherland](building_name)
     - how do i get to [Sandyford Building](building_name)
     - how do i get to [Lipman Building](building_name)
+    - how long wll it take me to get to [EBB](building_code)
+    - how long will it take me to get to [EBB](building_code)
+    - how long will it take me to get to [EBA](building_code)
+    - my location to [cce1](building_code)
+    - how do i get to [lipman](building_name)
+    - directions from me to [city campus east](building_name)
+    - how far away is [Squire workshops](building_name)
+    - how long to get to [Wynne Jones](building_name)
+    - how long does it take to get to [cis2](building_code)
+    - my location to [sandyford](building_name)
+    - how long from me to get to [Squires Workshops](building_name)
 - intent: get_directions_from_another_building
   examples: |
     - how long does it take to get from [EBA](building_code) to [CCE1](building_code_destination)
@@ -474,6 +484,11 @@ nlu:
     - distance from [Sutherland](building_name) to [Ellison Building A Block](building_name_destination)
     - [Sandyford Building](building_name) to [Northumberland Building](building_name_destination)
     - show [Lipman Building](building_name) and [Squires Workshops](building_name_destination)
+    - how long to get from [EBA](building_code) to [city campus east](building_name_destination)
+    - how long to get to [EBA](building_code_destination) from [cce1](building_code)
+    - distance from [sutherland](building_name) to [EBA](building_code_destination)
+    - [cis](building_code) to [elison building c block](building_name_destination)
+    - directions to [SQW](building_code_destination) from [CIS building](building_name)
 - intent: lecturers_option
   examples: |
     - lecturer
