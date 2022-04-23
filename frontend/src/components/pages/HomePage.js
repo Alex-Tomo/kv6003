@@ -378,8 +378,6 @@ class HomePage extends React.Component {
       return
     }
 
-
-
     let formData = new FormData()
     formData.append('add', true)
     formData.append('id', id)

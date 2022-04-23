@@ -28,7 +28,6 @@ def getMostLikelyCourse(course, courses):
     mostLikelyCourseCode = None
     ratio = None
 
-    # if courseCode is None:
     for i in range(len(courses)):
         if ratio is None:
             ratio = Levenshtein.ratio(string.capwords(course), string.capwords(courses[i]['title']))

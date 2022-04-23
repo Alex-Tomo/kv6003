@@ -33,11 +33,3 @@ policies:
      max_history: 5
      epochs: 100
      constrain_similarities: true
-
-
-# Language model -> Tokenizers (WhitespaceTokenizer), why this?
-# Featurizer -> Featurizer (RegexFeaturizer && LexicalSyntacticFeaturizer && CountVectorsFeaturizer), why these?
-# Intent Classifier -> Intent Recognition (DIETClassifier), Why this?
-# Entity Extraction -> Entity Extractor (DIETClassifier, EntitySynonymMapper)
-
-# Policy decides what action to take next
