@@ -4,17 +4,16 @@ digraph  {
 1 [class=active, fontsize=12, label=action_session_start];
 2 [class="", fontsize=12, label=action_my_location_to_building_map];
 "-3" [class=ellipsis, label="..."];
-6 [class=active, fontsize=12, label=action_building_to_building_map];
-7 [class="intent dashed active", label="  ?  ", shape=rect];
-8 [class=intent, fillcolor=lightblue, label="/get_directions_from_my_location", shape=rect, style=filled];
-9 [class="intent active", fillcolor=lightblue, label="/get_directions_from_another_building", shape=rect, style=filled];
+4 [class=active, fontsize=12, label=action_get_building_location];
+5 [class="intent dashed active", label="  ?  ", shape=rect];
+6 [class=intent, fillcolor=lightblue, label="/get_directions_from_my_location", shape=rect, style=filled];
+7 [class="intent active", fillcolor=lightblue, label="/building_location", shape=rect, style=filled];
 0 -> "-1"  [class="", key=NONE, label=""];
 0 -> 1  [class=active, key=NONE, label=""];
-1 -> 8  [class="", key=0];
-1 -> 9  [class=active, key=0];
+1 -> 6  [class="", key=0];
+1 -> 7  [class=active, key=0];
 2 -> "-3"  [class="", key=NONE, label=""];
-2 -> "-1"  [class="", key=NONE, label=""];
-6 -> 7  [class=active, key=NONE, label=""];
-8 -> 2  [class="", key=0];
-9 -> 6  [class=active, key=0];
+4 -> 5  [class=active, key=NONE, label=""];
+6 -> 2  [class="", key=0];
+7 -> 4  [class=active, key=0];
 }

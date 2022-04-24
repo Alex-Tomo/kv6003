@@ -29,31 +29,8 @@ class ActionOfferHelp(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(
-            text="Are you an...?",
-            buttons=STUDENT_TYPE_BUTTONS
-        )
-        return []
-
-
-class ActionStudentOptions(Action):
-
-    def name(self) -> Text:
-        return "action_student_options"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        buttons = []
-
-        if str(tracker.get_slot("student_type")) == "aspiring":
-            buttons = ASPIRING_STUDENT_BUTTONS
-        elif str(tracker.get_slot("student_type")) == "existing":
-            buttons = EXISTING_STUDENT_BUTTONS
-
-        dispatcher.utter_message(
-            text="What would you like to know about?",
-            buttons=buttons
+            text="What can i help you with?",
+            buttons=HOW_CAN_I_HELP_BUTTONS
         )
         return []
 
@@ -113,7 +90,6 @@ class ActionConfirmCourseName(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         courseCode = str(tracker.get_slot("courseCode"))
-        print(courseCode)
         course = str(tracker.get_slot("course"))
 
         response = requests.get("http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses")
@@ -190,6 +166,7 @@ class ActionShowModulesForSpecificCourse(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         course = str(tracker.get_slot("course"))
+        year = str(tracker.get_slot("year"))
 
         if course is None:
             dispatcher.utter_message(
@@ -200,14 +177,28 @@ class ActionShowModulesForSpecificCourse(Action):
 
         courseDetails = getMostLikelyCourse(course, getCourses())
 
-        year = str(tracker.get_slot("year"))
+        if courseDetails['ratio'] is not None and courseDetails['ratio'] < 0.4:
+            dispatcher.utter_message(
+                text="Sorry, I could not find that course."
+            )
+            ActionGetCourses.run(self, dispatcher, tracker, domain)
+            return []
+
+        elif courseDetails['ratio'] is not None and courseDetails['ratio'] < 0.8:
+            dispatcher.utter_message(
+                text=f"Did you mean {courseDetails['course']}?",
+                buttons=YES_NO_BUTTONS
+            )
 
         if year == "None":
+            dispatcher.utter_message(
+                text=f"I'm sorry, I didn't get the year."
+            )
             customSlots.setCourseCode(courseDetails['courseCode'])
             ActionWhichModules.run(self, dispatcher, tracker, domain)
             return [SlotSet("year", None)]
 
-        if courseDetails['courseCode'] == "None":
+        if courseDetails['course'] == "None" and courseDetails['courseCode'] == "None":
             dispatcher.utter_message(
                 text="Sorry, I could not find that course."
             )
@@ -243,7 +234,20 @@ class ActionSayCourseEntryRequirements(Action):
 
         courseDetails = getMostLikelyCourse(course, getCourses())
 
-        if courseDetails['courseCode'] is None:
+        if courseDetails['ratio'] is not None and courseDetails['ratio'] < 0.4:
+            dispatcher.utter_message(
+                text="Sorry, I could not find that course."
+            )
+            ActionGetCourses.run(self, dispatcher, tracker, domain)
+            return []
+
+        elif courseDetails['ratio'] is not None and courseDetails['ratio'] < 0.8:
+            dispatcher.utter_message(
+                text=f"Did you mean {courseDetails['course']}?",
+                buttons=YES_NO_BUTTONS
+            )
+
+        if courseDetails['course'] == 'None' and courseDetails['courseCode'] == 'None':
             dispatcher.utter_message(
                 text="Sorry, I could not find that course."
             )
@@ -295,7 +299,7 @@ class ActionGetBuildingName(Action):
             )
         else:
             dispatcher.utter_message(
-                text="I cannot find that building code"
+                text="I cannot find that building"
             )
 
         return []
@@ -382,20 +386,50 @@ class ActionGetBuildingLocation(Action):
 
         buildings = getAllBuildings()
 
-        origin = []
+        print(buildingCode)
+        print(buildingName)
 
-        if buildingCode != "None":
-            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
-        elif buildingName != "None":
+        origin = []
+        response = None
+
+        if buildingName is not None:
             origin = getMostLikelyBuildingByName(buildingName, buildings)
+        elif buildingCode is not None:
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
             return []
 
-        response = requests.get(
-            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
-            f"&building_code={origin['code']}"
-        )
+        print(origin)
+
+        if origin['ratio'] is not None and origin['ratio'] < 0.4:
+            dispatcher.utter_message(
+                text="Sorry, I could not find that building."
+            )
+            return []
+        elif origin['ratio'] is not None and origin['ratio'] < 0.8:
+            dispatcher.utter_message(
+                text=f"Did you mean {origin['name']}?",
+                buttons=YES_NO_BUTTONS
+            )
+            customSlots.setLastAction('action_get_building_location')
+            customSlots.setLocation(origin['name'])
+            return []
+
+        if origin['code'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_code={origin['code']}"
+            )
+        elif origin['name'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={origin['name']}"
+            )
+
+        if response is None:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
 
         buildingNumber = str(response.json()[0]['building_number'])
         buildingName = str(response.json()[0]['building_name'])
@@ -404,7 +438,7 @@ class ActionGetBuildingLocation(Action):
             text=f"{buildingName} is number {buildingNumber} on the map below",
             image="http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map"
         )
-        return []
+        return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
 
 class ActionBuildingMap(Action):
@@ -416,25 +450,55 @@ class ActionBuildingMap(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        buildingCode = str(tracker.get_slot("building_code"))
-        buildingName = str(tracker.get_slot("building_name"))
+        buildingCode = tracker.get_slot("building_code")
+        buildingName = tracker.get_slot("building_name")
 
         buildings = getAllBuildings()
 
-        origin = []
+        print(buildingCode)
+        print(buildingName)
 
-        if buildingCode != "None":
-            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
-        elif buildingName != "None":
+        origin = []
+        response = None
+
+        if buildingName is not None:
             origin = getMostLikelyBuildingByName(buildingName, buildings)
+        elif buildingCode is not None:
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
             return []
 
-        response = requests.get(
-            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
-            f"&building_code={origin['code']}"
-        )
+        print(origin)
+
+        if origin['ratio'] is not None and origin['ratio'] < 0.4:
+            dispatcher.utter_message(
+                text="Sorry, I could not find that building."
+            )
+            return []
+        elif origin['ratio'] is not None and origin['ratio'] < 0.8:
+            dispatcher.utter_message(
+                text=f"Did you mean {origin['name']}?",
+                buttons=YES_NO_BUTTONS
+            )
+            customSlots.setLastAction('action_building_map')
+            customSlots.setLocation(origin['name'])
+            return []
+
+        if origin['code'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_code={origin['code']}"
+            )
+        elif origin['name'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={origin['name']}"
+            )
+
+        if response is None:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
 
         dispatcher.utter_message(
             text=f"Heres what i found for {str(response.json()[0]['building_name'])}",
@@ -447,7 +511,7 @@ class ActionBuildingMap(Action):
             }
         )
 
-        return []
+        return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
 
 class ActionMyLocationToBuildingMap(Action):
@@ -464,20 +528,50 @@ class ActionMyLocationToBuildingMap(Action):
 
         buildings = getAllBuildings()
 
-        origin = []
+        print(buildingCode)
+        print(buildingName)
 
-        if buildingCode != "None":
-            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
-        elif buildingName != "None":
+        origin = []
+        response = None
+
+        if buildingName is not None:
             origin = getMostLikelyBuildingByName(buildingName, buildings)
+        elif buildingCode is not None:
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
             return []
 
-        response = requests.get(
-            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
-            f"&building_code={origin['code']}"
-        )
+        print(origin)
+
+        if origin['ratio'] is not None and origin['ratio'] < 0.4:
+            dispatcher.utter_message(
+                text="Sorry, I could not find that building."
+            )
+            return []
+        elif origin['ratio'] is not None and origin['ratio'] < 0.8:
+            dispatcher.utter_message(
+                text=f"Did you mean {origin['name']}?",
+                buttons=YES_NO_BUTTONS
+            )
+            customSlots.setLastAction('action_my_location_to_building_map')
+            customSlots.setLocation(origin['name'])
+            return []
+
+        if origin['code'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_code={origin['code']}"
+            )
+        elif origin['name'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={origin['name']}"
+            )
+
+        if response is None:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
 
         dispatcher.utter_message(
             text=f"Your location to {str(response.json()[0]['building_name'])}",
@@ -491,7 +585,7 @@ class ActionMyLocationToBuildingMap(Action):
             }
         )
 
-        return []
+        return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
 
 class ActionBuildingToBuildingMap(Action):
@@ -508,38 +602,67 @@ class ActionBuildingToBuildingMap(Action):
         buildingName = str(tracker.get_slot("building_name"))
         buildingNameDestination = str(tracker.get_slot("building_name_destination"))
 
+        print(buildingCode)
+        print(buildingCodeDestination)
+        print(buildingName)
+        print(buildingNameDestination)
+
         buildings = getAllBuildings()
 
         origin = []
         destination = []
+        response = None
+        responseDestination = None
 
-        if buildingCode != "None":
-            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
-        elif buildingName != "None":
+        if buildingName is not None:
             origin = getMostLikelyBuildingByName(buildingName, buildings)
+        elif buildingCode is not None:
+            origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
             return []
 
-        if buildingCodeDestination != "None":
-            destination = getMostLikelyBuildingByCode(buildingCodeDestination, buildings)
-        elif buildingNameDestination != "None":
+        if buildingNameDestination is not None:
             destination = getMostLikelyBuildingByName(buildingNameDestination, buildings)
+        elif buildingCodeDestination is not None:
+            destination = getMostLikelyBuildingByCode(buildingCodeDestination, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
             return []
 
+        if origin['code'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_code={origin['code']}"
+            )
+        elif origin['name'] is not None:
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={origin['name']}"
+            )
 
+        if response is None or len(response.json()) == 0:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
 
-        response = requests.get(
-            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
-            f"&building_code={origin['code']}"
-        )
+        if destination['code'] is not None:
+            responseDestination = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_code={destination['code']}"
+            )
+        elif destination['name'] is not None:
+            responseDestination = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={destination['name']}"
+            )
 
-        responseDestination = requests.get(
-            f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?location=true"
-            f"&building_code={destination['code']}"
-        )
+        if responseDestination is None or len(responseDestination.json()) == 0:
+            dispatcher.utter_message(text="I cannot find that building")
+            return []
+
+        if str(responseDestination.json()[0]['building_name']) == str(response.json()[0]['building_name']):
+            dispatcher.utter_message(text="Those are the same building")
+            return []
 
         dispatcher.utter_message(
             text=f"{str(destination['name'])} to {str(origin['name'])}",
@@ -560,8 +683,92 @@ class ActionBuildingToBuildingMap(Action):
             }
         )
 
-        return []
+        return [
+            SlotSet('building_code', None),
+            SlotSet('building_name', None),
+            SlotSet('building_code_destination', None),
+            SlotSet('building_name_destination', None)
+        ]
 
+
+class ActionGetLocationAfterConfirmation(Action):
+
+    def name(self) -> Text:
+        return "action_location_after_confirmation"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        last = customSlots.getLastAction()
+        locationName = customSlots.getLocation()
+
+        if last == 'action_get_building_location':
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={locationName}"
+            )
+
+            if response is None:
+                dispatcher.utter_message(text="I cannot find that building")
+                return []
+
+            buildingNumber = str(response.json()[0]['building_number'])
+            buildingName = str(response.json()[0]['building_name'])
+
+            dispatcher.utter_message(
+                text=f"{buildingName} is number {buildingNumber} on the map below",
+                image="http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map"
+            )
+            return [SlotSet('building_code', None), SlotSet('building_name', None)]
+        elif last == 'action_building_map':
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={locationName}"
+            )
+
+            if response is None:
+                dispatcher.utter_message(text="I cannot find that building")
+                return []
+
+            dispatcher.utter_message(
+                text=f"Heres what i found for {str(response.json()[0]['building_name'])}",
+                json_message={
+                    "map": [{
+                        "lat": str(response.json()[0]['building_lat']),
+                        "lng": str(response.json()[0]['building_lng']),
+                        "name": str(response.json()[0]['building_name'])
+                    }]
+                }
+            )
+
+            return [SlotSet('building_code', None), SlotSet('building_name', None)]
+
+        elif last =='action_my_location_to_building_map':
+            response = requests.get(
+                f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
+                f"&building_name={locationName}"
+            )
+
+            if response is None:
+                dispatcher.utter_message(text="I cannot find that building")
+                return []
+
+            dispatcher.utter_message(
+                text=f"Your location to {str(response.json()[0]['building_name'])}",
+                json_message={
+                    "my_location": True,
+                    "map": [{
+                        "lat": str(response.json()[0]['building_lat']),
+                        "lng": str(response.json()[0]['building_lng']),
+                        "name": str(response.json()[0]['building_name'])
+                    }]
+                }
+            )
+
+            return [SlotSet('building_code', None), SlotSet('building_name', None)]
+
+        return []
 
 class ActionLecturerOptions(Action):
 

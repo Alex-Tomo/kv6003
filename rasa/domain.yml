@@ -3,34 +3,34 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-- get_directions_from_another_building
+- building_location
 - get_directions_from_my_location
+- generic_affirm
+- campus_map
+- get_directions_from_another_building
 - buildings
 - building_name
 - building_location_option
-- choose_module_type
-- affirm
-- deny
-- entry_requirements_for_course
-- select_course
+- courses_choose_module_type
+- generic_deny
+- courses_entry_requirements_for_course
+- courses_select_course
 - building_codes_option
-- greet
-- my_student_type
+- generic_greet
 - show_map
-- building_location
-- apply_for_course
+- courses_apply_for_course
+- courses_extensions
 - university_accommodation
-- interest_in_course
+- courses_interest_in_course
 - university_facilities
 - visit_campus
 - open_days
-- campus_map
-- show_modules
-- entry_requirements
-- course_fees
-- choose_modules_for_specific_course
-- thank
-- goodbye
+- courses_show_modules
+- courses_entry_requirements
+- courses_fees
+- courses_choose_modules_for_specific_course
+- generic_thank
+- generic_goodbye
 - bot_challenge
 - give_name
 - ask_which_courses
@@ -58,6 +58,7 @@ intents:
 - show_building_on_map
 - calendar
 - get_directions
+- help_user_needs_help
 entities:
 - building_code
 - building_code_destination
@@ -149,8 +150,6 @@ responses:
   - text: Bye
   - text: Goodbye
   - text: Have a great day!
-  utter_student_type:
-  - text: You are a {student_type} student
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_can_i_help:
@@ -161,6 +160,8 @@ responses:
   - text: Current course fees for UK students is £9,250 per year. Current course fees for international students is £16,500 per year.
   utter_how_to_apply:
   - text: The admissions team can be contacted on 0191 406 0901 or at bc.applicantservices@northumbria.ac.uk via email.
+  utter_extensions:
+  - text: You must submit an ‘Application for Authorisation for Late Submission of Assessed Work’ before the hand-in deadline. Visit the ask4help desk or phone ask4help on 0191 227 4646 for more information.
   utter_campus_map:
   - text: Here is the campus map
     image: http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map
@@ -182,6 +183,7 @@ actions:
 - action_get_lecturer_email
 - action_grades
 - action_lecturer_options
+- action_location_after_confirmation
 - action_my_location_to_building_map
 - action_offer_help
 - action_open_days
@@ -189,7 +191,6 @@ actions:
 - action_say_course_name
 - action_show_modules
 - action_show_modules_for_specific_course
-- action_student_options
 - action_visit_campus
 - action_which_modules
 - utter_campus_map

@@ -31,12 +31,12 @@ def getMostLikelyBuildingByCode(buildingCode, buildings):
 
     for i in range(len(buildings)):
         if ratio is None:
-            ratio = Levenshtein.ratio(string.capwords(buildingCode), string.capwords(buildings[i]['code']))
+            ratio = Levenshtein.ratio(str(buildingCode), str(buildings[i]['code']).lower())
             mostLikelyBuildingName = buildings[i]['name']
             mostLikelyBuildingCode = buildings[i]['code']
 
-        if ratio < Levenshtein.ratio(string.capwords(buildingCode), string.capwords(buildings[i]['code'])):
-            ratio = Levenshtein.ratio(string.capwords(buildingCode), string.capwords(buildings[i]['code']))
+        if ratio < Levenshtein.ratio(str(buildingCode), str(buildings[i]['code']).lower()):
+            ratio = Levenshtein.ratio(str(buildingCode), str(buildings[i]['code']).lower())
             mostLikelyBuildingName = buildings[i]['name']
             mostLikelyBuildingCode = buildings[i]['code']
 

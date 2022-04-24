@@ -1,6 +1,6 @@
 version: "3.0"
 nlu:
-- intent: greet
+- intent: generic_greet
   examples: |
     - hey
     - hello
@@ -39,7 +39,7 @@ nlu:
     - what's happening
     - hi-ya
     - nice to meet you
-- intent: goodbye
+- intent: generic_goodbye
   examples: |
     - cu
     - good by
@@ -77,7 +77,7 @@ nlu:
     - seee you
     - see you
     - be seeing you
-- intent: affirm
+- intent: generic_affirm
   examples: |
     - yes
     - y
@@ -100,7 +100,7 @@ nlu:
     - affirm
     - affirmative
     - yes!
-- intent: deny
+- intent: generic_deny
   examples: |
     - no
     - n
@@ -122,7 +122,7 @@ nlu:
     - negative
     - definately not
     - definitely not
-- intent: thank
+- intent: generic_thank
   examples: |
     - thanks
     - thank you
@@ -151,60 +151,15 @@ nlu:
     - your a bot
     - youre a bot
     - you're a bot
-- intent: give_name
+- intent: help_user_needs_help
   examples: |
-    - [vincent](name)
-    - my name is [vincent](name)
-    - i am [vincent](name)
-    - im [vincent](name)
-    - i'm [vincent](name)
-    - name is [vincent](name)
-    - [rachel](name)
-    - my name is [rachel](name)
-    - i am [rachel](name)
-    - im [rachel](name)
-    - i'm [rachel](name)
-    - name is [rachel](name)
-    - [emma](name)
-    - my name is [emma](name)
-    - i am [emma](name)
-    - im [emma](name)
-    - i'm [emma](name)
-    - name is [emma](name)
-    - [alex](name)
-    - my name is [alex](name)
-    - i am [alex](name)
-    - im [alex](name)
-    - i'm [alex](name)
-    - name is [alex](name)
-    - [pete](name)
-    - my name is [pete](name)
-    - i am [pete](name)
-    - im [pete](name)
-    - i'm [pete](name)
-    - name is [pete](name)
-    - [yolinda](name)
-    - my name is [yolinda](name)
-    - i am [yolinda](name)
-    - im [yolinda](name)
-    - i'm [yolinda](name)
-    - name is [yolinda](name)
-    - [Alex](name)
-- intent: my_student_type
-  examples: |
-    - [aspiring](student_type)
-    - [Aspiring](student_type)
-    - [aspiring](student_type) student
-    - I am an [aspiring](student_type) student
-    - Im a [aspiring](student_type) student
-    - a [aspiring](student_type)
-    - [existing](student_type)
-    - [Existing](student_type)
-    - [existing](student_type) student
-    - I am an [existing](student_type) student
-    - Im a [existing](student_type) student
-    - a [existing](student_type)
-- intent: interest_in_course
+    - i need help
+    - what can you do?
+    - im lost
+    - i am lost
+    - i'm lost
+    - help
+- intent: courses_interest_in_course
   examples: |
     - I want to know about a course
     - I'm interested in taking a course
@@ -215,7 +170,7 @@ nlu:
     - tell me about the available courses
     - what courses are there
     - which courses are there
-- intent: select_course
+- intent: courses_select_course
   examples: |
     - [Computer and Digital Forensics BSc](course)
     - [Computer and Digital Forensics](course)
@@ -241,7 +196,7 @@ nlu:
     - I am interested in [Computer Science BSc](course)
     - Tell me about [Computer Science BSc](course)
     - Do you offer [Computer Science](course)?
-- intent: show_modules
+- intent: courses_show_modules
   examples: |
     - Show me the modules
     - modules
@@ -260,7 +215,7 @@ nlu:
     - what modules are on [Computer Science](course)?
     - [Computer Science](course) modules
     - show me [Computer Science](course) modules
-- intent: choose_module_type
+- intent: courses_choose_module_type
   examples: |
     - [all](year) Modules
     - Year [1](year) Modules
@@ -275,11 +230,7 @@ nlu:
     - [2](year)
     - [3](year)
     - [4](year)
-    - [2](year): Show on Ma
-    - [2](year): Show [CCE1](building_code) on Ma
-    - [2](year): Show [EBA](building_code) on Ma
-    - [2](year): [City](course) Campus East
-- intent: choose_modules_for_specific_course
+- intent: courses_choose_modules_for_specific_course
   examples: |
     - [computer network security] modules
     - show me [all](year) the modules for [Computer Science](course)
@@ -287,7 +238,7 @@ nlu:
     - show me year [2](year) modules for [Computer Science](course)
     - show me year [3](year) modules for [Computer Science](course)
     - show me year [4](year) modules for [Computer Science](course)
-- intent: entry_requirements
+- intent: courses_entry_requirements
   examples: |
     - What are the entry requirements
     - entry requirements
@@ -298,7 +249,7 @@ nlu:
     - what grades do i need
     - are my grades enough
     - do i have the right grades
-- intent: entry_requirements_for_course
+- intent: courses_entry_requirements_for_course
   examples: |
     - [computer network security](course) entry requirements
     - show me entry requirements for [Computer Science](course)
@@ -309,33 +260,61 @@ nlu:
     - show me entry requirements for [computer and digital forensics bsc](course)
     - entry requirements for [computer network security](course)
     - entry requirements for [computer networks](course)
-- intent: course_fees
+- intent: courses_fees
   examples: |
     - fees
+    - fee
+    - how much does this course cost
+    - costs
     - what are the fees
     - how much does the course cost
     - how much is it for international students
     - how much is it for uk students
-- intent: apply_for_course
+- intent: courses_apply_for_course
   examples: |
     - how do i apply for this course?
     - I want to apply for this course
     - can i apply for this course?
+- intent: courses_extensions
+  examples: |
+    - how do i apply for an extension
+    - PEC
+    - extension
+    - extensions
+    - PEC extension
+    - PEC extensions
+    - pec
+    - pec extension
+    - pec extensions
+    - where can i go for an extension
 - intent: university_accommodation
   examples: |
-    - I need accommodation
+    - accommodation
+    - accomodation
+    - acomodation
+    - acommodation
+    - i need accommodation
     - where can i find accomodation
     - what accomodation is there
     - how much is university accomodation
     - do you offer accomodation
 - intent: visit_campus
   examples: |
+    - i want to visit campus
     - visit campus
+    - vsiti campus
+    - visit campis
+    - visiting campus
     - tell me about campus
     - tell me about northumbria campus
 - intent: open_days
   examples: |
-    - When are the opens days
+    - help me with open days
+    - when are the opens days
+    - open days
+    - oepn days
+    - open dyas
+    - opne day
     - I want to visit university campus
     - i want to come to campus
     - when i can i visit campus
@@ -352,14 +331,28 @@ nlu:
   examples: |
     - Show me the campus map
     - campus map
+    - show campus map
+    - show me campus map
     - northumbria map
     - northumbria campus map
     - northumbria university map
+    - Campus map
+    - show me the map
+    - show me the map for the buildings
+    - show me map
+    - show map
+    - building map
 - intent: buildings
   examples: |
+    - help me with buildings
     - tell me about the buildings
     - buildings
+    - building
     - i want to know about buildings
+    - i need help with buildings
+    - biulding
+    - biuld
+    - buidlings
 - intent: building_codes_option
   examples: |
     - building codes
@@ -428,18 +421,39 @@ nlu:
     - wheres [WJB](building_code)
     - wheres [Wynne-Jones Building](building_name)
     - where is [CCE2](building_code)
+    - where is [Architecture Studios](building_name)
+    - where is [Burt Hall](building_name)
+    - where is [Camden Court](building_name)
+    - where is [Library](building_name)
+    - where is [Sport Central](building_name)
+    - [City Campus East 1](building_name)
+    - [City Campus East 2](building_name)
+    - [CIS Building](building_name)
+    - [Ellison Building A Block](building_name)
+    - [Ellison Building B Block](building_name)
+    - [Ellison Building C Block](building_name)
+    - [Ellison Building D Block](building_name)
+    - [Ellison Building E Block](building_name)
+    - [Lipman Building](building_name)
+    - [Northumberland Building](building_name)
+    - [Sandyford Building](building_name)
+    - [Squires Annexe](building_name)
+    - [Squires Building](building_name)
+    - [Squires Workshops](building_name)
+    - [Sutherland](building_name)
+    - [Wynne-Jones Building](building_name)
+    - [Architecture Studios](building_name)
+    - [Burt Hall](building_name)
+    - [Camden Court](building_name)
+    - [Library](building_name)
+    - [Sport Central](building_name)
+    - where is [city campus west](building_name)
 - intent: show_building_on_map
   examples: |
     - show on campus map
     - show on map
     - show map location
-- intent: show_map
-  examples: |
-    - show me the map
-    - show me the map for the buildings
-    - show me map
-    - show map
-    - building map
+    - Campus Map
 - intent: get_directions
   examples: |
     - get directions
@@ -472,6 +486,12 @@ nlu:
     - how long does it take to get to [cis2](building_code)
     - my location to [sandyford](building_name)
     - how long from me to get to [Squires Workshops](building_name)
+    - how long from me to get to [Architecture Studios](building_name)
+    - how long from me to get to [Burt Hall](building_name)
+    - how long from me to get to [Camden Court](building_name)
+    - how long from me to get to [Library](building_name)
+    - how long from me to get to [Sport Central](building_name)
+    - my location to [city campus west](building_name)
 - intent: get_directions_from_another_building
   examples: |
     - how long does it take to get from [EBA](building_code) to [CCE1](building_code_destination)
@@ -489,6 +509,16 @@ nlu:
     - distance from [sutherland](building_name) to [EBA](building_code_destination)
     - [cis](building_code) to [elison building c block](building_name_destination)
     - directions to [SQW](building_code_destination) from [CIS building](building_name)
+    - [cis building](building_name) direction to [sport central](building_name_destination)
+    - [cos building](building_name) to [sport central](building_name_destination)
+    - how do i get to [sport central](building_code_destination) from the [cis building](building_code)
+    - from [elison building](building_name_destination) to [cis building](building_name)
+    - from [camden court](building_name_destination) to [Architecture Studios](building_name)
+    - from [sperts centre](building_name_destination) to [Burt Hall](building_name)
+    - from [sports center](building_name_destination) to [Camden Court](building_name)
+    - from [cis building](building_name_destination) to [Library](building_name)
+    - from [elison building c block](building_name_destination) to [Sport Central](building_name)
+    - from [cis](building_code_destination) to [cis](building_code)
 - intent: lecturers_option
   examples: |
     - lecturer

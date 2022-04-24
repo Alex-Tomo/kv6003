@@ -1,0 +1,160 @@
+version: "3.0"
+nlu:
+- intent: apply_for_course
+  examples: |
+    - how do i apply for this course?
+- intent: visit_campus
+  examples: |
+    - tell me about campus
+- intent: buildings
+  examples: |
+    - tell me about the buildings
+- intent: show_building_on_map
+  examples: |
+    - show map location
+- intent: calendar
+  examples: |
+    - calendar
+- intent: building_codes_option
+  examples: |
+    - buildings codes
+- intent: building_location_option
+  examples: |
+    - i want to find a building location
+- intent: lecturers_option
+  examples: |
+    - tell me about lecturers
+- intent: course_fees
+  examples: |
+    - how much is it for international students
+- intent: university_accommodation
+  examples: |
+    - where can i find accomodation
+- intent: open_days
+  examples: |
+    - I want to visit university campus
+- intent: campus_map
+  examples: |
+    - northumbria campus map
+- intent: show_map
+  examples: |
+    - building map
+- intent: choose_modules_for_specific_course
+  examples: |
+    - show me [all](year) the modules for [Computer Science](course)
+- intent: university_facilities
+  examples: |
+    - facilities
+- intent: thank
+  examples: |
+    - thx
+- intent: get_directions
+  examples: |
+    - show building on google maps
+- intent: lecturer_email
+  examples: |
+    - [kay rogage](lecturer) email
+- intent: interest_in_course
+  examples: |
+    - I'm interested in taking a course
+    - what courses are there
+- intent: entry_requirements
+  examples: |
+    - What are the entry requirements
+    - entry
+- intent: entry_requirements_for_course
+  examples: |
+    - [computer network security](course) entry requirements
+- intent: my_student_type
+  examples: |
+    - [Aspiring](student_type)
+    - Im a [existing](student_type) student
+    - Im a [aspiring](student_type) student
+- intent: get_directions_from_another_building
+  examples: |
+    - how long will it take me to get from [EBA](building_code) to [SAN](building_code_destination)
+    - directions to [SQW](building_code_destination) from [CIS building](building_name)
+    - distance from [sutherland](building_name) to [EBA](building_code_destination)
+- intent: bot_challenge
+  examples: |
+    - you're a bot
+    - to whom am i speaking?
+    - to whom am i speaking
+- intent: show_modules
+  examples: |
+    - what modules
+    - module
+    - what modules are on [Computer Science](course)?
+    - the modules
+- intent: choose_module_type
+  examples: |
+    - Year [3](year) Modules
+    - [4](year)
+    - [1](year)
+- intent: building_name
+  examples: |
+    - what is [CCE1](building_code)
+    - [SQX](building_code)
+    - what building is [SAN](building_code)
+    - [CCE1](building_code)
+- intent: deny
+  examples: |
+    - definately not
+    - negate
+    - reject
+    - don't like that
+- intent: get_directions_from_my_location
+  examples: |
+    - how do i get to [EBE](building_code)
+    - how long does it take to get to [cis2](building_code)
+    - my location to [sandyford](building_name)
+    - how long will it take me to get to [City Campus East 1](building_name)
+- intent: affirm
+  examples: |
+    - indeed
+    - correct
+    - corect
+    - affirmative
+- intent: select_course
+  examples: |
+    - [computer Networks and cyber security bsc](course)
+    - [Computer and Digital Forensics](course)
+    - I am interested in [Computer Science BSc](course)
+    - [Computer Science with Games Development BSc](course)
+    - [web development](course)
+- intent: building_location
+  examples: |
+    - wheres [Squires Annexe](building_name)
+    - where is [LIP](building_code)
+    - wheres [Northumberland Building](building_name)
+    - where is [CCE2](building_code)
+    - wheres [NB](building_code)
+    - wheres [Squires Workshops](building_name)
+- intent: goodbye
+  examples: |
+    - gudbye
+    - cu
+    - im leaving
+    - good by
+    - good day
+    - see you
+    - adios
+    - gtg
+- intent: greet
+  examples: |
+    - het
+    - hello bot
+    - hi
+    - hello
+    - hey there
+    - howdy
+    - hiya
+- intent: give_name
+  examples: |
+    - [alex](name)
+    - name is [emma](name)
+    - my name is [pete](name)
+    - [emma](name)
+    - i'm [emma](name)
+    - im [vincent](name)
+    - im [rachel](name)

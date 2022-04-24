@@ -12,11 +12,9 @@ class ApiBuildingsController extends Controller
     if (!parent::isValidRequestMethod("GET")) return "error";
 
     if ($this->getRequest()->getParameter("building_code") !== null) {
-      if ($this->getRequest()->getParameter("location") !== null) {
-        $this->getGateway()->getBuildingLocation($this->getRequest()->getParameter("building_code"));
-      } else {
-        $this->getGateway()->getBuildingName($this->getRequest()->getParameter("building_code"));
-      }
+      $this->getGateway()->getBuildingLocationByCode($this->getRequest()->getParameter("building_code"));
+    } else if ($this->getRequest()->getParameter("building_name") !== null) {
+      $this->getGateway()->getBuildingLocationByName($this->getRequest()->getParameter("building_name"));
     } else {
       $this->getGateway()->getAllBuildingCodes();
     }

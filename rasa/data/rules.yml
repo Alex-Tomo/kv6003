@@ -4,7 +4,7 @@ rules:
 
 - rule: Say goodbye anytime the user says goodbye
   steps:
-  - intent: goodbye
+  - intent: generic_goodbye
   - action: utter_goodbye
 
 - rule: Say 'I am a bot' anytime the user challenges
@@ -19,6 +19,15 @@ rules:
 
 - rule: Ask can i help with anything else
   steps:
-  - intent: thank
+  - intent: generic_thank
   - action: utter_can_i_help
 
+- rule: User asks for help
+  steps:
+  - intent: help_user_needs_help
+  - action: action_offer_help
+
+- rule: User asks for help
+  steps:
+    - intent: courses_extensions
+    - action: utter_extensions

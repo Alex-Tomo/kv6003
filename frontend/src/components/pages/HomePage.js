@@ -255,7 +255,7 @@ class HomePage extends React.Component {
       method: 'POST',
       body: JSON.stringify({
         sender: "alex",
-        message: msg
+        message: msg.toLowerCase()
       })
     })
       .then(r => {

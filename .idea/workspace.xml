@@ -2,15 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bae55f81-0f99-4cfb-bef5-1b60521137a7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/baaf32ee-c482-44c2-a974-fea2c5e801ed.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/rasa/train_test_split/nlg_test_data.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rasa/train_test_split/nlg_training_data.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rasa/train_test_split/test_data.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rasa/train_test_split/training_data.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controller/apimessagescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apimessagescontroller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apimessagesgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apimessagesgateway.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controller/apibuildingscontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controller/apibuildingscontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/gateway/apibuildingsgateway.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/pages/HomePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasa/actions/courses.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/courses.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/buildings.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/buildings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/actions/custom_slots.py" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/actions/custom_slots.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rasa/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/nlu.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/data/rules.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/rules.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/data/stories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/data/stories.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/domain.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasa/story_graph.dot" beforeDir="false" afterPath="$PROJECT_DIR$/rasa/story_graph.dot" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,12 +72,15 @@
     </option>
   </component>
   <component name="ProjectId" id="23YfwuSa3zcFtenItUmjlUiUHOc" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -130,7 +142,7 @@
       <workItem from="1650360800539" duration="16553000" />
       <workItem from="1650453205787" duration="28873000" />
       <workItem from="1650647946393" duration="2201000" />
-      <workItem from="1650708202347" duration="13561000" />
+      <workItem from="1650708202347" duration="33956000" />
     </task>
     <servers />
   </component>
@@ -147,6 +159,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

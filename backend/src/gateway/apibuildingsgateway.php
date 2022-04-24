@@ -18,11 +18,20 @@ class ApiBuildingsGateway extends Gateway
     $this->setResult($result);
   }
 
-  public function getBuildingLocation($buildingCode)
+  public function getBuildingLocationByCode($buildingCode)
   {
     $sql = "SELECT * FROM kv6003_buildings
-                WHERE kv6003_buildings.building_code = :building_code";
+            WHERE kv6003_buildings.building_code = :building_code";
     $params = [":building_code" => $buildingCode];
+    $result = $this->getDatabase()->executeSQL($sql, $params);
+    $this->setResult($result);
+  }
+
+  public function getBuildingLocationByName($buildingName)
+  {
+    $sql = "SELECT * FROM kv6003_buildings
+            WHERE kv6003_buildings.building_name = :building_name";
+    $params = [":building_name" => $buildingName];
     $result = $this->getDatabase()->executeSQL($sql, $params);
     $this->setResult($result);
   }

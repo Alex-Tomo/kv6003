@@ -4,72 +4,65 @@ stories:
 
 - story: welcome
   steps:
-    - intent: greet
+    - intent: generic_greet
     - action: utter_greet
     - action: action_offer_help
-    - intent: my_student_type
-    - action: action_student_options
-
-- story: give student options
-  steps:
-    - intent: my_student_type
-    - action: action_student_options
 
 - story: User is interested in taking a course
   steps:
     - action: action_offer_help
-    - intent: interest_in_course
+    - intent: courses_interest_in_course
     - action: action_get_courses
 
 - story: User had picked a course and wants to see modules
   steps:
-    - intent: select_course
+    - intent: courses_select_course
     - action: action_say_course_name
 
 - story: Show modules
   steps:
-    - intent: show_modules
+    - intent: courses_show_modules
     - action: action_which_modules
-    - intent: choose_module_type
+    - intent: courses_choose_module_type
     - action: action_show_modules
     - action: utter_can_i_help
-    - intent: deny
+    - intent: generic_deny
     - action: utter_goodbye
 
 - story: Select Module type
   steps:
     - action: action_which_modules
-    - intent: choose_module_type
+    - intent: courses_choose_module_type
     - action: action_show_modules
     - action: utter_can_i_help
-    - intent: deny
+    - intent: generic_deny
     - action: utter_goodbye
 
 - story: Select modules for a specifically selected course
   steps:
-    - intent: choose_modules_for_specific_course
+    - intent: courses_choose_modules_for_specific_course
     - action: action_show_modules_for_specific_course
     - action: utter_can_i_help
-    - intent: deny
+    - intent: generic_deny
     - action: utter_goodbye
 
 
 - story: ask entry requirements
   steps:
-    - intent: select_course
+    - intent: courses_select_course
     - action: action_say_course_name
-    - intent: entry_requirements
+    - intent: courses_entry_requirements
     - action: action_say_course_entry_requirements
     - action: utter_can_i_help
-    - intent: deny
+    - intent: generic_deny
     - action: utter_goodbye
 
 - story: ask for fees
   steps:
-    - intent: course_fees
+    - intent: courses_fees
     - action: utter_course_fees
     - action: utter_can_i_help
-    - intent: deny
+    - intent: generic_deny
     - action: utter_goodbye
 
 - story: ask how final grade is calculated
@@ -80,74 +73,50 @@ stories:
 
 - story: can i help (yes)
   steps:
-    - intent: thank
+    - intent: generic_thank
     - action: utter_can_i_help
-    - intent: affirm
+    - intent: generic_affirm
     - action: action_offer_help
 
 - story: can i help (no)
   steps:
-    - intent: thank
+    - intent: generic_thank
     - action: utter_can_i_help
-    - intent: deny
+    - intent: generic_deny
     - action: utter_goodbye
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
 
 - story: interactive_story_2
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
 
 - story: interactive_story_4
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: Computer Science BSc
   - slot_was_set:
@@ -158,18 +127,12 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: Computer Science BSc
   - slot_was_set:
@@ -177,22 +140,22 @@ stories:
   - action: action_say_course_name
   - slot_was_set:
     - courseCode: G400
-  - intent: show_modules
+  - intent: courses_show_modules
   - action: action_which_modules
-  - intent: choose_module_type
+  - intent: courses_choose_module_type
     entities:
     - year: all
   - slot_was_set:
     - year: all
   - action: action_show_modules
-  - intent: thank
+  - intent: generic_thank
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: interactive_story_1
   steps:
-  - intent: choose_modules_for_specific_course
+  - intent: courses_choose_modules_for_specific_course
     entities:
     - year: all
     - course: Computer Science BSc
@@ -202,23 +165,17 @@ stories:
     - year: all
   - action: action_show_modules_for_specific_course
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: ask for course fees
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: Computer Science BSc
   - slot_was_set:
@@ -226,26 +183,20 @@ stories:
   - action: action_say_course_name
   - slot_was_set:
     - courseCode: G400
-  - intent: course_fees
+  - intent: courses_fees
   - action: utter_course_fees
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: ask for entry requirements
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: Computer and Digital Forensics BSc
   - slot_was_set:
@@ -253,26 +204,20 @@ stories:
   - action: action_say_course_name
   - slot_was_set:
     - courseCode: GF44
-  - intent: entry_requirements
+  - intent: courses_entry_requirements
   - action: action_say_course_entry_requirements
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: ask to see modules requirements
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: Computer Science with Games Development BSc
   - slot_was_set:
@@ -280,28 +225,22 @@ stories:
   - action: action_say_course_name
   - slot_was_set:
     - courseCode: G405
-  - intent: show_modules
+  - intent: courses_show_modules
     entities:
     - year: 1
   - action: action_show_modules
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: apply for course
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: Computer and Digital Forensics BSc
   - slot_was_set:
@@ -309,53 +248,35 @@ stories:
   - action: action_say_course_name
   - slot_was_set:
     - courseCode: GF44
-  - intent: apply_for_course
+  - intent:  courses_apply_for_course
   - action: utter_how_to_apply
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: student accomodation
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
   - intent: university_accommodation
   - action: action_accommodation
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: visit campus
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
   - intent: visit_campus
   - action: action_visit_campus
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
   - intent: visit_campus
   - action: action_visit_campus
   - intent: campus_map
@@ -364,68 +285,50 @@ stories:
   - intent: open_days
   - action: action_open_days
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: long story 1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
   - intent: university_accommodation
   - action: action_accommodation
   - action: utter_can_i_help
-  - intent: affirm
-  - action: action_student_options
+  - intent: generic_affirm
+  - action: action_offer_help
   - intent: visit_campus
   - action: action_visit_campus
   - intent: open_days
   - action: action_open_days
   - action: utter_can_i_help
-  - intent: affirm
-  - action: action_student_options
+  - intent: generic_affirm
+  - action: action_offer_help
   - intent: visit_campus
   - action: action_visit_campus
   - intent: university_facilities
   - action: action_campus_facilities
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
 
 - story: interactive_story_2
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: aspiring
-  - slot_was_set:
-    - student_type: aspiring
-  - action: action_student_options
-  - intent: interest_in_course
+  - intent: courses_interest_in_course
   - action: action_get_courses
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: Computer and Digital Forensics BSc
   - slot_was_set:
@@ -433,28 +336,22 @@ stories:
   - action: action_say_course_name
   - slot_was_set:
     - courseCode: GF44
-  - intent: apply_for_course
+  - intent:  courses_apply_for_course
   - action: utter_how_to_apply
   - action: utter_can_i_help
-  - intent: affirm
-  - action: action_student_options
+  - intent: generic_affirm
+  - action: action_offer_help
   - intent: university_accommodation
   - action: action_accommodation
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: building_name
   - action: action_ask_for_building_code
   - intent: building_name
@@ -465,15 +362,9 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: building_name
   - action: action_ask_for_building_code
   - intent: building_name
@@ -484,15 +375,9 @@ stories:
 
 - story: interactive_story_2
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: building_name
   - action: action_ask_for_building_code
   - intent: building_name
@@ -503,15 +388,9 @@ stories:
 
 - story: interactive_story_3
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: building_name
   - action: action_ask_for_building_code
   - intent: building_name
@@ -520,7 +399,7 @@ stories:
   - action: action_get_building_name
   - action: utter_can_i_help
   - intent: building_name
-  - action: action_student_options
+  - action: action_offer_help
   - intent: building_name
   - action: action_ask_for_building_code
   - intent: building_name
@@ -530,15 +409,9 @@ stories:
 
 - story: interactive_story_4
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: building_name
   - action: action_ask_for_building_code
   - intent: building_name
@@ -546,20 +419,14 @@ stories:
     - building_code: CCE1
   - action: action_get_building_name
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: building_name
   - action: action_ask_for_building_code
   - intent: building_name
@@ -569,50 +436,32 @@ stories:
     - building_code: CCE1
   - action: action_get_building_name
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: buildings
   steps:
-    - intent: greet
+    - intent: generic_greet
     - action: utter_greet
     - action: action_offer_help
-    - intent: my_student_type
-      entities:
-      - student_type: existing
-    - slot_was_set:
-      - student_type: existing
-    - action: action_student_options
     - intent: buildings
     - action: action_ask_about_buildings
 
 
 - story: building location
   steps:
-    - intent: greet
+    - intent: generic_greet
     - action: utter_greet
     - action: action_offer_help
-    - intent: my_student_type
-      entities:
-      - student_type: existing
-    - slot_was_set:
-      - student_type: existing
-    - action: action_student_options
     - intent: buildings
     - action: action_ask_about_buildings
     - intent: building_location
     - action: action_ask_for_building_name
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -625,15 +474,9 @@ stories:
 
 - story: interactive_story_2
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -641,15 +484,9 @@ stories:
 
 - story: interactive_story_3
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -665,15 +502,9 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -687,20 +518,14 @@ stories:
     - building_name: City Campus East 1
   - action: action_get_building_location
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_codes_option
@@ -712,17 +537,11 @@ stories:
     - building_code: EBB
   - action: action_get_building_name
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: interactive_story_1
   steps:
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -752,12 +571,6 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -773,15 +586,9 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -798,12 +605,6 @@ stories:
 
 - story: interactive_story_2
   steps:
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_location_option
@@ -819,12 +620,6 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: building_codes_option
@@ -838,12 +633,6 @@ stories:
 
 - story: interactive_story_2
   steps:
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: buildings
   - action: action_ask_about_buildings
   - intent: show_map
@@ -851,29 +640,17 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: lecturers_option
   - action: action_lecturer_options
 
 - story: interactive_story_2
   steps:
-  - intent: greet
+  - intent: generic_greet
   - action: utter_greet
   - action: action_offer_help
-  - intent: my_student_type
-    entities:
-    - student_type: existing
-  - slot_was_set:
-    - student_type: existing
-  - action: action_student_options
   - intent: lecturers_option
   - action: action_lecturer_options
   - intent: lecturer_email
@@ -888,25 +665,25 @@ stories:
 
 - story: interactive_story_1
   steps:
-  - intent: entry_requirements_for_course
+  - intent: courses_entry_requirements_for_course
     entities:
     - course: computer networks
   - slot_was_set:
     - course: computer networks
   - action: action_say_course_entry_requirements
   - action: utter_can_i_help
-  - intent: deny
+  - intent: generic_deny
   - action: utter_goodbye
 
 - story: interactive_story_2
   steps:
-  - intent: select_course
+  - intent: courses_select_course
     entities:
     - course: web development
   - slot_was_set:
     - course: web development
   - action: action_say_course_name
-  - intent: affirm
+  - intent: generic_affirm
   - action: action_confirm_course_name
 
 - story: interactive_story_1
@@ -1229,3 +1006,55 @@ stories:
   - slot_was_set:
       - building_name: CIS building
   - action: action_building_to_building_map
+
+- story: interactive_story_1
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_name: cis building
+    - building_name_destination: sport central
+  - action: action_building_to_building_map
+
+- story: interactive_story_2
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_name: cos building
+    - building_name_destination: sport central
+  - action: action_building_to_building_map
+
+- story: interactive_story_3
+  steps:
+  - intent: get_directions_from_another_building
+    entities:
+    - building_code_destination: sport central
+    - building_code: cis building
+  - action: action_building_to_building_map
+
+- story: interactive_story_1
+  steps:
+  - intent: campus_map
+  - action: utter_campus_map
+
+- story: interactive_story_1
+  steps:
+  - intent: get_directions_from_my_location
+    entities:
+    - building_name: city campus west
+  - slot_was_set:
+    - building_name: city campus west
+  - action: action_my_location_to_building_map
+  - intent: generic_affirm
+  - action: action_location_after_confirmation
+
+
+- story: interactive_story_2
+  steps:
+  - intent: building_location
+    entities:
+      - building_name: city campus west
+  - slot_was_set:
+      - building_name: city campus west
+  - action: action_get_building_location
+  - intent: generic_affirm
+  - action: action_location_after_confirmation
