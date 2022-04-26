@@ -114,10 +114,30 @@ class ActionWhichModules(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(
-            text="Which modules would you like to see?",
-            buttons=MODULE_YEAR_BUTTONS
-        )
+
+        if str(tracker.get_slot("course")) == str(None):
+            dispatcher.utter_message(
+                text="Sorry, I cannot find that course"
+            )
+
+        course = getMostLikelyCourse(str(tracker.get_slot("course")), getCourses())
+
+        if course['ratio'] is not None and course['ratio'] < 0.4:
+            dispatcher.utter_message(
+                text="Sorry, I cannot find that course"
+            )
+        elif course['ratio'] is not None and course['ratio'] < 0.8:
+            dispatcher.utter_message(
+                text=f"Did you mean {course['course']}?",
+                buttons=YES_NO_BUTTONS
+            )
+        elif course['course'] is not None and course['courseCode'] is not None:
+            SlotSet("course", course['course'])
+            dispatcher.utter_message(
+                text="Which modules would you like to see?",
+                buttons=MODULE_YEAR_BUTTONS
+            )
+
         return []
 
 
@@ -224,10 +244,11 @@ class ActionSayCourseEntryRequirements(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         course = str(tracker.get_slot("course"))
+        print(course)
 
         if course is None:
             dispatcher.utter_message(
-                text="Sorry, I could not find that course."
+                text="Which course would you like to know entry requirements for?"
             )
             ActionGetCourses.run(self, dispatcher, tracker, domain)
             return []
@@ -392,9 +413,9 @@ class ActionGetBuildingLocation(Action):
         origin = []
         response = None
 
-        if buildingName is not None:
+        if str(buildingName) != str(None):
             origin = getMostLikelyBuildingByName(buildingName, buildings)
-        elif buildingCode is not None:
+        elif str(buildingCode) != str(None):
             origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
@@ -461,9 +482,9 @@ class ActionBuildingMap(Action):
         origin = []
         response = None
 
-        if buildingName is not None:
+        if str(buildingName) != str(None):
             origin = getMostLikelyBuildingByName(buildingName, buildings)
-        elif buildingCode is not None:
+        elif str(buildingCode) != str(None):
             origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
@@ -534,9 +555,9 @@ class ActionMyLocationToBuildingMap(Action):
         origin = []
         response = None
 
-        if buildingName is not None:
+        if str(buildingName) != str(None):
             origin = getMostLikelyBuildingByName(buildingName, buildings)
-        elif buildingCode is not None:
+        elif str(buildingCode) != str(None):
             origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
@@ -614,17 +635,17 @@ class ActionBuildingToBuildingMap(Action):
         response = None
         responseDestination = None
 
-        if buildingName is not None:
+        if str(buildingName) != str(None):
             origin = getMostLikelyBuildingByName(buildingName, buildings)
-        elif buildingCode is not None:
+        elif str(buildingCode) != str(None):
             origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
             return []
 
-        if buildingNameDestination is not None:
+        if str(buildingNameDestination) != str(None):
             destination = getMostLikelyBuildingByName(buildingNameDestination, buildings)
-        elif buildingCodeDestination is not None:
+        elif str(buildingCodeDestination) != str(None):
             destination = getMostLikelyBuildingByCode(buildingCodeDestination, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")

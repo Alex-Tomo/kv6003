@@ -502,26 +502,28 @@ class HomePage extends React.Component {
           response.message.forEach(message => {
             if ((message.buttons !== null) && (message.buttons.length > 0)) {
               buttons = message.buttons.map((button, i) => {
-                return (
-                  <div key={i}>
-                    <button
-                      className="button"
-                      id="buttons"
-                      onClick={() => {
-                        this.handleOptionClick(button)
-                      }}
-                      style={{
-                        margin: "2.5px",
-                        width: "fit-content",
-                        whiteSpace: "normal",
-                        wordWrap: "break-word"
-                      }}
-                    >
-                      <span>{button}</span>
-                    </button>
-                    <br/>
-                  </div>
-                )
+                if (button !== "None") {
+                  return (
+                    <div key={i}>
+                      <button
+                        className="button"
+                        id="buttons"
+                        onClick={() => {
+                          this.handleOptionClick(button)
+                        }}
+                        style={{
+                          margin: "2.5px",
+                          width: "fit-content",
+                          whiteSpace: "normal",
+                          wordWrap: "break-word"
+                        }}
+                      >
+                        <span>{button}</span>
+                      </button>
+                      <br/>
+                    </div>
+                  )
+                }
               })
             }
           })

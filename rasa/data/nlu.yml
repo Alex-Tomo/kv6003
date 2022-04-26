@@ -275,6 +275,10 @@ nlu:
     - how do i apply for this course?
     - I want to apply for this course
     - can i apply for this course?
+    - apply
+    - apply for course
+    - how do i apply
+    - i want to apply
 - intent: courses_extensions
   examples: |
     - how do i apply for an extension
