@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Get all messages from the gateway and returns them
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class ApiMessagesController extends Controller
 {
   protected function setGateway()
@@ -9,8 +15,10 @@ class ApiMessagesController extends Controller
 
   protected function processRequest()
   {
+    // if the request is GET return an error
     if (!parent::isValidRequestMethod("POST")) return ["error"];
 
+    // Add a new message
     if ($this->getRequest()->getParameter("add") !== null) {
 
       $id = $this->getRequest()->getParameter("id");
@@ -20,6 +28,7 @@ class ApiMessagesController extends Controller
 
       $this->getGateway()->addMessage($id, $type, $message, $date);
 
+    // get all users messages
     } else if ($this->getRequest()->getParameter("id") !== null) {
       $this->getGateway()->getMessages($this->getRequest()->getParameter("id"));
     }

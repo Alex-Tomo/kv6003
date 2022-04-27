@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @param $exception - throw exception
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 function exceptionHandler($exception)
 {
   echo "internal server error!";

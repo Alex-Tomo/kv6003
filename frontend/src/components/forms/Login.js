@@ -12,17 +12,13 @@ class Login extends React.Component {
     return (
       <div id="login">
         <input
-          className="input"
+          className="input form-input"
           type="text"
           placeholder="Username..."
           onChange={event => this.props.handleUsername(event)}
         />
-
-        <br />
-        <br />
-
         <input
-          className="input"
+          className="input form-input"
           type="password"
           placeholder="Password..."
           onChange={event => this.props.handlePassword(event)}

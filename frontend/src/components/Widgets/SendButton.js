@@ -1,7 +1,6 @@
 import React from "react"
 import Button from "react-bootstrap/Button"
 
-// Icons
 import SendWhite from "../../assets/send_white.svg"
 
 /**

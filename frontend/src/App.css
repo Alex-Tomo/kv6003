@@ -268,6 +268,34 @@ html {
   color: black;
 }
 
+.form-input {
+  margin-bottom: 10px;
+}
+
+#setting-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  display: flex;
+  justify-content: center;
+}
+
+.settings-switch {
+  margin-right: 5px;
+}
+
+.title-dark {
+  color: black;
+}
+
+.map {
+  margin: 10px 10% 10px 10px;
+  height: 500px;
+  width: available;
+}
+
 @media only screen and (max-width: 768px) {
   .modal-card-width {
     width: 60%;

@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Abstract gateway to be extended by other gateway classes
+ * Get, set the database connection
+ * Get, set the data returned
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 abstract class Gateway
 {
   private $database;

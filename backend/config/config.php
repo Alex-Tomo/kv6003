@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Holds configuration details
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 include strtolower("config" . DIRECTORY_SEPARATOR . "autoloader.php");
 include strtolower("config" . DIRECTORY_SEPARATOR . "exceptionhandler.php");
 include strtolower("config" . DIRECTORY_SEPARATOR . "errorhandler.php");

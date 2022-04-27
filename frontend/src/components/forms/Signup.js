@@ -12,25 +12,19 @@ class Signup extends React.Component {
     return (
         <div id="signup">
           <input
-              className={`input ${this.props.usernameClass}`}
+              className={`input ${this.props.usernameClass} form-input`}
               type="text"
               placeholder="Username..."
               onChange={event => this.props.handleUsername(event)}
           />
-          <br />
-          <br />
-
           <input
-              className={`input ${this.props.passwordClass}`}
+              className={`input ${this.props.passwordClass} form-input`}
               type="password"
               placeholder="Password..."
               onChange={event => this.props.handlePassword(event)}
           />
-          <br />
-          <br />
-
           <input
-              className={`input ${this.props.repeatPasswordClass}`}
+              className={`input ${this.props.repeatPasswordClass} form-input`}
               type="password"
               placeholder="Repeat Password..."
               onChange={event => this.props.handleRepeatPassword(event)}

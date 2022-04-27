@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Get unknown and incorrect messages from the gateway
+ * only to be used by admin users
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class ApiAdminController extends Controller
 {
   protected function setGateway()

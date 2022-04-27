@@ -7,6 +7,10 @@ import ArrowUpWhite from "../../assets/arrow_up_white.svg"
 import ClearWhite from "../../assets/clear_white.svg"
 
 /**
+ * TODO: Remove incorrect messages
+ * TODO: Store messages of many types
+ * TODO: Needs cleaning up
+ *
  * The Admin page is only available to admin users, this stores
  * and displays messages with unknown or incorrect responses.
  *

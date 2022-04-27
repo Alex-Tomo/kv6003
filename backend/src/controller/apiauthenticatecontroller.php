@@ -1,6 +1,14 @@
 <?php
 
+// Using the Firebase JWT repository for Authentication
 use Firebase\JWT\JWT;
+
+/**
+ * Authenticate the user and returns a JWT token
+ * JWT tokens make use of the Firebase JWT repository
+ *
+ * @author Alex Thompson, W19007452
+ */
 
 class ApiAuthenticateController extends Controller
 {

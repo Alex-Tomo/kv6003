@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Get building related data from the gateway
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class ApiBuildingsController extends Controller
 {
   protected function setGateway()
@@ -9,8 +15,6 @@ class ApiBuildingsController extends Controller
 
   protected function processRequest()
   {
-    if (!parent::isValidRequestMethod("GET")) return "error";
-
     if ($this->getRequest()->getParameter("building_code") !== null) {
       $this->getGateway()->getBuildingLocationByCode($this->getRequest()->getParameter("building_code"));
     } else if ($this->getRequest()->getParameter("building_name") !== null) {

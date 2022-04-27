@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Abstract class to be extended by other controller classes
+ * Gets the request and returns data to index.php
+ * Checks if data is valid
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 abstract class Controller
 {
   private $request;

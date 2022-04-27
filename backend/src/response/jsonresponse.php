@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Returns the data in JSON format
+ * Sets the head to allow for JSON content
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class JSONResponse
 {
   private $data;

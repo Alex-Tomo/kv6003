@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Defines the API and images routes
+ *
+ * Uses Firebase JWT token repository for
+ * authentication purposes.
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 include strtolower("config" . DIRECTORY_SEPARATOR . "config.php");
 
 $request = new Request();
@@ -33,6 +42,7 @@ switch ($request->getPath()) {
     break;
 }
 
+// if case is campus map, result should not be echoed
 if ($response != null) {
   echo $response->getData();
 }

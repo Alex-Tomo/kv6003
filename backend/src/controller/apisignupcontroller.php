@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Handles new users creating accounts
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class ApiSignupController extends Controller
 {
   protected function setGateway()

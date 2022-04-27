@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Sets the database connection and has a function
+ * to execute SQL queries
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class Database
 {
   private $dbConnection;

@@ -2,7 +2,6 @@ import React, {useEffect} from "react"
 import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition"
 import Button from "react-bootstrap/Button"
 
-// Icons
 import MicrophoneWhite from "../../assets/mic_white.svg"
 
 /**

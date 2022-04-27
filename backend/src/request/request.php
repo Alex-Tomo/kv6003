@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Check the users URL and get parameters from the URL or the body
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class Request
 {
   private $url;
@@ -18,10 +24,18 @@ class Request
   public function getParameter($param)
   {
     if ($this->getRequestMethod() === "GET") {
-      $param = filter_input(INPUT_GET, $param, FILTER_SANITIZE_SPECIAL_CHARS);
+      $param = filter_input(
+        INPUT_GET,
+        $param,
+        FILTER_SANITIZE_SPECIAL_CHARS
+      );
     }
     if ($this->getRequestMethod() === "POST") {
-      $param = filter_input(INPUT_POST, $param, FILTER_SANITIZE_SPECIAL_CHARS);
+      $param = filter_input(
+        INPUT_POST,
+        $param,
+        FILTER_SANITIZE_SPECIAL_CHARS
+      );
     }
     return $param;
   }
