@@ -5,6 +5,7 @@ of relying on Slots
 @author Alex Thompson, W19007452
 """
 
+
 class CustomSlots:
     course = None
     courseCode = None
@@ -34,4 +35,3 @@ class CustomSlots:
 
     def getLastAction(self):
         return self.lastAction
-

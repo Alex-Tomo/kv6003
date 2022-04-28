@@ -8,11 +8,12 @@ the user has chosen
 import Levenshtein
 import requests
 import string
+from .constants.constants import BASE_COURSE_URL
 
 
 def getCourses():
     courses = []
-    response = requests.get("http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses")
+    response = requests.get(BASE_COURSE_URL)
     for i in range(0, len(response.json())):
         title = str(response.json()[i]['course_title'])
         code = str(response.json()[i]['course_code'])
@@ -48,10 +49,11 @@ def getMostLikelyCourse(course, courses):
 def getCourseModulesByYear(courseCode, year):
     if year.lower() == "all":
         response = requests.get(
-            "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&year=all")
+            f"{BASE_COURSE_URL}?course_code={courseCode}&year=all")
     else:
         response = requests.get(
-            "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&year=" + year)
+            f"{BASE_COURSE_URL}?course_code={courseCode}&year={year}"
+        )
 
     modules = []
     for i in range(0, len(response.json())):
@@ -62,7 +64,8 @@ def getCourseModulesByYear(courseCode, year):
 
 def getCourseEntryRequirements(courseCode):
     response = requests.get(
-        "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses?course_code=" + courseCode + "&entry_requirements=true")
+        f"{BASE_COURSE_URL}?course_code={courseCode}&entry_requirements=true"
+    )
 
     entry_requirements = ""
     entry_requirements += response.json()[0]['tariff_points'] + "\n"

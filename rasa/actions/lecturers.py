@@ -5,7 +5,6 @@ Functions for getting lecturer related queries
 """
 
 import Levenshtein
-import requests
 import string
 
 

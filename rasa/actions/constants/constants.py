@@ -4,7 +4,11 @@ List of constants used in other python files
 @author Alex Thompson, W19007452
 """
 
+# URL constants below
+BASE_COURSE_URL = "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/courses"
+BASE_BUILDING_URL = "http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings"
 
+# Button constants below
 HOW_CAN_I_HELP_BUTTONS = [
     {"title": "Courses", "payload": "/interest_in_course"},
     {"title": "Accommodation", "payload": "/university_accommodation"},

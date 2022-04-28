@@ -7,12 +7,11 @@ Functions for getting building related queries
 import Levenshtein
 import requests
 import string
+from .constants.constants import BASE_BUILDING_URL
 
 
 def getAllBuildings():
-    response = requests.get(
-        f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings"
-    )
+    response = requests.get(BASE_BUILDING_URL)
 
     buildings = []
     for i in range(len(response.json())):

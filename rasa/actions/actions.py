@@ -8,20 +8,24 @@ Rasa. When the user gives specific intents a class is run.
 from typing import Any, Text, Dict, List
 
 import requests
+import yaml
+import os
+
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
-from .courses import getCourses, getMostLikelyCourse, getCourseModulesByYear, getCourseEntryRequirements
-from .constants import *
+from .courses import *
+from .constants.constants import *
 from .custom_slots import *
-from .lecturers import getMostLikelyLecturer
-from .buildings import getAllBuildings, getMostLikelyBuildingByCode, getMostLikelyBuildingByName
+from .lecturers import *
+from .buildings import *
 
 # Custom slots is used to keep track of the current slots
 customSlots = CustomSlots()
 
 
 class ActionOfferHelp(Action):
+
     def name(self) -> Text:
         return "action_offer_help"
 
@@ -765,7 +769,7 @@ class ActionGetLocationAfterConfirmation(Action):
 
             return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
-        elif last =='action_my_location_to_building_map':
+        elif last == 'action_my_location_to_building_map':
             response = requests.get(
                 f"http://unn-w19007452.newnumyspace.co.uk/kv6003/api/buildings?"
                 f"&building_name={locationName}"
@@ -790,6 +794,7 @@ class ActionGetLocationAfterConfirmation(Action):
             return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
         return []
+
 
 class ActionLecturerOptions(Action):
 

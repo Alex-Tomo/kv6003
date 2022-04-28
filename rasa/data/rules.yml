@@ -31,3 +31,4 @@ rules:
   steps:
     - intent: courses_extensions
     - action: utter_extensions
+

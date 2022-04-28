@@ -24,12 +24,29 @@ class Admin extends React.Component {
     this.state = {
       unknownResults: [],
       incorrectResults: [],
+      training: false
     }
   }
 
   componentDidMount() {
     this.getUnknownMessages()
     this.getIncorrectMessages()
+    this.getCustomData()
+  }
+
+  getCustomData = () => {
+    fetch("http://localhost:5005/webhooks/recievefiles/webhook", {
+      method: 'POST',
+      body: JSON.stringify({
+        metadata: {file: "nlu"}
+      })
+    }).then(data => {
+      return data.json()
+    }).then(data => {
+      console.log(data)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   getUnknownMessages = () => {
@@ -104,6 +121,58 @@ class Admin extends React.Component {
     })
   }
 
+  retrainModel = () => {
+    if (this.state.training) {
+      console.log("already training")
+      return
+    }
+
+    if(prompt("Are you sure you want to retrain the model?") === null) return
+
+    this.setState({training: true})
+    fetch("http://localhost:5005/webhooks/retrainmodel/webhook", {
+      method: 'POST'
+    }).then(data => {
+      console.log(data)
+      this.setState({training: false})
+    }).catch(error => {
+      console.log(error)
+      this.setState({training: false})
+    })
+  }
+
+  sendCustomData = () => {
+    fetch("http://localhost:5005/webhooks/updatefiles/webhook", {
+      method: 'POST',
+      body: JSON.stringify({
+        sender: "alex",
+        message: "",
+        metadata: {
+          file: "domain",
+          add: true,
+          remove: false,
+          data: [
+            {
+              value: "testing v1.0"
+            },
+            {
+              value: "testing v2.0"
+            },
+            {
+              value: "testing v3.0"
+            }
+          ]
+        }
+      })
+    }).then(data => {
+      return data.json()
+    }).then(data => {
+      console.log(data)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
   render() {
     let unknownResults = ""
 
@@ -144,6 +213,24 @@ class Admin extends React.Component {
           height: "100%",
           alignItems: "stretch"
         }}>
+          <button
+              onClick={this.retrainModel}
+              disabled={this.state.training}
+              className="button"
+              style={{width: "25%", margin: "20px auto", padding: "10px"}}
+          >
+            {(this.state.training) ? "Training" : "Retrain model"}
+          </button>
+
+          <button
+              onClick={this.sendCustomData}
+              className="button"
+              style={{width: "25%", margin: "20px auto", padding: "10px"}}
+          >
+            Testing
+          </button>
+
+          <hr />
           <div
             style={{cursor: "pointer", padding: "10px", display: "flex", justifyContent: "center"}}
              onClick={() => {
