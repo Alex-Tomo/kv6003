@@ -15,8 +15,8 @@ class MessagesHeader extends React.Component {
     super(props)
 
     this.state = {
-      chatbotAgent: "Online",
-      status: "online"
+      chatbotAgent: "Getting Status...",
+      status: ""
     }
   }
 
@@ -63,7 +63,13 @@ class MessagesHeader extends React.Component {
             height="50px"
             width="50px"
           />
-          <p id="messages-header-para">NU Virtual Assistant<br/><span className={this.state.status}><em>{this.state.chatbotAgent}</em></span></p>
+          <p id="messages-header-para">
+            NU Virtual Assistant
+            <br/>
+            <span className={this.state.status}>
+              <em style={{fontWeight: "bold"}}>{this.state.chatbotAgent}</em>
+            </span>
+          </p>
           </div>
           <div id="listening" className="is-hidden" style={{ display: "flex", alignItems: "center" }}>
             <p><em>* Listening</em></p>

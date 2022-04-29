@@ -1,8 +1,6 @@
 import inspect
 import os
 
-import requests
-import yaml
 from rasa.core.channels.channel import UserMessage, InputChannel
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
@@ -10,9 +8,9 @@ from sanic.response import HTTPResponse
 from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
 
 
-class RetrainModel(InputChannel):
+class GetModels(InputChannel):
     def name(self):
-        return "retrainmodel"
+        return "get_models"
 
     def blueprint(
             self, on_new_message: Callable[[UserMessage], Awaitable[None]]
@@ -29,10 +27,12 @@ class RetrainModel(InputChannel):
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
 
-            print("training")
+            files = [file for file in os.listdir(os.path.join(os.getcwd(), 'models'))]
+            try:
+                files.remove('.DS_Store')
+            except:
+                print("No .DS_Store")
 
-            os.system("rasa train")
-
-            return response.json({"status": 200})
+            return response.json({'filenames': files})
 
         return custom_webhook

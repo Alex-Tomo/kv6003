@@ -1,4 +1,6 @@
 import inspect
+import os
+import yaml
 
 from rasa.core.channels.channel import UserMessage, InputChannel
 from sanic import Sanic, Blueprint, response
@@ -26,31 +28,48 @@ class UpdateFiles(InputChannel):
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
             sender = request.json.get("sender")
-            message = request.json.get("message")
             metadata = request.json.get("metadata")
 
-            if metadata['file'] == 'config':
-                if metadata['add']:
-                    for i in range(len(metadata['data'])):
-                        print(f"adding {metadata['data'][i]}")
-                elif metadata['remove']:
-                    for i in range(len(metadata['data'])):
-                        print(f"adding {metadata['data'][i]}")
-            if metadata['file'] == 'domain':
-                if metadata['add']:
-                    for i in range(len(metadata['data'])):
-                        print(f"adding {metadata['data'][i]}")
-                elif metadata['remove']:
-                    for i in range(len(metadata['data'])):
-                        print(f"adding {metadata['data'][i]}")
-            if metadata['file'] == 'nlu':
-                if metadata['add']:
-                    for i in range(len(metadata['data'])):
-                        print(f"adding {metadata['data'][i]}")
-                elif metadata['remove']:
-                    for i in range(len(metadata['data'])):
-                        print(f"adding {metadata['data'][i]}")
+            data = None
 
-            return response.json({"message": "hey"})
+            if metadata['file'] == 'nlu.yml':
+                with open(os.path.join(os.getcwd(), 'data', 'nlu.yml'), "r") as stream:
+                    try:
+                        data = yaml.safe_load(stream)
+                    except yaml.YAMLError as error:
+                        print(error)
+                        return
+
+            f = open(os.path.join(os.getcwd(), 'data', 'nlu.yml'), "w")
+            f.write("")
+            f.close()
+
+            f = open(os.path.join(os.getcwd(), 'data', 'nlu.yml'), "a")
+            f.write("version: " + yaml.dump(data['version']) + "\n")
+            f.write("nlu: \n")
+            for i in range(len(data['nlu'])):
+                f.write("  - intent: " + data['nlu'][i]['intent'] + "\n")
+                f.write("    examples: |\n")
+                if data['nlu'][i]['intent'] == metadata['intentTitle']:
+                    splitData = str(data['nlu'][i]['examples']).split("\n")
+                    intentValue = "- " + metadata['intentValue']
+                    for k in range(len(splitData) + 1):
+                        if k == len(splitData):
+                            f.write("      " + intentValue + "\n")
+                            continue
+                        if splitData[k] == "":
+                            continue
+                        f.write("      " + splitData[k] + "\n")
+                    splitData.append(intentValue)
+                else:
+                    splitData = str(data['nlu'][i]['examples']).split("\n")
+                    for k in range(len(splitData)):
+                        if splitData[k] == "":
+                            continue
+                        f.write("      " + splitData[k] + "\n")
+
+            f.close()
+
+            return response.json({"status": 200})
 
         return custom_webhook

@@ -302,8 +302,8 @@ html {
   }
 
   #message-buttons-container {
-    margin: 0 25px;
-    margin-left: 0;
+    margin: 0;
+    margin-right: 10% !important;
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;
@@ -315,6 +315,10 @@ html {
     margin: 20px 0 20px 2.5px !important;
     width: fit-content !important;
     white-space: nowrap !important;
+  }
+
+  #messages {
+    overflow-x: hidden;
   }
 }
 
@@ -352,8 +356,7 @@ html {
   }
 
   #message-buttons-container {
-    margin: 0 25px;
-    margin-left: 0;
+    margin: 0;
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;

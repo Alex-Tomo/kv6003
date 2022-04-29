@@ -10,9 +10,9 @@ from sanic.response import HTTPResponse
 from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
 
 
-class RetrainModel(InputChannel):
+class ReplaceCurrentModel(InputChannel):
     def name(self):
-        return "retrainmodel"
+        return "replace_current_model"
 
     def blueprint(
             self, on_new_message: Callable[[UserMessage], Awaitable[None]]
@@ -28,11 +28,12 @@ class RetrainModel(InputChannel):
 
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
+            metadata = request.json.get("metadata")
 
-            print("training")
-
-            os.system("rasa train")
-
-            return response.json({"status": 200})
+            print("loading " + metadata['filename'])
+            requests.put("http://localhost:5005/model",
+                         json={
+                             "model_file": str(os.path.join(os.getcwd(), 'models', metadata['filename']))
+                         })
 
         return custom_webhook

@@ -35,4 +35,15 @@ class ApiMessagesGateway extends Gateway
     $result = $this->getDatabase()->executeSQL($sql, $params);
     $this->setResult($result);
   }
+
+  public function removeMessages($id)
+  {
+    $sql = "
+      DELETE FROM kv6003_messages  
+      WHERE user_id = :id
+    ";
+    $params = [":id" => $id];
+    $result = $this->getDatabase()->executeSQL($sql, $params);
+    $this->setResult($result);
+  }
 }

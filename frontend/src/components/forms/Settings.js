@@ -15,7 +15,26 @@ import SoundIcon from "../../assets/sound_black.svg"
  */
 
 class Settings extends React.Component {
+  clearUserMessages = (id) => {
+    let formData = new FormData()
+    formData.append('id', id)
+    formData.append('remove', true)
+
+    fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
+      method: 'POST',
+      body: formData
+    })
+    .then(result => {
+      window.location.href = "http://localhost:3000"
+    })
+    .catch(error => {
+      alert("Could not delete messages")
+    })
+  }
+
   render() {
+    const userId = localStorage.getItem("id")
+
     return (
         <div id="settings">
           <div id="setting-container">
@@ -60,6 +79,22 @@ class Settings extends React.Component {
                 alt="Sound Icon"
               />
             </div>
+            {
+              (userId !== null) ?
+                <div style={{marginTop: "20px"}}>
+                  <button
+                    className="button is-danger"
+                    onClick={() => {
+                      this.clearUserMessages(userId)
+                    }}
+                  >
+                    Clear Messages
+                  </button>
+                </div>
+                :
+                null
+            }
+
           </div>
         </div>
     )

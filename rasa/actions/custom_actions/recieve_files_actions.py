@@ -32,35 +32,35 @@ class RecieveFiles(InputChannel):
             data = None
 
             if metadata['file'] == 'config':
-                with open(os.getcwd() + '\\config.yml', "r") as stream:
+                with open(os.path.join(os.getcwd(), 'config.yml'), "r") as stream:
                     try:
                         data = yaml.safe_load(stream)
                     except yaml.YAMLError as error:
                         print(error)
                         return
             elif metadata['file'] == 'domain':
-                with open(os.getcwd() + '\\domain.yml', "r") as stream:
+                with open(os.path.join(os.getcwd(), 'domain.yml'), "r") as stream:
                     try:
                         data = yaml.safe_load(stream)
                     except yaml.YAMLError as error:
                         print(error)
                         return
             elif metadata['file'] == 'nlu':
-                with open(os.getcwd() + '\\data\\nlu.yml', "r") as stream:
+                with open(os.path.join(os.getcwd(), 'data', 'nlu.yml'), "r") as stream:
                     try:
                         data = yaml.safe_load(stream)
                     except yaml.YAMLError as error:
                         print(error)
                         return
             elif metadata['file'] == 'rules':
-                with open(os.getcwd() + '\\data\\rules.yml', "r") as stream:
+                with open(os.path.join(os.getcwd(), 'data', 'rules.yml'), "r") as stream:
                     try:
                         data = yaml.safe_load(stream)
                     except yaml.YAMLError as error:
                         print(error)
                         return
             elif metadata['file'] == 'stories':
-                with open(os.getcwd() + '\\data\\stories.yml', "r") as stream:
+                with open(os.path.join(os.getcwd(), 'data', 'stories.yml'), "r") as stream:
                     try:
                         data = yaml.safe_load(stream)
                     except yaml.YAMLError as error:

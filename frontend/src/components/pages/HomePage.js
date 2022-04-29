@@ -15,6 +15,7 @@ import MoreBlack from "../../assets/more_black.svg"
 import Admin from "../sections/Admin"
 import VoiceModal from "../Modals/VoiceModal"
 import Map from "../Widgets/Map"
+import {Redirect, Route} from "react-router-dom";
 
 /**
  * The Home page will be displayed is the main page
@@ -50,22 +51,84 @@ class HomePage extends React.Component {
       localStorage.setItem("theme", "dark")
     }
 
-    this.handleInput = this.handleInput.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.handleUserInputMessage = this.handleUserInputMessage.bind(this)
+    this.handleClickSendButton = this.handleClickSendButton.bind(this)
     this.handleVoice = this.handleVoice.bind(this)
   }
 
-  handleInput = (event) => {
-    this.setState({userInput: event.target.value})
-  }
-
-  handleKeyPress = (event) => {
-    if ((event.key === 'Enter') && (!this.state.isSending)) {
-      this.handleClick()
+  /**
+   * Check if the user is logged in, if so load the users
+   * messages. Otherwise, send an initial message to the bot
+   * to start the conversation.
+   */
+  componentDidMount() {
+    if (
+      localStorage.getItem("token") &&
+      localStorage.getItem("id") &&
+      localStorage.getItem("user_type")
+    ) {
+      this.handleLogin(
+        localStorage.getItem("token"),
+        localStorage.getItem("id"),
+        localStorage.getItem("user_type")
+      )
+      .then(() => {
+        this.getMessages()
+      }).catch(e => {
+        console.log(e)
+      })
+    } else {
+      // if the user is not logged in and not messages have been
+      // sent then send an initial message
+      if (this.state.responses.length === 0) {
+        this.sendInitialMessage()
+      }
     }
   }
 
-  handleClick = () => {
+  /**
+   * when a new message is sent, scroll down to the latest message
+   *
+   * @param prevProps
+   * @param prevState
+   * @param snapshot
+   */
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const messages = document.getElementById('messages')
+
+    try {
+      if (messages.lastElementChild != null)
+        messages.lastElementChild.scrollIntoView()
+    } catch (error) {}
+  }
+
+  /**
+   * Update the userinput state when the user types in the
+   * message input box
+   *
+   * @param event
+   */
+  handleUserInputMessage = (event) => {
+    this.setState({userInput: event.target.value})
+  }
+
+  /**
+   * Send the message to the bot when the user hits the enter
+   * key as long as a message is not currently being processed
+   *
+   * @param event
+   */
+  handleEnterKeyPressed = (event) => {
+    if ((event.key === 'Enter') && (!this.state.isSending)) {
+      this.handleClickSendButton()
+    }
+  }
+
+  /**
+   * Send the message the bot as long as the userinput is not
+   * a blank message
+   */
+  handleClickSendButton = () => {
     if (this.state.userInput.trim() === "") {
       return
     }
@@ -73,22 +136,12 @@ class HomePage extends React.Component {
     this.sendMessageToBot(this.state.userInput)
   }
 
-  componentDidMount() {
-    if (localStorage.getItem("token") && localStorage.getItem("id") && localStorage.getItem("user_type")) {
-      this.handleLogin(localStorage.getItem("token"), localStorage.getItem("id"), localStorage.getItem("user_type"))
-        .then(() => {
-          this.getMessages()
-        }).catch(e => {
-          console.log(e)
-        })
-    } else {
-      if (this.state.responses.length === 0) {
-        this.sendInitialMessage()
-      }
-    }
-  }
-
+  /**
+   * Send an initial message to the bot to start the conversation
+   */
   sendInitialMessage = () => {
+    // set issending to true so the user cannot send another message
+    // while the current sent message is being processed
     this.setState({isSending: true})
 
     fetch("http://localhost:5005/webhooks/rest/webhook", {
@@ -151,6 +204,7 @@ class HomePage extends React.Component {
       })
   }
 
+  // only run if the user is logged in
   getMessages = () => {
     let formData = new FormData()
     formData.append('id', this.state.user_id)
@@ -160,71 +214,131 @@ class HomePage extends React.Component {
       body: formData
     }).then(r => {
       return r.json()
-    }).then(r => {
-      let arr = []
-      for (let i = 0; i < r.length; i++) {
-        arr.push({
-          sender: (r[i].type === 'sent') ? this.USER : this.BOT,
-          message: [{"text": r[i].message, "image": undefined, "buttons": []}],
-        })
-      }
+    }).then(d => {
+      let botText = []
+      let tempArray = []
+      let buttons = []
+      let type = undefined
 
-      this.setState({responses: arr})
+      if (d.length > 0) {
+        for (let i = 0; i < d.length; i++) {
+          if (d[i].type === 'received') {
+            if (type === undefined) {
+              type = 'received'
+            }
+            if (type === 'sent') {
+              tempArray.push({
+                sender: this.USER,
+                message: botText
+              })
+              botText = []
+              type = 'received'
+            }
+            if (d[i].message !== undefined) {
+              botText.push({"text": d[i].message, "image": undefined, "buttons": [], "link": undefined})
+            }
+
+            try {
+              if (d[i].image !== undefined) {
+                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
+              }
+            } catch (error) {}
+
+            try {
+              if (d[i].buttons.length > 0) {
+                for (let j = 0; j < d[i].buttons.length; j++) {
+                  buttons.push(d[i].buttons[j].title)
+                }
+                botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
+              }
+            } catch (error) {}
+          } else {
+            if (type === undefined) {
+              type = 'sent'
+            }
+            if (type === 'received') {
+              tempArray.push({
+                sender: this.BOT,
+                message: botText
+              })
+              botText = []
+              type = 'sent'
+            }
+            if (d[i].message !== undefined) {
+              botText.push({"text": d[i].message, "image": undefined, "buttons": [], "link": undefined})
+            }
+
+            try {
+              if (d[i].image !== undefined) {
+                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
+              }
+            } catch (error) {}
+
+            try {
+              if (d[i].buttons.length > 0) {
+                for (let j = 0; j < d[i].buttons.length; j++) {
+                  buttons.push(d[i].buttons[j].title)
+                }
+                botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
+              }
+            } catch (error) {}
+          }
+        }
+      }
+      this.setState({
+        responses: tempArray
+      })
     })
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    try {
-      if (document.getElementById('messages').lastElementChild != null) {
-        document.getElementById('messages').lastElementChild.scrollIntoView()
-      }
-    } catch (e) {}
-  }
-
+  /**
+   * Get the latest messages and pass to SpeechSynthesisUtterance
+   * which will speak the message aloud to the user
+   */
   speak = () => {
-    let msg = new SpeechSynthesisUtterance()
+    const msg = new SpeechSynthesisUtterance()
+    const responses = this.state.responses
 
-    for (let i = 0; i < this.state.responses[this.state.responses.length - 1].message.length; i++) {
-      if (this.state.responses[this.state.responses.length - 1].message[i].text !== undefined) {
-        msg.text = this.state.responses[this.state.responses.length - 1].message[i].text
+    for (let i = 0; i < responses[responses.length - 1].message.length; i++) {
+      if (responses[responses.length - 1].message[i].text !== undefined) {
+        msg.text = responses[responses.length - 1].message[i].text
 
         window.speechSynthesis.speak(new SpeechSynthesisUtterance(msg.text))
       }
     }
   }
 
+  /**
+   * When the user sends a voice message, it is converted to a string
+   * and passed to the bot for processing
+   *
+   * @param voice - the users speech
+   */
   handleVoice = (voice) => {
     this.sendMessageToBot(voice.toString())
   }
 
-  addIncorrectMessage = (botMsg, userMsg) => {
+  /**
+   * The user can click the response is incorrect, this will
+   * save the responses to be used by the admin user
+   *
+   * @param botMsg
+   * @param userMsg
+   */
+  addIncorrectMessage = (botMsg, userMsg = "") => {
+    const result = prompt("Do you give permission for your message to be saved?")
+    if (result !== 'yes') return
+
     let formData = new FormData()
     formData.append('incorrect', "true")
     formData.append('add', "true")
-    formData.append('user_message', userMsg)
-    formData.append('bot_message', botMsg)
+    formData.append('user_message', userMsg[0].text)
+    formData.append('bot_message', botMsg[0].text)
 
     fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/admin', {
       method: 'POST',
       body: formData
-    }).then(r => {
-      // console.log("added message")
-    }).catch(err => {
-      console.log("could not add message")
-    })
-  }
-
-  addUnknownMessage = (unknownMessage) => {
-    let formData = new FormData()
-    formData.append('add', "true")
-    formData.append('message', unknownMessage)
-
-    fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/admin', {
-      method: 'POST',
-      body: formData
-    }).then(r => {
-      // console.log("added message")
-    }).catch(err => {
+    }).catch(() => {
       console.log("could not add message")
     })
   }
@@ -365,9 +479,14 @@ class HomePage extends React.Component {
       })
   }
 
-  // id => users id
-  // type => 'sent' or 'received'
-  // msg => the message => do not include buttons
+  /**
+   * If the user is logged in, this saves their messages
+   * to be loaded later
+   *
+   * @param id => users id
+   * @param type => 'sent' or 'received'
+   * @param msg => the message => do not include buttons
+   */
   addMessageToDatabase = (id, type, msg) => {
     if (typeof msg == "object") {
       for (let i = 0; i < msg.length; i++) {
@@ -395,47 +514,49 @@ class HomePage extends React.Component {
     })
   }
 
-  handleOptionClick = (option) => {
-    this.sendMessageToBot(option)
-  }
-
   displaySignupModal = async () => {
     await this.setState({
-      modal: <SignupModal closeModal={this.closeModal} accountCreated={this.accountCreated} />
+      modal: <SignupModal
+        closeModal={this.closeModal}
+        accountCreated={this.accountCreated}
+      />
     })
+
   }
 
   displayLoginModal = async () => {
     await this.setState({
-      modal: <LoginModal handleLogin={this.handleLogin} />
+      modal: <LoginModal
+        handleLogin={this.handleLogin}
+      />
     })
   }
 
   displaySettingsModal = async () => {
     await this.setState({
-      modal: <SettingsModal closeModal={this.closeModal}
+      modal: <SettingsModal
+        closeModal={this.closeModal}
       />
     })
   }
 
   displayVoiceModal = async () => {
     await this.setState({
-      modal: <VoiceModal closeModal={this.closeModal} voiceText={this.state.voiceText}
+      modal: <VoiceModal
+        closeModal={this.closeModal}
+        voiceText={this.state.voiceText}
       />
     })
   }
 
   updateVoiceModal = async (voiceText) => {
-    // console.log(voiceText.toString())
-    document.getElementById("voice-modal-text").innerText = voiceText.toString()
+    const voiceModal = document.getElementById("voice-modal-text")
+
+    voiceModal.innerText = voiceText.toString()
   }
 
   closeModal = () => {
     this.setState({modal: <></>})
-  }
-
-  accountCreated = () => {
-
   }
 
   handleLogout = async () => {
@@ -466,6 +587,8 @@ class HomePage extends React.Component {
     if (this.state.responses.length === 0) {
       this.sendInitialMessage()
     }
+
+    window.location.href = "http://localhost:3000"
   }
 
   handleLogin = async (token, id, type) => {
@@ -483,6 +606,7 @@ class HomePage extends React.Component {
 
     this.closeModal()
     this.getMessages()
+    this.sendInitialMessage()
   }
 
   updateAdmin = async (value) => {
@@ -509,7 +633,7 @@ class HomePage extends React.Component {
                         className="button"
                         id="buttons"
                         onClick={() => {
-                          this.handleOptionClick(button)
+                          this.sendMessageToBot(button)
                         }}
                         style={{
                           margin: "2.5px",
@@ -651,7 +775,11 @@ class HomePage extends React.Component {
                           className="button is-danger"
                           onMouseDown={() => {
                             document.getElementById(`menu${i}`).classList.remove("is-active")
-                            this.addIncorrectMessage(this.state.responses[i].message, this.state.responses[i-1].message)
+                            if (i > 1) {
+                              this.addIncorrectMessage(this.state.responses[i].message, this.state.responses[i - 1].message)
+                            } else {
+                              alert("Cannot report this message")
+                            }
                           }}
                         >This Response is Wrong</button>
                     </div>
@@ -705,7 +833,7 @@ class HomePage extends React.Component {
         </div>
 
         {(this.state.displayAdmin) ?
-          <><Admin /></> :
+          <><Admin closeModal={this.closeModal} /></> :
           <>
             <MessagesHeader
               colourTheme={localStorage.getItem("theme")}
@@ -720,10 +848,10 @@ class HomePage extends React.Component {
               colourTheme={localStorage.getItem("theme")}
               handleVoice={this.handleVoice}
               userInput={this.state.userInput}
-              handleInput={this.handleInput}
-              handleKeyPress={this.handleKeyPress}
+              handleInput={this.handleUserInputMessage}
+              handleKeyPress={this.handleEnterKeyPressed}
               isSending={this.state.isSending}
-              handleClick={this.handleClick}
+              handleClick={this.handleClickSendButton}
               displayVoiceModal={this.displayVoiceModal}
               closeModal={this.closeModal}
               updateVoiceModal={this.updateVoiceModal}
