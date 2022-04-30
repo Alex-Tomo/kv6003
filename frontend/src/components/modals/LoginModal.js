@@ -75,7 +75,8 @@ class LoginModal extends React.Component {
     })
 
     if (usernameError || passwordError) {
-      document.getElementById("error-notification").classList.remove("is-hidden")
+      document.getElementById("error-notification")
+        .classList.remove("is-hidden")
       return true
     }
 
@@ -107,7 +108,7 @@ class LoginModal extends React.Component {
     }).then(r => {
       this.accept(r)
     }).catch(() => {
-      let errorNotification = document.getElementById("error-notification")
+      const errorNotification = document.getElementById("error-notification")
       errorNotification.innerText = "Could Not Log In"
       errorNotification.classList.remove("is-hidden")
     })
@@ -125,8 +126,8 @@ class LoginModal extends React.Component {
     // logs the user in, saves the user details, closes the modal
     this.props.handleLogin(results.token, results.id, results.type)
 
-    let successMessage = document.getElementById("success-message")
-    let notification = document.getElementById("notification")
+    const successMessage = document.getElementById("success-message")
+    const notification = document.getElementById("notification")
 
     successMessage.innerText = `Welcome ${this.state.username}!`
     notification.classList.add("is-success")
@@ -144,7 +145,7 @@ class LoginModal extends React.Component {
    * displays an error message to the user
    */
   reject = () => {
-    let notification = document.getElementById("error-notification")
+    const notification = document.getElementById("error-notification")
 
     notification.innerText = "Could Not Log In"
     notification.classList.remove("is-hidden")

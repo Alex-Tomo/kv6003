@@ -53,7 +53,7 @@ class MessagesHeader extends React.Component {
             `${this.props.colourTheme}`
         }
       >
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="messages-header-div">
           <div className="messages-header-banner">
           <img
             src={(localStorage.getItem("theme") === "dark") ?
@@ -67,11 +67,11 @@ class MessagesHeader extends React.Component {
             NU Virtual Assistant
             <br/>
             <span className={this.state.status}>
-              <em style={{fontWeight: "bold"}}>{this.state.chatbotAgent}</em>
+              <em className="message-header-em">{this.state.chatbotAgent}</em>
             </span>
           </p>
           </div>
-          <div id="listening" className="is-hidden" style={{ display: "flex", alignItems: "center" }}>
+          <div id="listening" className="is-hidden">
             <p><em>* Listening</em></p>
           </div>
         </div>

@@ -1,6 +1,8 @@
 import React from "react"
 
 /**
+ * Displays the intents modal, allows the user to view
+ * and add more intent data
  *
  * @author - Alex Thompson, W19007452
  */
@@ -15,17 +17,8 @@ class IntentsModal extends React.Component {
   }
 
   /**
-   * Closes the settings modal and displays an updated settings notification
-   * if the user has updated either of there settings
-   */
-  closeModal = () => {
-    this.props.closeModal()
-  }
-
-  /**
-   * Send the users details to the authentication API endpoint,
-   * if the details are valid log the user in, otherwise display
-   * an error to the user
+   * Checks if the input field is not empty then adds
+   * the new intent to the training data
    */
   addIntent = () => {
     if (this.state.intentValue.trim() === "") {
@@ -43,21 +36,20 @@ class IntentsModal extends React.Component {
           intentValue: this.state.intentValue.trim()
         }
       })
-    }).then((response) => {
-      console.log(response)
     }).catch(error => {
       console.log(error)
     })
   }
 
   render() {
+    // splits the intents so they are displayed more clearly
     let intents = ""
     let splitIntents = this.props.intents.split("\n")
 
     if (splitIntents.length > 0) {
       intents = splitIntents.map((intent, i) => {
         return (
-          <p key={i} style={{color: "black", marginBottom: "2px", marginLeft: "10px", textAlign: "start"}}>
+          <p key={i} className="intent-paragraphs">
             {intent}
           </p>
         )
@@ -79,27 +71,25 @@ class IntentsModal extends React.Component {
             {intents}
           </section>
           <footer className="modal-card-foot">
-            <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
+            <div className="intent-modal-footer">
             <input
               placeholder="Type New Intent Here..."
               type="text"
-              className="input"
-              style={{width: "100%", marginBottom: "5px"}}
+              className="input intent-input"
               onChange={(e) => {
                 this.setState({intentValue: e.target.value})
               }}
             />
-            <div style={{display: "flex", flexDirection: "row"}}>
+            <div className="intent-footer-buttons">
               <button
-                style={{width: "60%"}}
-                className="button is-success"
+                className="button is-success intent-success-button"
                 onClick={this.addIntent}
               >
                 Add New Intent
               </button>
-              <button
-                style={{width: "40%"}}
-                className="button cancel">Cancel</button>
+              <button className="button cancel intent-cancel-button">
+                Cancel
+              </button>
               </div>
             </div>
           </footer>

@@ -1,73 +1,12 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
 @import './css/navbar.css';
 @import './css/voice.css';
+@import './css/messages.css';
+@import './css/settings.css';
 
 .App {
   text-align: center;
 }
-
-/* Reference the switch stuff and put in to its own file */
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
-/* end of switch */
 
 html {
   overflow: hidden;
@@ -96,26 +35,6 @@ html {
   grid-area: admin;
 }
 
-#messages-header {
-  grid-area: messages-header;
-}
-
-#messages-header-para {
-  text-align: start;
-}
-
-#messages {
-  grid-area: messages;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  padding-top: 10px;
-}
-
-#messages::-webkit-scrollbar {
- display: none;
-}
-
 .dark {
   background-color: #17141D !important;
   color: white;
@@ -126,98 +45,9 @@ html {
   color: black;
 }
 
-#message-functionality-container {
-  grid-area: message-functionality;
-  display: flex;
-}
-
-#message-functionality {
-  display: flex;
-  background-color: #17141D;
-  color: white;
-  width: 80%;
-  margin: auto;
-}
-
 .container > button {
   background-color: #17141D;
   color: white;
-}
-
-.user-message-container {
-  display: flex;
-  flex-direction: row;
-  margin-right: 10%;
-}
-
-.user-message {
-  width: fit-content;
-  max-width: 45%;
-  word-wrap: break-word;
-  border: 2px solid #D8D8D8;
-  background-color: #D8D8D8;
-  color: black;
-  border-radius: 8px 0 8px 8px;
-  margin: 5px 5px 5px auto;
-  padding: 0 20px;
-}
-
-.user-message p {
-  margin: 1px;
-}
-
-.bot-message-container {
-  display: flex;
-  flex-direction: row;
-  margin-left: 10%;
-}
-
-.bot-message {
-  width: fit-content;
-  max-width: 45%;
-  word-wrap: break-word;
-  border: 2px solid #ACB9CC;
-  background-color: #ACB9CC;
-  color: black;
-  border-radius: 0 8px 8px 8px;
-  margin: 0 auto 5px 5px;
-  padding: 0 20px;
-  min-height: 69px;
-}
-
-.bot-message p {
-  margin: 1px;
-}
-
-.chat-circle {
-  background-color: #17141D;
-  margin-bottom: 5px;
-}
-
-#settings {
-  color: black;
-}
-
-.online {
-  color: green;
-}
-
-.offline {
-  color: red;
-}
-
-.messages-header-banner {
-  margin: 5px 10% 0 10%;
-  display: flex;
-  vertical-align: middle !important;
-}
-
-#messages-header hr {
-  margin: 0;
-}
-
-.messages-header-banner img {
-  margin-right: 10px;
 }
 
 #notification {
@@ -245,23 +75,13 @@ html {
 }
 
 .voice-button {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
+  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 #send-button {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-
-#message-buttons-container {
-  margin: 0 10%;
-  margin-left: 0;
-  display: flex;
-  overflow-y: hidden;
-  overflow-x: auto;
-  flex-wrap: wrap;
-  flex-direction: row;
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
 }
 
 .info-window {
@@ -272,18 +92,9 @@ html {
   margin-bottom: 10px;
 }
 
-#setting-container {
-  display: flex;
-  flex-direction: column;
-}
-
 .field {
   display: flex;
   justify-content: center;
-}
-
-.settings-switch {
-  margin-right: 5px;
 }
 
 .title-dark {
@@ -296,6 +107,150 @@ html {
   width: available;
 }
 
+.intent-paragraphs {
+  color: black;
+  margin-bottom: 2px;
+  margin-left: 10px;
+  text-align: start;
+}
+
+.intent-modal-footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.intent-input {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.intent-footer-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.intent-success-button {
+  width: 60%;
+}
+
+.intent-cancel-button {
+  width: 40%;
+}
+
+.button:hover {
+  transition: 0.3s;
+  border: 2px solid black;
+}
+
+.message-buttons {
+  margin: 2px;
+  width: fit-content;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.navbar-div {
+  height: 70px;
+}
+
+.navbar-div-heading {
+  min-height: 53px;
+  max-height: 53px;
+}
+
+.menu-icon {
+  cursor: pointer;
+}
+
+.messages-header-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.messages-header-em {
+  font-weight: bold;
+}
+
+#listening {
+  display: flex;
+  align-items: center;
+}
+
+#input-message {
+  width: 100%;
+}
+
+.bot-message {
+  min-height: 30px;
+}
+
+.admin-model-table-p {
+  width: 80%;
+  text-align: start;
+  margin: 2.5px 5px;
+}
+
+#models-table {
+  height: max-content;
+  overflow-y: scroll;
+}
+
+#intents-table {
+  height: max-content;
+  overflow-y: scroll;
+}
+
+.admin-tr-intent-row {
+  cursor: pointer;
+}
+
+.admin-incorrect-button {
+  width: fit-content;
+  margin: 2px 2px 2px 0;
+}
+
+#admin {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100%;
+  align-items: stretch;
+}
+
+.admin-retrain-button {
+  width: 25%;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.admin-hr {
+  margin: 0;
+}
+
+.admin-table-head {
+  position: sticky;
+  top: 0;
+  background: #EAEAEA;
+  z-index: 100;
+}
+
+.admin-table-container {
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+#incorrect-responses-table {
+  height: max-content;
+  overflow-y: scroll;
+}
+
+.table {
+  margin: 0;
+}
+
 @media only screen and (max-width: 768px) {
   .modal-card-width {
     width: 60%;
@@ -303,7 +258,7 @@ html {
 
   #message-buttons-container {
     margin: 0;
-    margin-right: 10% !important;
+    margin-right: 20% !important;
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;
@@ -357,6 +312,7 @@ html {
 
   #message-buttons-container {
     margin: 0;
+    margin-right: 10% !important;
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;

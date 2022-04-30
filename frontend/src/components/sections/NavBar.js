@@ -228,8 +228,8 @@ class NavBar extends React.Component {
       return (
         <div id="nav-container" className={this.props.colourTheme}>
           <div id="nav" className={this.props.colourTheme}>
-            <div style={{height: "70px"}}>
-              <h1 id="title" style={{minHeight: "53px", maxHeight: "53px"}}>NUBot</h1>
+            <div className="navbar-div">
+              <h1 id="title" className="navbar-div-heading">NUBot</h1>
             </div>
             {buttons}
           </div>
@@ -240,8 +240,8 @@ class NavBar extends React.Component {
         <div>
           <div id="nav-container" className={this.props.colourTheme}>
             <div id="nav" className={this.props.colourTheme}>
-              <div style={{height: "70px"}}>
-                <h1 id="title" style={{minHeight: "53px", maxHeight: "53px"}}>NUBot</h1>
+              <div className="navbar-div">
+                <h1 id="title" className="navbar-div-heading">NUBot</h1>
               </div>
               <div id="mobile-menu">
                 <img
@@ -252,7 +252,7 @@ class NavBar extends React.Component {
                   alt="Menu Icon"
                   height="40px"
                   width="40px"
-                  style={{cursor: "pointer"}}
+                  className="menu-icon"
                   onClick={() => {
                     this.changeMenu().then(() => this.showMenu())
                   }}

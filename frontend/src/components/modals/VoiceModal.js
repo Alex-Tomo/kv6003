@@ -1,8 +1,9 @@
 import React from "react"
 
 /**
- * The VoiceModal class contains a modal which will display
- * what the user has said.
+ * The VoiceModal class contains a modal which displays
+ * some lines indicating the user can speak. Used purely
+ * as an animation.
  *
  * @author - Alex Thompson, W19007452
  */

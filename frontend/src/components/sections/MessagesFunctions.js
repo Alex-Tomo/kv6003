@@ -1,6 +1,6 @@
 import React from "react"
-import VoiceButton from "../Widgets/VoiceButton"
-import SendButton from "../Widgets/SendButton"
+import VoiceButton from "../ui_elements/VoiceButton"
+import SendButton from "../ui_elements/SendButton"
 
 /**
  * The MessagesFunctions displays the bottom of the messages
@@ -25,7 +25,6 @@ class MessagesFunctions extends React.Component {
           />
           <input
             id="input-message"
-            style={{width: "100%"}}
             placeholder="Type your message here..."
             value={this.props.userInput}
             onChange={this.props.handleInput}

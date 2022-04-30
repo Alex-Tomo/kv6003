@@ -5,13 +5,10 @@ import ArrowDownWhite from "../../assets/arrow_down_white.svg"
 import ArrowUpBlack from "../../assets/arrow_up_black.svg"
 import ArrowUpWhite from "../../assets/arrow_up_white.svg"
 import ClearWhite from "../../assets/clear_white.svg"
-import IntentsModal from "../Modals/IntentModal";
-import {Spinner} from "react-bootstrap";
+import IntentsModal from "../modals/IntentModal"
+import {Spinner} from "react-bootstrap"
 
 /**
- * TODO: Store messages of many types
- * TODO: Needs cleaning up
- *
  * The Admin page is only available to admin users, this stores
  * and displays messages with unknown or incorrect responses.
  *
@@ -87,7 +84,7 @@ class Admin extends React.Component {
       return
     }
 
-    if (prompt("Are you sure you want to retrain the model?") === null) return
+    if (!window.confirm("Are you sure you want to retrain the model?")) return
 
     this.setState({training: true})
     fetch("http://localhost:5005/webhooks/retrainmodel/webhook", {
@@ -101,7 +98,7 @@ class Admin extends React.Component {
   }
 
   replaceModel = (modelFileName) => {
-    if (prompt("Are you sure you want to load " + modelFileName + "?") === null) return
+    if (!window.confirm(`Are you sure you want to load ${modelFileName}?`)) return
 
     fetch("http://localhost:5005/model", {
       method: 'PUT',
@@ -122,6 +119,54 @@ class Admin extends React.Component {
     })
   }
 
+  loadModels = () => {
+    fetch("http://localhost:5005/webhooks/get_models/webhook", {
+      method: 'POST'
+    }).then(data => {
+      return data.json()
+    }).then(data => {
+      this.setState({models: data.filenames})
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  closeAllTables = () => {
+    const modelsTable = document.getElementById("models-table")
+    const modelsArrow = document.getElementById("models-arrow")
+    const incorrectResponsesTable =
+      document.getElementById("incorrect-responses-table")
+    const incorrectResponsesArrow =
+      document.getElementById("incorrect-response-arrow")
+    const intentsTable = document.getElementById("intents-table")
+    const intentsArrow = document.getElementById("intents-arrow")
+
+    modelsTable.classList.add("is-hidden")
+    incorrectResponsesTable.classList.add("is-hidden")
+    intentsTable.classList.add("is-hidden")
+
+    modelsArrow.src =
+      (localStorage.getItem("theme") === "dark") ?
+        ArrowDownWhite : ArrowDownBlack
+
+    incorrectResponsesArrow.src =
+      (localStorage.getItem("theme") === "dark") ?
+        ArrowDownWhite : ArrowDownBlack
+    intentsArrow.src =
+      (localStorage.getItem("theme") === "dark") ?
+        ArrowDownWhite : ArrowDownBlack
+  }
+
+  openTable = (tableName, tableArrow) => {
+    const table = document.getElementById(tableName)
+    const arrow = document.getElementById(tableArrow)
+
+    table.classList.remove("is-hidden")
+    arrow.src =
+      (localStorage.getItem("theme") === "dark") ?
+        ArrowUpWhite : ArrowUpBlack
+  }
+
   render() {
     let models = ""
 
@@ -130,7 +175,7 @@ class Admin extends React.Component {
         return (
           <tr key={i} className={localStorage.getItem("theme")}>
             <td>
-              <p style={{width: "80%", textAlign: "start", margin: "2.5px 5px"}}>
+              <p className="admin-model-table-p">
                 {model}
               </p>
             </td>
@@ -153,15 +198,14 @@ class Admin extends React.Component {
     if (this.state.intents.length > 0) {
       intents = this.state.intents.map((intent, i) => {
         return (
-          <tr key={i} className={localStorage.getItem("theme")}
+          <tr key={i} className={localStorage.getItem("theme") + " admin-tr-intent-row"}
               onClick={async () => {
                 await this.setState({modal: <IntentsModal title={intent.intent} intents={intent.examples}/>})
                 await this.addCloseModalListener()
               }}
-              style={{cursor: "pointer"}}
           >
             <td>
-              <p style={{width: "80%", textAlign: "start", margin: "2.5px 5px"}}>
+              <p className="admin-model-table-p">
                 {intent.intent}
               </p>
             </td>
@@ -179,7 +223,7 @@ class Admin extends React.Component {
             <td><p>{result.user_message}</p></td>
             <td><p>{result.bot_message}</p></td>
             <td>
-              <button style={{width: "fit-content", margin: "2.5px 2.5px 2.5px 0"}} className="button is-danger"
+              <button className="button is-danger admin-incorrect-button"
                       onClick={() => this.removeIncorrectMessage(result.id)}>
                 <img src={ClearWhite} alt="Delete Icon"/>
               </button>
@@ -190,50 +234,25 @@ class Admin extends React.Component {
     }
 
     return (
-      <div id="admin" style={{
-        display: "flex",
-        flexDirection: "column",
-        overflowY: "scroll",
-        height: "100%",
-        alignItems: "stretch"
-      }}>
+      <div id="admin">
         <button
           onClick={this.retrainModel}
           disabled={this.state.training}
-          className="button"
-          style={{width: "25%", margin: "20px auto", padding: "10px"}}
+          className="button admin-retrain-button"
         >
           {(this.state.training) ? "Training" : "Retrain model"}
         </button>
 
-        <hr
-          style={{margin: "0"}}
-        />
+        <hr className="admin-hr" />
         <div
-          style={{cursor: "pointer", padding: "10px", display: "flex", justifyContent: "center"}}
+          className="admin-table-container"
           onClick={() => {
             if (document.getElementById("models-table").classList.contains("is-hidden")) {
-              fetch("http://localhost:5005/webhooks/get_models/webhook", {
-                method: 'POST'
-              }).then(data => {
-                return data.json()
-              }).then(data => {
-                this.setState({models: data.filenames})
-              }).catch(error => {
-                console.log(error)
-              })
-
-              document.getElementById("models-table").classList.remove("is-hidden")
-              document.getElementById("incorrect-responses-table").classList.add("is-hidden")
-              document.getElementById("intents-table").classList.add("is-hidden")
-
-              document.getElementById("models-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowUpWhite : ArrowUpBlack
-              document.getElementById("incorrect-response-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
+              this.closeAllTables()
+              this.openTable("models-table", "models-arrow")
+              this.loadModels()
             } else {
-              document.getElementById("models-table").classList.add("is-hidden")
-
-              document.getElementById("models-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
-              document.getElementById("intents-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
+              this.closeAllTables()
             }
           }}>
           <h2>
@@ -246,17 +265,14 @@ class Admin extends React.Component {
         <div
           id="models-table"
           className="is-hidden"
-          style={{height: "max-content", overflowY: "scroll"}}
         >
-          <hr
-            style={{margin: "0"}}
-          />
+          <hr className="admin-hr" />
           {(models) ?
-            <table className="table" style={{margin: "0"}}>
+            <table className="table">
               <thead>
               <tr>
-                <th style={{position: "sticky", top: "0", background: "#EAEAEA", zIndex: "100"}}>Model Name</th>
-                <th style={{position: "sticky", top: "0", background: "#EAEAEA", zIndex: "100"}}>Run Model</th>
+                <th className="admin-table-head">Model Name</th>
+                <th className="admin-table-head">Run Model</th>
               </tr>
               </thead>
               <tbody>
@@ -264,33 +280,25 @@ class Admin extends React.Component {
               </tbody>
             </table>
             :
-            <Spinner animation="border" role="status">
+            <div>
+              <Spinner animation="border" role="status" />
               <span>Loading Models...</span>
-            </Spinner>
+            </div>
           }
 
         </div>
-        <hr
-          style={{margin: "0"}}
-        />
+
+        <hr className="admin-hr" />
 
         <div
-          style={{cursor: "pointer", padding: "10px", display: "flex", justifyContent: "center"}}
+          className="admin-table-container"
           onClick={() => {
             if (document.getElementById("intents-table").classList.contains("is-hidden")) {
+              this.closeAllTables()
+              this.openTable("intents-table", "intents-arrow")
               this.getIntentions()
-
-              document.getElementById("intents-table").classList.remove("is-hidden")
-              document.getElementById("incorrect-responses-table").classList.add("is-hidden")
-              document.getElementById("models-table").classList.add("is-hidden")
-
-              document.getElementById("intents-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowUpWhite : ArrowUpBlack
-              document.getElementById("incorrect-response-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
-              document.getElementById("models-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
             } else {
-              document.getElementById("intents-table").classList.add("is-hidden")
-
-              document.getElementById("intents-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
+              this.closeAllTables()
             }
           }}>
           <h2>
@@ -303,18 +311,15 @@ class Admin extends React.Component {
         <div
           id="intents-table"
           className="is-hidden"
-          style={{height: "max-content", overflowY: "scroll"}}
         >
-          <hr
-            style={{margin: "0"}}
-          />
+          <hr className="admin-hr" />
 
             {(intents) ?
-              <table className="table" style={{margin: "0"}}>
+              <table className="table">
                 <thead>
                 <tr>
-                  <th style={{position: "sticky", top: "0", background: "#EAEAEA", zIndex: "100"}}>Recognised Intentions
-                    (Click to add more data)
+                  <th className="admin-table-head">
+                    Recognised Intentions (Click to add more data)
                   </th>
                 </tr>
                 </thead>
@@ -323,33 +328,24 @@ class Admin extends React.Component {
                 </tbody>
               </table>
               :
-              <Spinner animation="border" role="status">
+              <div>
+                <Spinner animation="border" role="status" />
                 <span>Loading Intentions...</span>
-              </Spinner>
+              </div>
             }
 
         </div>
-        <hr
-          style={{margin: "0"}}
-        />
+        <hr className="admin-hr" />
 
         <div
-          style={{cursor: "pointer", padding: "10px", display: "flex", justifyContent: "center"}}
+          className="admin-table-container"
           onClick={() => {
             if (document.getElementById("incorrect-responses-table").classList.contains("is-hidden")) {
+              this.closeAllTables()
+              this.openTable("incorrect-responses-table", "incorrect-response-arrow")
               this.getIncorrectMessages()
-
-              document.getElementById("incorrect-responses-table").classList.remove("is-hidden")
-              document.getElementById("intents-table").classList.add("is-hidden")
-              document.getElementById("models-table").classList.add("is-hidden")
-
-              document.getElementById("incorrect-response-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowUpWhite : ArrowUpBlack
-              document.getElementById("intents-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
             } else {
-              document.getElementById("incorrect-responses-table").classList.add("is-hidden")
-
-              document.getElementById("incorrect-response-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
-              document.getElementById("models-arrow").src = (localStorage.getItem("theme") === "dark") ? ArrowDownWhite : ArrowDownBlack
+              this.closeAllTables()
             }
           }}>
           <h2>
@@ -362,18 +358,16 @@ class Admin extends React.Component {
         <div
           id="incorrect-responses-table"
           className="is-hidden"
-          style={{height: "max-content", overflowY: "scroll"}}>
-          <hr
-            style={{margin: "0"}}
-          />
+        >
+          <hr className="admin-hr" />
 
             {(incorrectResults) ?
-              <table className="table" style={{margin: "0"}}>
+              <table className="table">
                 <thead>
                 <tr>
-                  <th style={{position: "sticky", top: "0", background: "#EAEAEA", zIndex: "100"}}>User Message</th>
-                  <th style={{position: "sticky", top: "0", background: "#EAEAEA", zIndex: "100"}}>Bot Message</th>
-                  <th style={{position: "sticky", top: "0", background: "#EAEAEA", zIndex: "100"}}>Remove</th>
+                  <th className="admin-table-head">User Message</th>
+                  <th className="admin-table-head">Bot Message</th>
+                  <th className="admin-table-head">Remove</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -381,15 +375,15 @@ class Admin extends React.Component {
                 </tbody>
               </table>
               :
-              <Spinner animation="border" role="status">
+              <div>
+                <Spinner animation="border" role="status" />
                 <span>Loading Incorrect Results...</span>
-              </Spinner>
+              </div>
             }
 
         </div>
-        <hr
-          style={{margin: "0"}}
-        />
+
+        <hr className="admin-hr" />
 
         {this.state.modal}
       </div>

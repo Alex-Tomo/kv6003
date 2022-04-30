@@ -70,7 +70,7 @@ class SignupModal extends React.Component {
    * @returns {boolean} - true is there are errors
    */
   checkUserDetails = () => {
-    let errorMessage = document.getElementById("error-message")
+    const errorMessage = document.getElementById("error-message")
     errorMessage.innerHTML = ""
     document.getElementById("error-notification").classList.add("is-hidden")
 
@@ -101,7 +101,8 @@ class SignupModal extends React.Component {
     })
 
     if (usernameError || passwordError || repeatPasswordError) {
-      document.getElementById("error-notification").classList.remove("is-hidden")
+      document.getElementById("error-notification")
+        .classList.remove("is-hidden")
       return true
     }
     return false
@@ -127,8 +128,8 @@ class SignupModal extends React.Component {
       this.props.accountCreated()
       this.props.closeModal()
 
-      let message = document.getElementById("success-message")
-      let notification = document.getElementById("notification")
+      const message = document.getElementById("success-message")
+      const notification = document.getElementById("notification")
 
       message.innerText = "Account Successfully Created"
       notification.classList.add("is-success")

@@ -24,9 +24,10 @@ class ApiMessagesController extends Controller
       $id = $this->getRequest()->getParameter("id");
       $type = $this->getRequest()->getParameter("type");
       $message = $this->getRequest()->getParameter("message");
+      $link = $this->getRequest()->getParameter("link");
       $date = $this->getRequest()->getParameter("date");
 
-      $this->getGateway()->addMessage($id, $type, $message, $date);
+      $this->getGateway()->addMessage($id, $type, $message, $link, $date);
 
     } else if ($this->getRequest()->getParameter("remove") !== null) {
       $this->getGateway()->removeMessages($this->getRequest()->getParameter("id"));

@@ -3,19 +3,19 @@ import React from "react"
 import NavBar from "../sections/NavBar"
 import Messages from "../sections/Messages"
 import MessagesFunctions from "../sections/MessagesFunctions"
-import SignupModal from "../Modals/SignupModal"
-import LoginModal from "../Modals/LoginModal"
+import SignupModal from "../modals/SignupModal"
+import LoginModal from "../modals/LoginModal"
 import MessagesHeader from "../sections/MessagesHeader"
-import SettingsModal from "../Modals/SettingsModal"
+import SettingsModal from "../modals/SettingsModal"
 import AccountCircleBlack from "../../assets/account_circle_black.svg"
 import AccountCircleWhite from "../../assets/account_circle_white.svg"
 import RobotBlack from "../../assets/robot_black.svg"
 import RobotWhite from "../../assets/robot_white.svg"
 import MoreBlack from "../../assets/more_black.svg"
 import Admin from "../sections/Admin"
-import VoiceModal from "../Modals/VoiceModal"
-import Map from "../Widgets/Map"
-import {Redirect, Route} from "react-router-dom";
+import VoiceModal from "../modals/VoiceModal"
+import Map from "../ui_elements/Map"
+import MessageButton from "../ui_elements/MessageButton"
 
 /**
  * The Home page will be displayed is the main page
@@ -41,10 +41,12 @@ class HomePage extends React.Component {
       loggedIn: false,
       accessToken: "",
       user_id: null,
-      user_type: (localStorage.getItem("user_type") === null) ? "" : localStorage.getItem("user_type"),
+      user_type: (localStorage.getItem("user_type") === null) ?
+        "" : localStorage.getItem("user_type"),
       initialMessageSend: false,
       displayAdmin: false,
-      voiceText: ""
+      voiceText: "",
+      saveMessages: false
     }
 
     if (localStorage.getItem("theme") === null) {
@@ -156,44 +158,13 @@ class HomePage extends React.Component {
         return r.json()
       })
       .then(d => {
-        let botText = []
-        let tempArray = this.state.responses
-        let buttons = []
-
-        if (d.length > 0) {
-          for (let i = 0; i < d.length; i++) {
-            if (d[i].text !== undefined) {
-              botText.push({"text": d[i].text, "image": undefined, "buttons": [], "link": undefined})
-            }
-
-            try {
-              if (d[i].image !== undefined) {
-                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
-              }
-            } catch (error) {}
-
-            try {
-              if (d[i].buttons.length > 0) {
-                for (let j = 0; j < d[i].buttons.length; j++) {
-                  buttons.push(d[i].buttons[j].title)
-                }
-                botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
-              }
-            } catch (error) {}
-
-          }
-          tempArray.push({
-            sender: this.BOT,
-            message: botText
-          })
-        }
-        this.setState({
-          responses: tempArray
-        })
-
+        this.getMessageFromBot(d)
       })
       .then(() => {
-        this.setState({isSending: false})
+        this.setState({
+          isSending: false,
+          saveMessages: true
+        })
 
         if (localStorage.getItem("sound") === 'true') {
           this.speak()
@@ -204,7 +175,109 @@ class HomePage extends React.Component {
       })
   }
 
-  // only run if the user is logged in
+  /**
+   * Recieve the message from the bot and structure the data
+   * to be displayed correctly
+   *
+   * @param d - the incoming message
+   */
+  getMessageFromBot = (d) => {
+    let botText = []
+    let tempArray = this.state.responses
+    let newMap = false
+
+    let buttons = []
+
+    if (d.length > 0) {
+      for (let i = 0; i < d.length; i++) {
+        if (d[i].text !== undefined) {
+          botText.push({
+            "text": d[i].text,
+            "image": undefined,
+            "buttons": [],
+            "link": undefined
+          })
+        }
+
+        try {
+          if (d[i].custom.link !== undefined) {
+            botText[botText.length-1].link = d[i].custom.link
+          }
+        } catch (e) {}
+
+        try {
+          if (d[i].custom.my_location !== undefined) {
+            botText[botText.length-1].my_location = true
+            botText[botText.length-1].coordinates = d[i].custom.map
+            newMap = true
+          }
+        } catch (e) {}
+
+        try {
+          if (d[i].custom.map !== undefined) {
+            botText[botText.length-1].coordinates = d[i].custom.map
+            newMap = true
+          }
+        } catch (e) {}
+
+        try {
+          if (d[i].image !== undefined) {
+            botText.push({
+              "text": undefined,
+              "image": d[i].image,
+              "buttons": [],
+              "link": undefined
+            })
+          }
+        } catch (error) {}
+
+        try {
+          if (d[i].buttons.length > 0) {
+            for (let j = 0; j < d[i].buttons.length; j++) {
+              buttons.push(d[i].buttons[j].title)
+            }
+            botText.push({
+              "text": undefined,
+              "image": d[i].image,
+              "buttons": buttons,
+              "link": undefined
+            })
+          }
+        } catch (error) {}
+
+      }
+
+      // only display 1 google map at a time
+      if (newMap) {
+        for (let i = 0; i < tempArray.length; i++) {
+          if (tempArray[i].message[0].coordinates !== undefined) {
+            tempArray[i].message[0].coordinates = undefined
+            tempArray[i].message[0].my_location = undefined
+          }
+        }
+      }
+
+      tempArray.push({
+        sender: this.BOT,
+        message: botText,
+        date: new Date().toString()
+      })
+    }
+
+    if (this.state.loggedIn && this.state.saveMessages) {
+      this.addMessageToDatabase(localStorage.getItem("id"), 'received', botText)
+    }
+
+    this.setState({
+      responses: tempArray
+    })
+  }
+
+  /**
+   * only run if the user is logged in. Gets the users messages
+   * from the database. Checks if the message was sent or received,
+   * and assigns the messages to the correct user
+   */
   getMessages = () => {
     let formData = new FormData()
     formData.append('id', this.state.user_id)
@@ -217,11 +290,12 @@ class HomePage extends React.Component {
     }).then(d => {
       let botText = []
       let tempArray = []
-      let buttons = []
       let type = undefined
 
       if (d.length > 0) {
         for (let i = 0; i < d.length; i++) {
+          console.log(d[i])
+
           if (d[i].type === 'received') {
             if (type === undefined) {
               type = 'received'
@@ -234,24 +308,24 @@ class HomePage extends React.Component {
               botText = []
               type = 'received'
             }
+
             if (d[i].message !== undefined) {
-              botText.push({"text": d[i].message, "image": undefined, "buttons": [], "link": undefined})
+              if (d[i].link !== 'null') {
+                botText.push({
+                  "text": d[i].message,
+                  "image": undefined,
+                  "buttons": [],
+                  "link": d[i].link
+                })
+              } else {
+                botText.push({
+                  "text": d[i].message,
+                  "image": undefined,
+                  "buttons": [],
+                  "link": undefined
+                })
+              }
             }
-
-            try {
-              if (d[i].image !== undefined) {
-                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
-              }
-            } catch (error) {}
-
-            try {
-              if (d[i].buttons.length > 0) {
-                for (let j = 0; j < d[i].buttons.length; j++) {
-                  buttons.push(d[i].buttons[j].title)
-                }
-                botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
-              }
-            } catch (error) {}
           } else {
             if (type === undefined) {
               type = 'sent'
@@ -265,23 +339,13 @@ class HomePage extends React.Component {
               type = 'sent'
             }
             if (d[i].message !== undefined) {
-              botText.push({"text": d[i].message, "image": undefined, "buttons": [], "link": undefined})
+              botText.push({
+                "text": d[i].message,
+                "image": undefined,
+                "buttons": [],
+                "link": undefined
+              })
             }
-
-            try {
-              if (d[i].image !== undefined) {
-                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
-              }
-            } catch (error) {}
-
-            try {
-              if (d[i].buttons.length > 0) {
-                for (let j = 0; j < d[i].buttons.length; j++) {
-                  buttons.push(d[i].buttons[j].title)
-                }
-                botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
-              }
-            } catch (error) {}
           }
         }
       }
@@ -326,8 +390,7 @@ class HomePage extends React.Component {
    * @param userMsg
    */
   addIncorrectMessage = (botMsg, userMsg = "") => {
-    const result = prompt("Do you give permission for your message to be saved?")
-    if (result !== 'yes') return
+    if (!window.confirm("Do you give permission for your message to be saved?")) return
 
     let formData = new FormData()
     formData.append('incorrect', "true")
@@ -343,16 +406,24 @@ class HomePage extends React.Component {
     })
   }
 
+  /**
+   * Sends the message to the bot, checks if the user is logged in
+   * and updates the database. If the message cannot be sent show
+   * an error notification.
+   *
+   * @param msg - the message being send to the bot
+   */
   sendMessageToBot = (msg) => {
     if (this.state.isSending) return
 
+    // To close the voice modal
     this.closeModal()
 
     this.setState({
       isSending: true
     })
 
-    if (this.state.loggedIn) {
+    if (this.state.loggedIn && this.state.saveMessages) {
       this.addMessageToDatabase(localStorage.getItem("id"), 'sent', msg)
     }
 
@@ -376,85 +447,7 @@ class HomePage extends React.Component {
         return r.json()
       })
       .then(d => {
-        if (d[0].text === "Sorry, i do not understand...") {
-          this.addUnknownMessage(msg)
-        }
-
-        let botText = []
-        let tempArray = this.state.responses
-        let newMap = false
-
-        let buttons = []
-
-        if (d.length > 0) {
-          for (let i = 0; i < d.length; i++) {
-            if (d[i].text !== undefined) {
-              botText.push({"text": d[i].text, "image": undefined, "buttons": [], "link": undefined})
-            }
-
-            try {
-              if (d[i].custom.link !== undefined) {
-                botText[botText.length-1].link = d[i].custom.link
-              }
-            } catch (e) {}
-
-            try {
-              if (d[i].custom.my_location !== undefined) {
-                botText[botText.length-1].my_location = true
-                botText[botText.length-1].coordinates = d[i].custom.map
-                newMap = true
-              }
-            } catch (e) {}
-
-            try {
-              if (d[i].custom.map !== undefined) {
-                botText[botText.length-1].coordinates = d[i].custom.map
-                newMap = true
-              }
-            } catch (e) {}
-
-            try {
-              if (d[i].image !== undefined) {
-                botText.push({"image": d[i].image, "text": undefined, "buttons": [], "link": undefined})
-              }
-            } catch (error) {}
-
-            try {
-              if (d[i].buttons.length > 0) {
-                for (let j = 0; j < d[i].buttons.length; j++) {
-                  buttons.push(d[i].buttons[j].title)
-                }
-              botText.push({"image": d[i].image, "text": undefined, "buttons": buttons, "link": undefined})
-              }
-            } catch (error) {}
-
-          }
-
-          // only display 1 google map at a time
-          if (newMap) {
-            for (let i = 0; i < tempArray.length; i++) {
-              if (tempArray[i].message[0].coordinates !== undefined) {
-                tempArray[i].message[0].coordinates = undefined
-                tempArray[i].message[0].my_location = undefined
-              }
-            }
-          }
-
-          tempArray.push({
-            sender: this.BOT,
-            message: botText,
-            date: new Date().toString()
-          })
-        }
-
-        if (this.state.loggedIn) {
-          this.addMessageToDatabase(localStorage.getItem("id"), 'received', botText)
-        }
-
-        this.setState({
-          responses: tempArray
-        })
-
+        this.getMessageFromBot(d)
       })
       .then(() => {
         if (localStorage.getItem("sound") === 'true') {
@@ -465,15 +458,18 @@ class HomePage extends React.Component {
           isSending: false
         })
       })
-      .catch(error => {
-        document.getElementById("success-message").innerText = "Could Not Send Message"
-        document.getElementById("notification").classList.add("is-danger")
-        document.getElementById("notification").classList.remove("is-hidden")
+      .catch(() => {
+        const message = document.getElementById("success-message")
+        const notification = document.getElementById("success-notification")
+
+        message.innerText = "Could Not Send Message"
+        notification.classList.add("is-danger")
+        notification.classList.remove("is-hidden")
 
         setTimeout(() => {
-          document.getElementById("success-message").innerText = ""
-          document.getElementById("notification").classList.add("is-hidden")
-          document.getElementById("notification").classList.remove("is-danger")
+          message.innerText = ""
+          notification.classList.add("is-hidden")
+          notification.classList.remove("is-danger")
         }, 3000)
         this.setState({isSending: false})
       })
@@ -487,11 +483,16 @@ class HomePage extends React.Component {
    * @param type => 'sent' or 'received'
    * @param msg => the message => do not include buttons
    */
-  addMessageToDatabase = (id, type, msg) => {
+  addMessageToDatabase = (id, type, msg, link) => {
+
     if (typeof msg == "object") {
       for (let i = 0; i < msg.length; i++) {
+        let msgLink = msg[i].link
+        if (msgLink === undefined) {
+          msgLink = null
+        }
         if (msg[i].text !== undefined) {
-          this.addMessageToDatabase(id, type, msg[i].text)
+          this.addMessageToDatabase(id, type, msg[i].text, msgLink)
         }
       }
       return
@@ -502,18 +503,20 @@ class HomePage extends React.Component {
     formData.append('id', id)
     formData.append('type', type)
     formData.append('message', msg)
+    formData.append('link', link)
     formData.append('date', new Date().toString())
 
     fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
       method: 'POST',
       body: formData
-    }).then(() => {
-      // console.log("Message added")
     }).catch(() => {
       console.log("Could not add message")
     })
   }
 
+  /**
+   * Display the signup modal
+   */
   displaySignupModal = async () => {
     await this.setState({
       modal: <SignupModal
@@ -524,6 +527,9 @@ class HomePage extends React.Component {
 
   }
 
+  /**
+   * Display the login modal
+   */
   displayLoginModal = async () => {
     await this.setState({
       modal: <LoginModal
@@ -532,6 +538,9 @@ class HomePage extends React.Component {
     })
   }
 
+  /**
+   * Display the settings modal
+   */
   displaySettingsModal = async () => {
     await this.setState({
       modal: <SettingsModal
@@ -540,6 +549,9 @@ class HomePage extends React.Component {
     })
   }
 
+  /**
+   * Display the voice modal
+   */
   displayVoiceModal = async () => {
     await this.setState({
       modal: <VoiceModal
@@ -549,16 +561,18 @@ class HomePage extends React.Component {
     })
   }
 
-  updateVoiceModal = async (voiceText) => {
-    const voiceModal = document.getElementById("voice-modal-text")
-
-    voiceModal.innerText = voiceText.toString()
-  }
-
+  /**
+   * closes the currently open modal
+   */
   closeModal = () => {
     this.setState({modal: <></>})
   }
 
+  /**
+   * Log the user out and removes all relevant details.
+   * When the user has logged out redirect them, refresh the
+   * page.
+   */
   handleLogout = async () => {
     await this.setState({
       accessToken: "",
@@ -571,26 +585,17 @@ class HomePage extends React.Component {
     localStorage.removeItem("id")
     localStorage.removeItem("user_type")
 
-    let msg = document.getElementById("success-message")
-    let notification = document.getElementById("notification")
-
-    msg.innerText = "Logged Out"
-    notification.classList.add("is-success")
-    notification.classList.remove("is-hidden")
-
-    setTimeout(() => {
-      msg.innerText = ""
-      notification.classList.add("is-hidden")
-      notification.classList.remove("is-success")
-    }, 3000)
-
-    if (this.state.responses.length === 0) {
-      this.sendInitialMessage()
-    }
-
     window.location.href = "http://localhost:3000"
   }
 
+  /**
+   * When the user logs in, load their messages
+   * from the database.
+   *
+   * @param token - JWT token
+   * @param id - the user id
+   * @param type - the user type (admin or not)
+   */
   handleLogin = async (token, id, type) => {
     await this.setState({
       accessToken: token,
@@ -605,10 +610,18 @@ class HomePage extends React.Component {
     await localStorage.setItem("user_type", type)
 
     this.closeModal()
-    this.getMessages()
-    this.sendInitialMessage()
+    await this.getMessages()
+    await this.sendInitialMessage()
   }
 
+  /**
+   * If the user is logged in and is an admin user
+   * set the state to true, this gives the user an
+   * additional admin button option. And displays
+   * the admin page.
+   *
+   * @param value - boolean true or false
+   */
   updateAdmin = async (value) => {
     this.setState({displayAdmin: value})
   }
@@ -622,30 +635,18 @@ class HomePage extends React.Component {
         key = i
         let buttons = ""
 
+        // displays a list of buttons to the user
         if (response.message.length > 0) {
           response.message.forEach(message => {
             if ((message.buttons !== null) && (message.buttons.length > 0)) {
               buttons = message.buttons.map((button, i) => {
                 if (button !== "None") {
                   return (
-                    <div key={i}>
-                      <button
-                        className="button"
-                        id="buttons"
-                        onClick={() => {
-                          this.sendMessageToBot(button)
-                        }}
-                        style={{
-                          margin: "2.5px",
-                          width: "fit-content",
-                          whiteSpace: "normal",
-                          wordWrap: "break-word"
-                        }}
-                      >
-                        <span>{button}</span>
-                      </button>
-                      <br/>
-                    </div>
+                    <MessageButton
+                      key={i}
+                      title={button}
+                      sendMessage={() => this.sendMessageToBot(button)}
+                    />
                   )
                 }
               })
@@ -794,6 +795,7 @@ class HomePage extends React.Component {
         }
       })
 
+      // while the bots message is loading display an is typing message
       if (this.state.responses[this.state.responses.length-1].sender === this.USER) {
         responses.push(
           <div className="bot-message-container" key={key+1}>
@@ -854,7 +856,6 @@ class HomePage extends React.Component {
               handleClick={this.handleClickSendButton}
               displayVoiceModal={this.displayVoiceModal}
               closeModal={this.closeModal}
-              updateVoiceModal={this.updateVoiceModal}
             />
           </>
         }

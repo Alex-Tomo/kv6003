@@ -20,16 +20,17 @@ class ApiMessagesGateway extends Gateway
     $this->setResult($result);
   }
 
-  public function addMessage($id, $type, $message, $date)
+  public function addMessage($id, $type, $message, $link, $date)
   {
     $sql = "
-      INSERT INTO kv6003_messages (user_id, type, message, date_added) 
-      VALUES (:id, :type, :message, :date)
+      INSERT INTO kv6003_messages (user_id, type, message, link, date_added) 
+      VALUES (:id, :type, :message, :link, :date)
     ";
     $params = [
       ":id" => $id,
       ":type" => $type,
       ":message" => $message,
+      ":link" => $link,
       ":date" => $date
     ];
     $result = $this->getDatabase()->executeSQL($sql, $params);

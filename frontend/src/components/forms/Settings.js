@@ -15,6 +15,11 @@ import SoundIcon from "../../assets/sound_black.svg"
  */
 
 class Settings extends React.Component {
+  /**
+   * Removes all the users messages from the database
+   *
+   * @param id - the users id
+   */
   clearUserMessages = (id) => {
     let formData = new FormData()
     formData.append('id', id)
@@ -24,79 +29,80 @@ class Settings extends React.Component {
       method: 'POST',
       body: formData
     })
-    .then(result => {
-      window.location.href = "http://localhost:3000"
-    })
-    .catch(error => {
-      alert("Could not delete messages")
-    })
+      .then(() => {
+        window.location.href = "http://localhost:3000"
+      })
+      .catch(() => {
+        alert("Could not delete messages")
+      })
   }
 
   render() {
     const userId = localStorage.getItem("id")
+    let clearMessagesButton =  ""
+
+    if (userId !== null) {
+      clearMessagesButton = (
+        <div style={{marginTop: "20px"}}>
+          <button
+            className="button is-danger"
+            onClick={() => {
+              this.clearUserMessages(userId)
+            }}
+          >
+            Clear Messages
+          </button>
+        </div>
+      )
+    }
 
     return (
-        <div id="settings">
-          <div id="setting-container">
-            <div className="field">
-              <img
-                className="settings-switch"
-                src={LightIcon}
-                alt="Colour Theme Icon"
+      <div id="settings">
+        <div id="setting-container">
+          <div className="field">
+            <img
+              className="settings-switch"
+              src={LightIcon}
+              alt="Colour Theme Icon"
+            />
+            <label className="switch">
+              <input
+                type="checkbox"
+                onChange={this.props.changeColourTheme}
+                checked={this.props.colourThemeChecked}
               />
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  onChange={this.props.changeColourTheme}
-                  checked={this.props.colourThemeChecked}
-                />
-                <span className="slider round"/>
-              </label>
-              <img
-                className="settings-switch"
-                src={DarkIcon}
-                alt="Colour Theme Icon"
-              />
-            </div>
-
-            <div className="field">
-              <img
-                className="settings-switch"
-                src={MuteIcon}
-                alt="Mute Icon"
-              />
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  onChange={this.props.handleChange}
-                  checked={this.props.isChecked}
-                />
-                <span className="slider round"/>
-              </label>
-              <img
-                className="settings-switch"
-                src={SoundIcon}
-                alt="Sound Icon"
-              />
-            </div>
-            {
-              (userId !== null) ?
-                <div style={{marginTop: "20px"}}>
-                  <button
-                    className="button is-danger"
-                    onClick={() => {
-                      this.clearUserMessages(userId)
-                    }}
-                  >
-                    Clear Messages
-                  </button>
-                </div>
-                :
-                null
-            }
-
+              <span className="slider round"/>
+            </label>
+            <img
+              className="settings-switch"
+              src={DarkIcon}
+              alt="Colour Theme Icon"
+            />
           </div>
+
+          <div className="field">
+            <img
+              className="settings-switch"
+              src={MuteIcon}
+              alt="Mute Icon"
+            />
+            <label className="switch">
+              <input
+                type="checkbox"
+                onChange={this.props.handleChange}
+                checked={this.props.isChecked}
+              />
+              <span className="slider round"/>
+            </label>
+            <img
+              className="settings-switch"
+              src={SoundIcon}
+              alt="Sound Icon"
+            />
+          </div>
+          {clearMessagesButton}
         </div>
+      </div>
     )
   }
 }

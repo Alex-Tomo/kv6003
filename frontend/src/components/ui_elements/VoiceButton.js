@@ -24,7 +24,8 @@ const VoiceButton = (props) => {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition()
 
-  document.querySelectorAll(('.modal-background') || []).forEach((close) => {
+  document.querySelectorAll(('.modal-background') || [])
+    .forEach((close) => {
     close.addEventListener('click', () => {
       props.closeModal()
       resetTranscript()

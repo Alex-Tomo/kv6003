@@ -65,7 +65,10 @@ class SettingsModal extends React.Component {
     let message = document.getElementById("success-message")
     let notification = document.getElementById("notification")
 
-    if (this.colourTheme !== this.state.colourTheme || this.sound !== this.state.soundChecked) {
+    if (
+      this.colourTheme !== this.state.colourTheme ||
+      this.sound !== this.state.soundChecked
+    ) {
       message.innerText = `Settings Updated`
       notification.classList.add("is-success")
       notification.classList.remove("is-hidden")

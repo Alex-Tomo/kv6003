@@ -30,7 +30,7 @@ class Messages extends React.Component {
               alt="Account Circle"
               className={`chat-circle  ${localStorage.getItem("theme")}`}
             />
-            <div className="bot-message" style={{minHeight: "30px"}}>
+            <div className="bot-message">
               <p><em>is typing...</em></p>
             </div>
           </div>
