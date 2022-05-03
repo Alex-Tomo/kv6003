@@ -10,6 +10,9 @@ import string
 from .constants.constants import BASE_BUILDING_URL
 
 
+"""
+Gets all building names and code
+"""
 def getAllBuildings():
     response = requests.get(BASE_BUILDING_URL)
 
@@ -23,6 +26,13 @@ def getAllBuildings():
     return buildings
 
 
+"""
+Uses Levenshtein distance to get the building code thats
+most similiar to the give buildingCode
+
+buildingCode -> Building code to be checked
+buildings -> List of all the buildings in the database 
+"""
 def getMostLikelyBuildingByCode(buildingCode, buildings):
     mostLikelyBuildingName = None
     mostLikelyBuildingCode = None
@@ -45,6 +55,13 @@ def getMostLikelyBuildingByCode(buildingCode, buildings):
     return {"ratio": ratio, "name": buildingName, "code": buildingCode}
 
 
+"""
+Uses Levenshtein distance to get the building name thats
+most similiar to the give buildingName
+
+buildingName -> Building name to be checked
+buildings -> List of all the buildings in the database 
+"""
 def getMostLikelyBuildingByName(buildingName, buildings):
     mostLikelyBuildingName = None
     mostLikelyBuildingCode = None

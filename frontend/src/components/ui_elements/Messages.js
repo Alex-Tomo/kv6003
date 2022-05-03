@@ -14,13 +14,18 @@ class Messages extends React.Component {
   render() {
     let hidden = false
     try {
-      hidden = document.getElementById("messages").className.includes("is-hidden")
+      hidden = document.getElementById("messages")
+          .className.includes("is-hidden")
     } catch (e) {}
 
     return (
       <div
         id="messages"
-        className={(hidden) ? "is-hidden " + this.props.colourTheme : "" + this.props.colourTheme}
+        className={
+          (hidden) ?
+            `is-hidden ${this.props.colourTheme}` :
+            `${this.props.colourTheme}`
+        }
       >
         {(this.props.responses.length > 0) ? this.props.responses :
           <div className="bot-message-container">
@@ -28,10 +33,12 @@ class Messages extends React.Component {
               src={(localStorage.getItem("theme") === "dark") ?
                 RobotWhite : RobotBlack}
               alt="Account Circle"
-              className={`chat-circle  ${localStorage.getItem("theme")}`}
+              className={`chat-circle ${localStorage.getItem("theme")}`}
             />
-            <div className="bot-message">
-              <p><em>is typing...</em></p>
+            <div className="bot-message-typing">
+              <div className="typing-one" />
+              <div className="typing-two" />
+              <div className="typing-three" />
             </div>
           </div>
         }

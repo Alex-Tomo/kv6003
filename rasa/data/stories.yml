@@ -637,6 +637,8 @@ stories:
   - action: action_ask_about_buildings
   - intent: show_map
   - action: utter_campus_map
+  - action: utter_can_i_help
+
 
 - story: interactive_story_1
   steps:
@@ -1035,6 +1037,7 @@ stories:
   steps:
   - intent: campus_map
   - action: utter_campus_map
+  - action: utter_can_i_help
 
 - story: interactive_story_1
   steps:
@@ -1058,3 +1061,10 @@ stories:
   - action: action_get_building_location
   - intent: generic_affirm
   - action: action_location_after_confirmation
+
+
+- story: start again
+  steps:
+  - intent: start_over
+  - action: action_offer_help
+

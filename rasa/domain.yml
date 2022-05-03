@@ -3,6 +3,7 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: false
 intents:
+- start_over
 - building_location
 - get_directions_from_my_location
 - generic_affirm
@@ -133,40 +134,46 @@ slots:
     - type: from_entity
       entity: building_name_destination
   lecturer:
-    type: categorical
+    type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: lecturer
-    values:
-    - jeremy ellman
-    - christina vasiliou
-    - kay rogage
-    - alex thompson
 responses:
   utter_greet:
-  - text: Hi, welcome to NUChat, I am your helper bot.
+  - text: Hi, welcome to NUChat, I am your helper bot. I have been developed as part of the KV6003 individual computing project module. Type 'Start Over' at any moment to start from the beginning.
   utter_goodbye:
   - text: Bye
   - text: Goodbye
   - text: Have a great day!
+    buttons:
+      - title: Wake Up
+        payload: /generic_greet
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
   utter_can_i_help:
   - text: Is there anything else I can help with?
+    buttons:
+    - title: Yes
+      payload: /affirm
+    - title: No
+      payload: /deny
   utter_default:
   - text: Sorry, i do not understand...
+    buttons:
+    - title: Start Over
+      payload: /action_offer_help
   utter_course_fees:
-  - text: Current course fees for UK students is £9,250 per year. Current course fees for international students is £16,500 per year.
+  - text: According to the data that i found, current course fees for UK students is £9,250 per year and current course fees for international students is £16,500 per year.
   utter_how_to_apply:
-  - text: The admissions team can be contacted on 0191 406 0901 or at bc.applicantservices@northumbria.ac.uk via email.
+  - text: To apply for a course you can contact admissions team by phone on 0191 406 0901 or you can contact the admissions team by email at bc.applicantservices@northumbria.ac.uk.
   utter_extensions:
-  - text: You must submit an ‘Application for Authorisation for Late Submission of Assessed Work’ before the hand-in deadline. Visit the ask4help desk or phone ask4help on 0191 227 4646 for more information.
+  - text: To apply for an extension an ‘Application for Authorisation for Late Submission of Assessed Work’ must be submitted before the hand-in deadline. You can visit the ask4help desk located in the library or you can phone ask4help on 0191 227 4646.
   utter_campus_map:
-  - text: Here is the campus map
+  - text: Here is the Newcastle city campus map
     image: http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map
   utter_which_email:
-  - text: Whose email do you want to see?
+  - text: Whose email would you like to see?
 actions:
 - action_accommodation
 - action_ask_about_buildings

@@ -31,4 +31,4 @@ rules:
   steps:
     - intent: courses_extensions
     - action: utter_extensions
-
+    - action: utter_can_i_help

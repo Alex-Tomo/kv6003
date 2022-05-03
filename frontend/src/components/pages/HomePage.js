@@ -1,7 +1,7 @@
 import React from "react"
 
 import NavBar from "../sections/NavBar"
-import Messages from "../sections/Messages"
+import Messages from "../ui_elements/Messages"
 import MessagesFunctions from "../sections/MessagesFunctions"
 import SignupModal from "../modals/SignupModal"
 import LoginModal from "../modals/LoginModal"
@@ -185,17 +185,26 @@ class HomePage extends React.Component {
     let botText = []
     let tempArray = this.state.responses
     let newMap = false
-
+    let newButton = false
     let buttons = []
 
     if (d.length > 0) {
+      const date = new Date()
+      let formattedDate = ""
+      if (date.getHours() > 12 || date.getHours() === 0) {
+        formattedDate = `${date.getHours()}:${date.getMinutes()}PM`
+      } else {
+        formattedDate = `${date.getHours()}:${date.getMinutes()}AM`
+      }
+
       for (let i = 0; i < d.length; i++) {
         if (d[i].text !== undefined) {
           botText.push({
-            "text": d[i].text,
-            "image": undefined,
-            "buttons": [],
-            "link": undefined
+            text: d[i].text,
+            image: undefined,
+            buttons: [],
+            link: undefined,
+            date: formattedDate
           })
         }
 
@@ -223,10 +232,11 @@ class HomePage extends React.Component {
         try {
           if (d[i].image !== undefined) {
             botText.push({
-              "text": undefined,
-              "image": d[i].image,
-              "buttons": [],
-              "link": undefined
+              text: undefined,
+              image: d[i].image,
+              buttons: [],
+              link: undefined,
+              date: formattedDate
             })
           }
         } catch (error) {}
@@ -237,14 +247,26 @@ class HomePage extends React.Component {
               buttons.push(d[i].buttons[j].title)
             }
             botText.push({
-              "text": undefined,
-              "image": d[i].image,
-              "buttons": buttons,
-              "link": undefined
+              text: undefined,
+              image: d[i].image,
+              buttons: buttons,
+              link: undefined,
+              date: formattedDate
             })
+            newButton = true
           }
         } catch (error) {}
+      }
 
+      // only display 1 set of buttons at a time
+      if (newButton) {
+        for (let i = 0; i < tempArray.length; i++) {
+          for (let j = 0; j < tempArray[i].message.length; j++) {
+            if (tempArray[i].message[j].buttons.length > 0) {
+              tempArray[i].message[j].buttons = []
+            }
+          }
+        }
       }
 
       // only display 1 google map at a time
@@ -259,8 +281,7 @@ class HomePage extends React.Component {
 
       tempArray.push({
         sender: this.BOT,
-        message: botText,
-        date: new Date().toString()
+        message: botText
       })
     }
 
@@ -294,8 +315,6 @@ class HomePage extends React.Component {
 
       if (d.length > 0) {
         for (let i = 0; i < d.length; i++) {
-          console.log(d[i])
-
           if (d[i].type === 'received') {
             if (type === undefined) {
               type = 'received'
@@ -312,17 +331,19 @@ class HomePage extends React.Component {
             if (d[i].message !== undefined) {
               if (d[i].link !== 'null') {
                 botText.push({
-                  "text": d[i].message,
-                  "image": undefined,
-                  "buttons": [],
-                  "link": d[i].link
+                  text: d[i].message,
+                  image: undefined,
+                  buttons: [],
+                  link: d[i].link,
+                  date: d[i].date_added
                 })
               } else {
                 botText.push({
-                  "text": d[i].message,
-                  "image": undefined,
-                  "buttons": [],
-                  "link": undefined
+                  text: d[i].message,
+                  image: undefined,
+                  buttons: [],
+                  link: undefined,
+                  date: d[i].date_added
                 })
               }
             }
@@ -340,10 +361,11 @@ class HomePage extends React.Component {
             }
             if (d[i].message !== undefined) {
               botText.push({
-                "text": d[i].message,
-                "image": undefined,
-                "buttons": [],
-                "link": undefined
+                text: d[i].message,
+                image: undefined,
+                buttons: [],
+                link: undefined,
+                date: d[i].date_added
               })
             }
           }
@@ -390,7 +412,8 @@ class HomePage extends React.Component {
    * @param userMsg
    */
   addIncorrectMessage = (botMsg, userMsg = "") => {
-    if (!window.confirm("Do you give permission for your message to be saved?")) return
+    if (!window.confirm("Do you give permission for your message to be saved?"))
+      return
 
     let formData = new FormData()
     formData.append('incorrect', "true")
@@ -427,10 +450,26 @@ class HomePage extends React.Component {
       this.addMessageToDatabase(localStorage.getItem("id"), 'sent', msg)
     }
 
+    const date = new Date()
+    let formattedDate = ""
+    if (date.getHours() > 12 || date.getHours() === 0) {
+      formattedDate = `${date.getHours()}:${date.getMinutes()}PM`
+    } else {
+      formattedDate = `${date.getHours()}:${date.getMinutes()}AM`
+    }
+
     let tempArray = this.state.responses
     tempArray.push({
       sender: this.USER,
-      message: [{"text": msg, "image": undefined, "buttons": [], "link": undefined}],
+      message: [
+        {
+          text: msg,
+          image: undefined,
+          buttons: [],
+          link: undefined,
+          date: formattedDate
+        }
+      ],
       buttons: [],
       date: new Date().toString()
     })
@@ -498,13 +537,21 @@ class HomePage extends React.Component {
       return
     }
 
+    const date = new Date()
+    let formattedDate = ""
+    if (date.getHours() > 12 || date.getHours() === 0) {
+      formattedDate = `${date.getHours()}:${date.getMinutes()}PM`
+    } else {
+      formattedDate = `${date.getHours()}:${date.getMinutes()}AM`
+    }
+
     let formData = new FormData()
     formData.append('add', true)
     formData.append('id', id)
     formData.append('type', type)
     formData.append('message', msg)
     formData.append('link', link)
-    formData.append('date', new Date().toString())
+    formData.append('date', formattedDate)
 
     fetch('http://unn-w19007452.newnumyspace.co.uk/kv6003/api/messages', {
       method: 'POST',
@@ -574,6 +621,9 @@ class HomePage extends React.Component {
    * page.
    */
   handleLogout = async () => {
+    if (!window.confirm("Are you sure you want to log out?"))
+      return
+
     await this.setState({
       accessToken: "",
       user_id: null,
@@ -658,12 +708,17 @@ class HomePage extends React.Component {
           if (message.text !== undefined) {
             message.text = message.text.replaceAll("&#13;", "")
             message.text = message.text.replaceAll("&#10;", "\n")
+            message.text = message.text.replaceAll("&#39;", "'")
 
             if (message.link !== undefined) {
               let text = message.text.split("{?}")
               return (
                 <div className="bot-message" key={i}>
                   <p>{text[0]}<a href={message.link}>this link</a>{text[1]}</p>
+                  <br />
+                  <p style={{textAlign: "end", fontSize: "small"}}>
+                    <em>Received - {message.date}</em>
+                  </p>
                 </div>
               )
             }
@@ -673,6 +728,10 @@ class HomePage extends React.Component {
                 <div key={i}>
                   <div className="bot-message">
                     <p>{message.text}</p>
+                    <br />
+                    <p style={{textAlign: "end", fontSize: "small"}}>
+                      <em>Received - {message.date}</em>
+                    </p>
                   </div>
                   <Map my_location={true} coordinates={message.coordinates} />
                 </div>
@@ -684,6 +743,10 @@ class HomePage extends React.Component {
                 <div key={i}>
                   <div className="bot-message">
                     <p>{message.text}</p>
+                    <br />
+                    <p style={{textAlign: "end", fontSize: "small"}}>
+                      <em>Received - {message.date}</em>
+                    </p>
                   </div>
                   <Map my_location={undefined} coordinates={message.coordinates} />
                 </div>
@@ -693,6 +756,10 @@ class HomePage extends React.Component {
             return (
               <div className="bot-message" key={i}>
                 <p>{message.text}</p>
+                <br />
+                <p style={{textAlign: "end", fontSize: "small"}}>
+                  <em>Received - {message.date}</em>
+                </p>
               </div>
             )
           } else if (message.image !== undefined) {
@@ -723,6 +790,10 @@ class HomePage extends React.Component {
             <div className="user-message-container" key={i}>
               <div key={i} className="user-message">
                 <p>{response.message[0].text}</p>
+                <br />
+                <p style={{textAlign: "start", fontSize: "small"}}>
+                  <em>Sent - {response.message[0].date}</em>
+                </p>
               </div>
               <img
                 src={(localStorage.getItem("theme") === "dark") ?
@@ -751,14 +822,16 @@ class HomePage extends React.Component {
                       <button className="button" aria-haspopup="true" aria-controls="dropdown-menu"
                         style={{padding: "10px"}}
                         onClick={() => {
-                          if (document.getElementById(`menu${i}`).classList.contains("is-active")) {
-                            document.getElementById(`menu${i}`).classList.remove("is-active")
+                          const menu = document.getElementById(`menu${i}`)
+                          if (menu.classList.contains("is-active")) {
+                            menu.classList.remove("is-active")
                           } else {
-                            document.getElementById(`menu${i}`).classList.add("is-active")
+                            menu.classList.add("is-active")
                           }
                         }}
                         onBlur={() => {
-                          document.getElementById(`menu${i}`).classList.remove("is-active")
+                          const menu = document.getElementById(`menu${i}`)
+                          menu.classList.remove("is-active")
                         }}
                       >
                         <span className="icon is-small">
@@ -803,10 +876,12 @@ class HomePage extends React.Component {
               src={(localStorage.getItem("theme") === "dark") ?
                 RobotWhite : RobotBlack}
               alt="Account Circle"
-              className={`chat-circle  ${localStorage.getItem("theme")}`}
+              className={`chat-circle ${localStorage.getItem("theme")}`}
             />
-            <div className="bot-message" style={{minHeight: "30px"}}>
-              <p><em>is typing...</em></p>
+            <div className="bot-message-typing">
+              <div className="typing-one" />
+              <div className="typing-two" />
+              <div className="typing-three" />
             </div>
           </div>
         )
@@ -816,7 +891,10 @@ class HomePage extends React.Component {
     let displayAdmin = (this.state.displayAdmin) ? "admin" : ""
 
     return (
-      <div id="main-root" className={localStorage.getItem("theme") + " " + displayAdmin}>
+      <div
+        id="main-root"
+        className={`${localStorage.getItem("theme")} ${displayAdmin}`}
+      >
         <NavBar
           colourTheme={localStorage.getItem("theme")}
           displaySignupModal={this.displaySignupModal}
@@ -830,7 +908,10 @@ class HomePage extends React.Component {
           updateAdmin={this.updateAdmin}
         />
 
-        <div id="notification" className="notification is-hidden">
+        <div
+          id="notification"
+          className="notification is-hidden"
+        >
           <p id="success-message" />
         </div>
 

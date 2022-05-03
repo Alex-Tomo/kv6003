@@ -8,6 +8,9 @@ import Levenshtein
 import string
 
 
+"""
+Returns a list of lecturers names and emails
+"""
 def getLecturers():
     lecturers = [
         {"name": "Jeremy Ellman", "email": "jeremy.ellman@northumbria.ac.uk"},
@@ -19,6 +22,12 @@ def getLecturers():
     return lecturers
 
 
+"""
+Uses the Levenshtein distance to check the most likely
+lecturer by name then return their email
+
+lecturer -> the lecturers name to be checked
+"""
 def getMostLikelyLecturer(lecturer):
     lecturers = getLecturers()
     mostLikelyLecturerName = None

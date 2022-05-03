@@ -19,11 +19,11 @@ HOW_CAN_I_HELP_BUTTONS = [
 ]
 
 COURSE_INFORMATION_BUTTONS = [
-    {"title": "modules", "payload": "/show_modules"},
-    {"title": "entry requirements", "payload": "/entry_requirements"},
-    {"title": "fees", "payload": "/course_fees"},
-    {"title": "how to apply", "payload": "/apply"},
-    {"title": "extensions", "payload": "/extensions"},
+    {"title": "Modules", "payload": "/show_modules"},
+    {"title": "Entry Requirements", "payload": "/entry_requirements"},
+    {"title": "Fees", "payload": "/course_fees"},
+    {"title": "How to Apply", "payload": "/apply"},
+    {"title": "Extensions", "payload": "/extensions"},
 ]
 
 YES_NO_BUTTONS = [

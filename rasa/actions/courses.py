@@ -11,6 +11,9 @@ import string
 from .constants.constants import BASE_COURSE_URL
 
 
+"""
+Gets all the course names and codes from the database 
+"""
 def getCourses():
     courses = []
     response = requests.get(BASE_COURSE_URL)
@@ -24,6 +27,13 @@ def getCourses():
     return courses
 
 
+"""
+Uses Levenshtein distance to get the course thats
+most similiar to the given course
+
+course -> course to be checked
+courses -> List of all the courses in the database 
+"""
 def getMostLikelyCourse(course, courses):
     mostLikelyCourseTitle = None
     mostLikelyCourseCode = None
@@ -46,6 +56,12 @@ def getMostLikelyCourse(course, courses):
     return {"ratio": ratio, "course": course, "courseCode": courseCode}
 
 
+"""
+Requests all the modules in a course
+
+courseCode -> used to filter all the courses
+year -> can be 'all', 1, 2, 3 or 4
+"""
 def getCourseModulesByYear(courseCode, year):
     if year.lower() == "all":
         response = requests.get(
@@ -62,6 +78,11 @@ def getCourseModulesByYear(courseCode, year):
     return modules
 
 
+"""
+Requests the entry requirements for a course
+
+courseCode -> used to filter all the courses
+"""
 def getCourseEntryRequirements(courseCode):
     response = requests.get(
         f"{BASE_COURSE_URL}?course_code={courseCode}&entry_requirements=true"

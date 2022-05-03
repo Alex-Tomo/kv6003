@@ -1,549 +1,554 @@
-version: '3.0'
-
-nlu: 
-  - intent: generic_greet
-    examples: |
-      - hey
-      - hello
-      - hi
-      - hello there
-      - good morning
-      - good evening
-      - moin
-      - hey there
-      - let's go
-      - hey dude
-      - goodmorning
-      - goodevening
-      - good afternoon
-      - heya
-      - hiya
-      - hey ya
-      - helo
-      - het
-      - heyaa
-      - heloo
-      - hey friend
-      - hello bot
-      - greetings
-      - greeting
-      - gretings
-      - howdy
-      - howde
-      - welcome
-      - hi welcome
-      - bonjour
-      - good day.
-      - gud day
-      - how goes it
-      - what's up
-      - what's happening
-      - hi-ya
-      - nice to meet you
-      - good day sire
-      - yoooo
-  - intent: generic_goodbye
-    examples: |
-      - cu
-      - good by
-      - cee you later
-      - good night
-      - bye
-      - goodbye
-      - have a nice day
-      - see you around
-      - bye bye
-      - see you later
-      - gudbye
-      - bye -bye
-      - bye-bye
-      - by by
-      - cu l8r
-      - cu later
-      - c u later
-      - later
-      - cheerio
-      - so long
-      - see you another day
-      - ive got to go now
-      - im going now
-      - good day
-      - adios
-      - toodle-oo
-      - ciao
-      - im leaving
-      - g2g
-      - gtg
-      - got to go
-      - byee
-      - byeee
-      - seee you
-      - see you
-      - be seeing you
-  - intent: generic_affirm
-    examples: |
-      - yes
-      - y
-      - indeed
-      - of course
-      - that sounds good
-      - correct
-      - assert
-      - confirm
-      - corect
-      - ye
-      - yea
-      - yeah
-      - yess
-      - okay
-      - ok
-      - k
-      - okie
-      - okey
-      - affirm
-      - affirmative
-      - yes!
-  - intent: generic_deny
-    examples: |
-      - no
-      - n
-      - never
-      - I don't think so
-      - don't like that
-      - no way
-      - not really
-      - nop
-      - nope
-      - nah
-      - no way!
-      - nah!
-      - refuse
-      - reject
-      - turn down
-      - disprove
-      - negate
-      - negative
-      - definately not
-      - definitely not
-  - intent: generic_thank
-    examples: |
-      - thanks
-      - thank you
-      - cheers
-      - cool
-      - sound
-      - ty
-      - thnx
-      - thx
-  - intent: bot_challenge
-    examples: |
-      - are you a bot?
-      - are you a human?
-      - am I talking to a bot?
-      - am I talking to a human?
-      - who are you?
-      - whom are you?
-      - to whom am i speaking
-      - to whom am i speaking?
-      - you are not a human
-      - you are not a human, are you
-      - you are not a human, are you?
-      - you are not a human are you
-      - you are not a human are you?
-      - you are a bot
-      - your a bot
-      - youre a bot
-      - you're a bot
-  - intent: help_user_needs_help
-    examples: |
-      - i need help
-      - what can you do?
-      - im lost
-      - i am lost
-      - i'm lost
-      - help
-  - intent: courses_interest_in_course
-    examples: |
-      - I want to know about a course
-      - I'm interested in taking a course
-      - Im interested in taking a course
-      - a course
-      - course
-      - What courses
-      - tell me about the available courses
-      - what courses are there
-      - which courses are there
-  - intent: courses_select_course
-    examples: |
-      - [Computer and Digital Forensics BSc](course)
-      - [Computer and Digital Forensics](course)
-      - [Computer Networks and Cyber Security BSc](course)
-      - [Computer Science BSc](course)
-      - [Computer Science with Artificial Intelligence BSc](course)
-      - [Computer Science with Games Development BSc](course)
-      - [Computer Science with Web Development BSc](course)
-      - [computer and digital forensics bsc](course)
-      - [computer and digital forensics](course)
-      - [computer Networks and cyber security bsc](course)
-      - [computer science bsc](course)
-      - [computer science with artificial intelligence bsc](course)
-      - [computer science with games development bsc](course)
-      - [computer science with web development bsc](course)
-      - [web development](course)
-      - [game development](course)
-      - [games development](course)
-      - [cyber security](course)
-      - [digital forensics](course)
-      - [network security](course)
-      - [artificial intelligence](course)
-      - I am interested in [Computer Science BSc](course)
-      - Tell me about [Computer Science BSc](course)
-      - Do you offer [Computer Science](course)?
-  - intent: courses_show_modules
-    examples: |
-      - Show me the modules
-      - modules
-      - module
-      - what modules
-      - show modules
-      - the module
-      - the modules
-      - show the modules
-      - which modules are there
-      - Please show me modules.
-      - modules to show me
-      - Modules, please.
-      - show me modules
-      - what modules are on this course
-      - what modules are on [Computer Science](course)?
-      - [Computer Science](course) modules
-      - show me [Computer Science](course) modules
-  - intent: courses_choose_module_type
-    examples: |
-      - [all](year) Modules
-      - Year [1](year) Modules
-      - Year [2](year) Modules
-      - Year [3](year) Modules
-      - Year [4](year) Modules
-      - year [1](year)
-      - year [2](year)
-      - year [3](year)
-      - year [4](year)
-      - [1](year)
-      - [2](year)
-      - [3](year)
-      - [4](year)
-  - intent: courses_choose_modules_for_specific_course
-    examples: |
-      - [computer network security] modules
-      - show me [all](year) the modules for [Computer Science](course)
-      - show me year [1](year) modules for [Computer Science](course)
-      - show me year [2](year) modules for [Computer Science](course)
-      - show me year [3](year) modules for [Computer Science](course)
-      - show me year [4](year) modules for [Computer Science](course)
-  - intent: courses_entry_requirements
-    examples: |
-      - What are the entry requirements
-      - entry requirements
-      - requirements
-      - entry
-      - what do i need
-      - which grades do i need
-      - what grades do i need
-      - are my grades enough
-      - do i have the right grades
-  - intent: courses_entry_requirements_for_course
-    examples: |
-      - [computer network security](course) entry requirements
-      - show me entry requirements for [Computer Science](course)
-      - entry requirements for [Computer Science with Artificial Intelligence BSc](course)
-      - [Computer Science with Games Development BSc](course) entry requirements
-      - what are entry requirements for [Computer Science with Web Development BSc](course)
-      - what are the entry requirements for [computer Networks and cyber security bsc](course)
-      - show me entry requirements for [computer and digital forensics bsc](course)
-      - entry requirements for [computer network security](course)
-      - entry requirements for [computer networks](course)
-  - intent: courses_fees
-    examples: |
-      - fees
-      - fee
-      - how much does this course cost
-      - costs
-      - what are the fees
-      - how much does the course cost
-      - how much is it for international students
-      - how much is it for uk students
-  - intent: courses_apply_for_course
-    examples: |
-      - how do i apply for this course?
-      - I want to apply for this course
-      - can i apply for this course?
-      - apply
-      - apply for course
-      - how do i apply
-      - i want to apply
-  - intent: courses_extensions
-    examples: |
-      - how do i apply for an extension
-      - PEC
-      - extension
-      - extensions
-      - PEC extension
-      - PEC extensions
-      - pec
-      - pec extension
-      - pec extensions
-      - where can i go for an extension
-  - intent: university_accommodation
-    examples: |
-      - accommodation
-      - accomodation
-      - acomodation
-      - acommodation
-      - i need accommodation
-      - where can i find accomodation
-      - what accomodation is there
-      - how much is university accomodation
-      - do you offer accomodation
-  - intent: visit_campus
-    examples: |
-      - i want to visit campus
-      - visit campus
-      - vsiti campus
-      - visit campis
-      - visiting campus
-      - tell me about campus
-      - tell me about northumbria campus
-  - intent: open_days
-    examples: |
-      - help me with open days
-      - when are the opens days
-      - open days
-      - oepn days
-      - open dyas
-      - opne day
-      - I want to visit university campus
-      - i want to come to campus
-      - when i can i visit campus
-      - campus open days
-  - intent: university_facilities
-    examples: |
-      - university facilities
-      - What facilities do you offer
-      - does northumbria have a vr room
-      - does northumbria have a computer building
-      - does northumbria have a library
-      - facilities
-  - intent: campus_map
-    examples: |
-      - Show me the campus map
-      - campus map
-      - show campus map
-      - show me campus map
-      - northumbria map
-      - northumbria campus map
-      - northumbria university map
-      - Campus map
-      - show me the map
-      - show me the map for the buildings
-      - show me map
-      - show map
-      - building map
-  - intent: buildings
-    examples: |
-      - help me with buildings
-      - tell me about the buildings
-      - buildings
-      - building
-      - i want to know about buildings
-      - i need help with buildings
-      - biulding
-      - biuld
-      - buidlings
-  - intent: building_codes_option
-    examples: |
-      - building codes
-      - location codes
-      - buildings codes
-      - building code
-  - intent: building_name
-    examples: |
-      - what is [CCE1](building_code)
-      - what building is [CCE2](building_code)
-      - [CIS](building_code)
-      - what is [EBA](building_code)
-      - what building is [EBB](building_code)
-      - [EBC](building_code)
-      - what is [EBD](building_code)
-      - what building is [EBE](building_code)
-      - [LIP](building_code)
-      - what is [NB](building_code)
-      - what building is [SAN](building_code)
-      - [SQX](building_code)
-      - what is [SQ](building_code)
-      - what building is [SQW](building_code)
-      - [SUB](building_code)
-      - what is [WJB](building_code)
-      - [CCE1](building_code)
-      - [cce1](building_code)
-      - [EBA](building_code)
-  - intent: building_location_option
-    examples: |
-      - building location
-      - buildings location
-      - building locations
-      - i want to find a building location
-  - intent: building_location
-    examples: |
-      - where is [CCE1](building_code)
-      - where is [City Campus East 1](building_name)
-      - wheres [CCE2](building_code)
-      - wheres [City Campus East 2](building_name)
-      - where is [CIS](building_code)
-      - where is [CIS Building](building_name)
-      - wheres [EBA](building_code)
-      - wheres [Ellison Building A Block](building_name)
-      - where is [EBB](building_code)
-      - where is [Ellison Building B Block](building_name)
-      - wheres [EBC](building_code)
-      - wheres [Ellison Building C Block](building_name)
-      - where is [EBD](building_code)
-      - where is [Ellison Building D Block](building_name)
-      - wheres [EBE](building_code)
-      - wheres [Ellison Building E Block](building_name)
-      - where is [LIP](building_code)
-      - where is [Lipman Building](building_name)
-      - wheres [NB](building_code)
-      - wheres [Northumberland Building](building_name)
-      - where is [SAN](building_code)
-      - where is [Sandyford Building](building_name)
-      - wheres [SQX](building_code)
-      - wheres [Squires Annexe](building_name)
-      - where is [SQ](building_code)
-      - where is [Squires Building](building_name)
-      - wheres [SQW](building_code)
-      - wheres [Squires Workshops](building_name)
-      - where is [SUB](building_code)
-      - where is [Sutherland](building_name)
-      - wheres [WJB](building_code)
-      - wheres [Wynne-Jones Building](building_name)
-      - where is [CCE2](building_code)
-      - where is [Architecture Studios](building_name)
-      - where is [Burt Hall](building_name)
-      - where is [Camden Court](building_name)
-      - where is [Library](building_name)
-      - where is [Sport Central](building_name)
-      - [City Campus East 1](building_name)
-      - [City Campus East 2](building_name)
-      - [CIS Building](building_name)
-      - [Ellison Building A Block](building_name)
-      - [Ellison Building B Block](building_name)
-      - [Ellison Building C Block](building_name)
-      - [Ellison Building D Block](building_name)
-      - [Ellison Building E Block](building_name)
-      - [Lipman Building](building_name)
-      - [Northumberland Building](building_name)
-      - [Sandyford Building](building_name)
-      - [Squires Annexe](building_name)
-      - [Squires Building](building_name)
-      - [Squires Workshops](building_name)
-      - [Sutherland](building_name)
-      - [Wynne-Jones Building](building_name)
-      - [Architecture Studios](building_name)
-      - [Burt Hall](building_name)
-      - [Camden Court](building_name)
-      - [Library](building_name)
-      - [Sport Central](building_name)
-      - where is [city campus west](building_name)
-  - intent: show_building_on_map
-    examples: |
-      - show on campus map
-      - show on map
-      - show map location
-      - Campus Map
-  - intent: get_directions
-    examples: |
-      - get directions
-      - directions
-      - how do i get to building
-      - show building on google maps
-      - show directions on google maps
-      - show directions
-      - show on maps
-      - show directions on maps
-  - intent: get_directions_from_my_location
-    examples: |
-      - how long will it take me to get to [CCE1](building_code)
-      - my location to [EBA](building_code)
-      - how far away is [CIS](building_code)
-      - how do i get to [EBE](building_code)
-      - how long will it take me to get to [City Campus East 1](building_name)
-      - my location to [City Campus East 2](building_name)
-      - how far away is [Sutherland](building_name)
-      - how do i get to [Sandyford Building](building_name)
-      - how do i get to [Lipman Building](building_name)
-      - how long wll it take me to get to [EBB](building_code)
-      - how long will it take me to get to [EBB](building_code)
-      - how long will it take me to get to [EBA](building_code)
-      - my location to [cce1](building_code)
-      - how do i get to [lipman](building_name)
-      - directions from me to [city campus east](building_name)
-      - how far away is [Squire workshops](building_name)
-      - how long to get to [Wynne Jones](building_name)
-      - how long does it take to get to [cis2](building_code)
-      - my location to [sandyford](building_name)
-      - how long from me to get to [Squires Workshops](building_name)
-      - how long from me to get to [Architecture Studios](building_name)
-      - how long from me to get to [Burt Hall](building_name)
-      - how long from me to get to [Camden Court](building_name)
-      - how long from me to get to [Library](building_name)
-      - how long from me to get to [Sport Central](building_name)
-      - my location to [city campus west](building_name)
-  - intent: get_directions_from_another_building
-    examples: |
-      - how long does it take to get from [EBA](building_code) to [CCE1](building_code_destination)
-      - how long will it take me to get from [EBA](building_code) to [SAN](building_code_destination)
-      - distance from [CIS](building_code) to [CCE1](building_code_destination)
-      - [CIS](building_code) to [EBB](building_code_destination)
-      - show [CIS](building_code) and [EBB](building_code_destination)
-      - how long does it take to get from [City Campus East 1](building_name) to [Wynne-Jones Building](building_name_destination)
-      - how long will it take me to get from [City Campus East 2](building_name) to [CIS Building](building_name_destination)
-      - distance from [Sutherland](building_name) to [Ellison Building A Block](building_name_destination)
-      - [Sandyford Building](building_name) to [Northumberland Building](building_name_destination)
-      - show [Lipman Building](building_name) and [Squires Workshops](building_name_destination)
-      - how long to get from [EBA](building_code) to [city campus east](building_name_destination)
-      - how long to get to [EBA](building_code_destination) from [cce1](building_code)
-      - distance from [sutherland](building_name) to [EBA](building_code_destination)
-      - [cis](building_code) to [elison building c block](building_name_destination)
-      - directions to [SQW](building_code_destination) from [CIS building](building_name)
-      - [cis building](building_name) direction to [sport central](building_name_destination)
-      - [cos building](building_name) to [sport central](building_name_destination)
-      - how do i get to [sport central](building_code_destination) from the [cis building](building_code)
-      - from [elison building](building_name_destination) to [cis building](building_name)
-      - from [camden court](building_name_destination) to [Architecture Studios](building_name)
-      - from [sperts centre](building_name_destination) to [Burt Hall](building_name)
-      - from [sports center](building_name_destination) to [Camden Court](building_name)
-      - from [cis building](building_name_destination) to [Library](building_name)
-      - from [elison building c block](building_name_destination) to [Sport Central](building_name)
-      - from [cis](building_code_destination) to [cis](building_code)
-  - intent: lecturers_option
-    examples: |
-      - lecturer
-      - lecturers
-      - tell me about lecturers
-      - show me lecturers
-  - intent: lecturer_email
-    examples: |
-      - what is Dr [Jeremy Ellman](lecturer) email?
-      - show me Dr [Christina Vasiliou](lecturer) email?
-      - whats Dr [Kay Rogage](lecturer) email?
-      - What is [Jeremy Ellman](lecturer) email
-      - [christina vasiliou](lecturer) email?
-      - [kay rogage](lecturer) email
-      - [jeremy ellman](lecturer) email
-      - [alex thompson](lecturer) email
-  - intent: calendar
-    examples: |
-      - calendar
-      - show calendar
-      - calendar dates
+version: "3.0"
+nlu:
+- intent: generic_greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - heya
+    - hiya
+    - hey ya
+    - helo
+    - het
+    - heyaa
+    - heloo
+    - hey friend
+    - hello bot
+    - greetings
+    - greeting
+    - gretings
+    - howdy
+    - howde
+    - welcome
+    - hi welcome
+    - bonjour
+    - good day.
+    - gud day
+    - how goes it
+    - what's up
+    - what's happening
+    - hi-ya
+    - nice to meet you
+    - good day sire
+    - yoooo
+- intent: generic_goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - gudbye
+    - bye -bye
+    - bye-bye
+    - by by
+    - cu l8r
+    - cu later
+    - c u later
+    - later
+    - cheerio
+    - so long
+    - see you another day
+    - ive got to go now
+    - im going now
+    - good day
+    - adios
+    - toodle-oo
+    - ciao
+    - im leaving
+    - g2g
+    - gtg
+    - got to go
+    - byee
+    - byeee
+    - seee you
+    - see you
+    - be seeing you
+- intent: generic_affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - assert
+    - confirm
+    - corect
+    - ye
+    - yea
+    - yeah
+    - yess
+    - okay
+    - ok
+    - k
+    - okie
+    - okey
+    - affirm
+    - affirmative
+    - yes!
+- intent: generic_deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - nop
+    - nope
+    - nah
+    - no way!
+    - nah!
+    - refuse
+    - reject
+    - turn down
+    - disprove
+    - negate
+    - negative
+    - definately not
+    - definitely not
+- intent: generic_thank
+  examples: |
+    - thanks
+    - thank you
+    - cheers
+    - cool
+    - sound
+    - ty
+    - thnx
+    - thx
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - who are you?
+    - whom are you?
+    - to whom am i speaking
+    - to whom am i speaking?
+    - you are not a human
+    - you are not a human, are you
+    - you are not a human, are you?
+    - you are not a human are you
+    - you are not a human are you?
+    - you are a bot
+    - your a bot
+    - youre a bot
+    - you're a bot
+- intent: start_over
+  examples: |
+    - start again
+    - start over
+    - i made a mistake
+    - restart
+- intent: help_user_needs_help
+  examples: |
+    - i need help
+    - what can you do?
+    - im lost
+    - i am lost
+    - i'm lost
+    - help
+- intent: courses_interest_in_course
+  examples: |
+    - I want to know about a course
+    - I'm interested in taking a course
+    - Im interested in taking a course
+    - a course
+    - course
+    - What courses
+    - tell me about the available courses
+    - what courses are there
+    - which courses are there
+- intent: courses_select_course
+  examples: |
+    - [Computer and Digital Forensics BSc](course)
+    - [Computer and Digital Forensics](course)
+    - [Computer Networks and Cyber Security BSc](course)
+    - [Computer Science BSc](course)
+    - [Computer Science with Artificial Intelligence BSc](course)
+    - [Computer Science with Games Development BSc](course)
+    - [Computer Science with Web Development BSc](course)
+    - [computer and digital forensics bsc](course)
+    - [computer and digital forensics](course)
+    - [computer Networks and cyber security bsc](course)
+    - [computer science bsc](course)
+    - [computer science with artificial intelligence bsc](course)
+    - [computer science with games development bsc](course)
+    - [computer science with web development bsc](course)
+    - [web development](course)
+    - [game development](course)
+    - [games development](course)
+    - [cyber security](course)
+    - [digital forensics](course)
+    - [network security](course)
+    - [artificial intelligence](course)
+    - I am interested in [Computer Science BSc](course)
+    - Tell me about [Computer Science BSc](course)
+    - Do you offer [Computer Science](course)?
+- intent: courses_show_modules
+  examples: |
+    - Show me the modules
+    - modules
+    - module
+    - what modules
+    - show modules
+    - the module
+    - the modules
+    - show the modules
+    - which modules are there
+    - Please show me modules.
+    - modules to show me
+    - Modules, please.
+    - show me modules
+    - what modules are on this course
+    - what modules are on [Computer Science](course)?
+    - [Computer Science](course) modules
+    - show me [Computer Science](course) modules
+- intent: courses_choose_module_type
+  examples: |
+    - [all](year) Modules
+    - Year [1](year) Modules
+    - Year [2](year) Modules
+    - Year [3](year) Modules
+    - Year [4](year) Modules
+    - year [1](year)
+    - year [2](year)
+    - year [3](year)
+    - year [4](year)
+    - [1](year)
+    - [2](year)
+    - [3](year)
+    - [4](year)
+- intent: courses_choose_modules_for_specific_course
+  examples: |
+    - [computer network security] modules
+    - show me [all](year) the modules for [Computer Science](course)
+    - show me year [1](year) modules for [Computer Science](course)
+    - show me year [2](year) modules for [Computer Science](course)
+    - show me year [3](year) modules for [Computer Science](course)
+    - show me year [4](year) modules for [Computer Science](course)
+- intent: courses_entry_requirements
+  examples: |
+    - What are the entry requirements
+    - entry requirements
+    - requirements
+    - entry
+    - what do i need
+    - which grades do i need
+    - what grades do i need
+    - are my grades enough
+    - do i have the right grades
+- intent: courses_entry_requirements_for_course
+  examples: |
+    - [computer network security](course) entry requirements
+    - show me entry requirements for [Computer Science](course)
+    - entry requirements for [Computer Science with Artificial Intelligence BSc](course)
+    - [Computer Science with Games Development BSc](course) entry requirements
+    - what are entry requirements for [Computer Science with Web Development BSc](course)
+    - what are the entry requirements for [computer Networks and cyber security bsc](course)
+    - show me entry requirements for [computer and digital forensics bsc](course)
+    - entry requirements for [computer network security](course)
+    - entry requirements for [computer networks](course)
+- intent: courses_fees
+  examples: |
+    - fees
+    - fee
+    - how much does this course cost
+    - costs
+    - what are the fees
+    - how much does the course cost
+    - how much is it for international students
+    - how much is it for uk students
+- intent: courses_apply_for_course
+  examples: |
+    - how do i apply for this course?
+    - I want to apply for this course
+    - can i apply for this course?
+    - apply
+    - apply for course
+    - how do i apply
+    - i want to apply
+- intent: courses_extensions
+  examples: |
+    - how do i apply for an extension
+    - PEC
+    - extension
+    - extensions
+    - PEC extension
+    - PEC extensions
+    - pec
+    - pec extension
+    - pec extensions
+    - where can i go for an extension
+- intent: university_accommodation
+  examples: |
+    - accommodation
+    - accomodation
+    - acomodation
+    - acommodation
+    - i need accommodation
+    - where can i find accomodation
+    - what accomodation is there
+    - how much is university accomodation
+    - do you offer accomodation
+- intent: visit_campus
+  examples: |
+    - i want to visit campus
+    - visit campus
+    - vsiti campus
+    - visit campis
+    - visiting campus
+    - tell me about campus
+    - tell me about northumbria campus
+- intent: open_days
+  examples: |
+    - help me with open days
+    - when are the opens days
+    - open days
+    - oepn days
+    - open dyas
+    - opne day
+    - I want to visit university campus
+    - i want to come to campus
+    - when i can i visit campus
+    - campus open days
+- intent: university_facilities
+  examples: |
+    - university facilities
+    - What facilities do you offer
+    - does northumbria have a vr room
+    - does northumbria have a computer building
+    - does northumbria have a library
+    - facilities
+- intent: campus_map
+  examples: |
+    - Show me the campus map
+    - campus map
+    - show campus map
+    - show me campus map
+    - northumbria map
+    - northumbria campus map
+    - northumbria university map
+    - Campus map
+    - show me the map
+    - show me the map for the buildings
+    - show me map
+    - show map
+    - building map
+- intent: buildings
+  examples: |
+    - help me with buildings
+    - tell me about the buildings
+    - buildings
+    - building
+    - i want to know about buildings
+    - i need help with buildings
+    - biulding
+    - biuld
+    - buidlings
+- intent: building_codes_option
+  examples: |
+    - building codes
+    - location codes
+    - buildings codes
+    - building code
+- intent: building_name
+  examples: |
+    - what is [CCE1](building_code)
+    - what building is [CCE2](building_code)
+    - [CIS](building_code)
+    - what is [EBA](building_code)
+    - what building is [EBB](building_code)
+    - [EBC](building_code)
+    - what is [EBD](building_code)
+    - what building is [EBE](building_code)
+    - [LIP](building_code)
+    - what is [NB](building_code)
+    - what building is [SAN](building_code)
+    - [SQX](building_code)
+    - what is [SQ](building_code)
+    - what building is [SQW](building_code)
+    - [SUB](building_code)
+    - what is [WJB](building_code)
+    - [CCE1](building_code)
+    - [cce1](building_code)
+    - [EBA](building_code)
+- intent: building_location_option
+  examples: |
+    - building location
+    - buildings location
+    - building locations
+    - i want to find a building location
+- intent: building_location
+  examples: |
+    - where is [CCE1](building_code)
+    - where is [City Campus East 1](building_name)
+    - wheres [CCE2](building_code)
+    - wheres [City Campus East 2](building_name)
+    - where is [CIS](building_code)
+    - where is [CIS Building](building_name)
+    - wheres [EBA](building_code)
+    - wheres [Ellison Building A Block](building_name)
+    - where is [EBB](building_code)
+    - where is [Ellison Building B Block](building_name)
+    - wheres [EBC](building_code)
+    - wheres [Ellison Building C Block](building_name)
+    - where is [EBD](building_code)
+    - where is [Ellison Building D Block](building_name)
+    - wheres [EBE](building_code)
+    - wheres [Ellison Building E Block](building_name)
+    - where is [LIP](building_code)
+    - where is [Lipman Building](building_name)
+    - wheres [NB](building_code)
+    - wheres [Northumberland Building](building_name)
+    - where is [SAN](building_code)
+    - where is [Sandyford Building](building_name)
+    - wheres [SQX](building_code)
+    - wheres [Squires Annexe](building_name)
+    - where is [SQ](building_code)
+    - where is [Squires Building](building_name)
+    - wheres [SQW](building_code)
+    - wheres [Squires Workshops](building_name)
+    - where is [SUB](building_code)
+    - where is [Sutherland](building_name)
+    - wheres [WJB](building_code)
+    - wheres [Wynne-Jones Building](building_name)
+    - where is [CCE2](building_code)
+    - where is [Architecture Studios](building_name)
+    - where is [Burt Hall](building_name)
+    - where is [Camden Court](building_name)
+    - where is [Library](building_name)
+    - where is [Sport Central](building_name)
+    - [City Campus East 1](building_name)
+    - [City Campus East 2](building_name)
+    - [CIS Building](building_name)
+    - [Ellison Building A Block](building_name)
+    - [Ellison Building B Block](building_name)
+    - [Ellison Building C Block](building_name)
+    - [Ellison Building D Block](building_name)
+    - [Ellison Building E Block](building_name)
+    - [Lipman Building](building_name)
+    - [Northumberland Building](building_name)
+    - [Sandyford Building](building_name)
+    - [Squires Annexe](building_name)
+    - [Squires Building](building_name)
+    - [Squires Workshops](building_name)
+    - [Sutherland](building_name)
+    - [Wynne-Jones Building](building_name)
+    - [Architecture Studios](building_name)
+    - [Burt Hall](building_name)
+    - [Camden Court](building_name)
+    - [Library](building_name)
+    - [Sport Central](building_name)
+    - where is [city campus west](building_name)
+- intent: show_building_on_map
+  examples: |
+    - show on campus map
+    - show on map
+    - show map location
+    - Campus Map
+- intent: get_directions
+  examples: |
+    - get directions
+    - directions
+    - how do i get to building
+    - show building on google maps
+    - show directions on google maps
+    - show directions
+    - show on maps
+    - show directions on maps
+- intent: get_directions_from_my_location
+  examples: |
+    - how long will it take me to get to [CCE1](building_code)
+    - my location to [EBA](building_code)
+    - how far away is [CIS](building_code)
+    - how do i get to [EBE](building_code)
+    - how long will it take me to get to [City Campus East 1](building_name)
+    - my location to [City Campus East 2](building_name)
+    - how far away is [Sutherland](building_name)
+    - how do i get to [Sandyford Building](building_name)
+    - how do i get to [Lipman Building](building_name)
+    - how long wll it take me to get to [EBB](building_code)
+    - how long will it take me to get to [EBB](building_code)
+    - how long will it take me to get to [EBA](building_code)
+    - my location to [cce1](building_code)
+    - how do i get to [lipman](building_name)
+    - directions from me to [city campus east](building_name)
+    - how far away is [Squire workshops](building_name)
+    - how long to get to [Wynne Jones](building_name)
+    - how long does it take to get to [cis2](building_code)
+    - my location to [sandyford](building_name)
+    - how long from me to get to [Squires Workshops](building_name)
+    - how long from me to get to [Architecture Studios](building_name)
+    - how long from me to get to [Burt Hall](building_name)
+    - how long from me to get to [Camden Court](building_name)
+    - how long from me to get to [Library](building_name)
+    - how long from me to get to [Sport Central](building_name)
+    - my location to [city campus west](building_name)
+- intent: get_directions_from_another_building
+  examples: |
+    - how long does it take to get from [EBA](building_code) to [CCE1](building_code_destination)
+    - how long will it take me to get from [EBA](building_code) to [SAN](building_code_destination)
+    - distance from [CIS](building_code) to [CCE1](building_code_destination)
+    - [CIS](building_code) to [EBB](building_code_destination)
+    - show [CIS](building_code) and [EBB](building_code_destination)
+    - how long does it take to get from [City Campus East 1](building_name) to [Wynne-Jones Building](building_name_destination)
+    - how long will it take me to get from [City Campus East 2](building_name) to [CIS Building](building_name_destination)
+    - distance from [Sutherland](building_name) to [Ellison Building A Block](building_name_destination)
+    - [Sandyford Building](building_name) to [Northumberland Building](building_name_destination)
+    - show [Lipman Building](building_name) and [Squires Workshops](building_name_destination)
+    - how long to get from [EBA](building_code) to [city campus east](building_name_destination)
+    - how long to get to [EBA](building_code_destination) from [cce1](building_code)
+    - distance from [sutherland](building_name) to [EBA](building_code_destination)
+    - [cis](building_code) to [elison building c block](building_name_destination)
+    - directions to [SQW](building_code_destination) from [CIS building](building_name)
+    - [cis building](building_name) direction to [sport central](building_name_destination)
+    - [cos building](building_name) to [sport central](building_name_destination)
+    - how do i get to [sport central](building_code_destination) from the [cis building](building_code)
+    - from [elison building](building_name_destination) to [cis building](building_name)
+    - from [camden court](building_name_destination) to [Architecture Studios](building_name)
+    - from [sperts centre](building_name_destination) to [Burt Hall](building_name)
+    - from [sports center](building_name_destination) to [Camden Court](building_name)
+    - from [cis building](building_name_destination) to [Library](building_name)
+    - from [elison building c block](building_name_destination) to [Sport Central](building_name)
+    - from [cis](building_code_destination) to [cis](building_code)
+- intent: lecturers_option
+  examples: |
+    - lecturer
+    - lecturers
+    - tell me about lecturers
+    - show me lecturers
+- intent: lecturer_email
+  examples: |
+    - what is Dr [Jeremy Ellman](lecturer) email?
+    - show me Dr [Christina Vasiliou](lecturer) email?
+    - whats Dr [Kay Rogage](lecturer) email?
+    - What is [Jeremy Ellman](lecturer) email
+    - [christina vasiliou](lecturer) email?
+    - [kay rogage](lecturer) email
+    - [jeremy ellman](lecturer) email
+    - [alex thompson](lecturer) email
+- intent: calendar
+  examples: |
+    - calendar
+    - show calendar
+    - calendar dates

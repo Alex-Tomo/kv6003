@@ -148,6 +148,7 @@ html {
   width: fit-content;
   white-space: normal;
   word-wrap: break-word;
+  font-weight: 500;
 }
 
 .navbar-div {

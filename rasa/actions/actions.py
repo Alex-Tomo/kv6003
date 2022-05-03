@@ -6,11 +6,6 @@ Rasa. When the user gives specific intents a class is run.
 """
 
 from typing import Any, Text, Dict, List
-
-import requests
-import yaml
-import os
-
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
@@ -423,6 +418,7 @@ class ActionGetBuildingLocation(Action):
             origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
+            dispatcher.utter_message(response="utter_can_i_help")
             return []
 
         print(origin)
@@ -431,6 +427,7 @@ class ActionGetBuildingLocation(Action):
             dispatcher.utter_message(
                 text="Sorry, I could not find that building."
             )
+            dispatcher.utter_message(response="utter_can_i_help")
             return []
         elif origin['ratio'] is not None and origin['ratio'] < 0.8:
             dispatcher.utter_message(
@@ -461,8 +458,9 @@ class ActionGetBuildingLocation(Action):
 
         dispatcher.utter_message(
             text=f"{buildingName} is number {buildingNumber} on the map below",
-            image="http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map"
+            image="http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map",
         )
+        dispatcher.utter_message(response="utter_can_i_help")
         return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
 
@@ -492,6 +490,7 @@ class ActionBuildingMap(Action):
             origin = getMostLikelyBuildingByCode(buildingCode, buildings)
         else:
             dispatcher.utter_message(text="I cannot find that building")
+            dispatcher.utter_message(response="utter_can_i_help")
             return []
 
         print(origin)
@@ -500,6 +499,7 @@ class ActionBuildingMap(Action):
             dispatcher.utter_message(
                 text="Sorry, I could not find that building."
             )
+            dispatcher.utter_message(response="utter_can_i_help")
             return []
         elif origin['ratio'] is not None and origin['ratio'] < 0.8:
             dispatcher.utter_message(
@@ -535,6 +535,7 @@ class ActionBuildingMap(Action):
                 }]
             }
         )
+        dispatcher.utter_message(response="utter_can_i_help")
 
         return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
@@ -609,7 +610,7 @@ class ActionMyLocationToBuildingMap(Action):
                 }]
             }
         )
-
+        dispatcher.utter_message(response="utter_can_i_help")
         return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
 
@@ -736,6 +737,7 @@ class ActionGetLocationAfterConfirmation(Action):
 
             if response is None:
                 dispatcher.utter_message(text="I cannot find that building")
+                dispatcher.utter_message(response="utter_can_i_help")
                 return []
 
             buildingNumber = str(response.json()[0]['building_number'])
@@ -745,6 +747,7 @@ class ActionGetLocationAfterConfirmation(Action):
                 text=f"{buildingName} is number {buildingNumber} on the map below",
                 image="http://unn-w19007452.newnumyspace.co.uk/kv6003/campus_map"
             )
+            dispatcher.utter_message(response="utter_can_i_help")
             return [SlotSet('building_code', None), SlotSet('building_name', None)]
         elif last == 'action_building_map':
             response = requests.get(
@@ -754,6 +757,7 @@ class ActionGetLocationAfterConfirmation(Action):
 
             if response is None:
                 dispatcher.utter_message(text="I cannot find that building")
+                dispatcher.utter_message(response="utter_can_i_help")
                 return []
 
             dispatcher.utter_message(
@@ -766,7 +770,7 @@ class ActionGetLocationAfterConfirmation(Action):
                     }]
                 }
             )
-
+            dispatcher.utter_message(response="utter_can_i_help")
             return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
         elif last == 'action_my_location_to_building_map':
@@ -777,6 +781,7 @@ class ActionGetLocationAfterConfirmation(Action):
 
             if response is None:
                 dispatcher.utter_message(text="I cannot find that building")
+                dispatcher.utter_message(response="utter_can_i_help")
                 return []
 
             dispatcher.utter_message(
@@ -790,7 +795,7 @@ class ActionGetLocationAfterConfirmation(Action):
                     }]
                 }
             )
-
+            dispatcher.utter_message(response="utter_can_i_help")
             return [SlotSet('building_code', None), SlotSet('building_name', None)]
 
         return []
@@ -832,7 +837,7 @@ class ActionGetLecturerEmail(Action):
             dispatcher.utter_message(
                 text="I could not find lecturer"
             )
-
+        dispatcher.utter_message(response="utter_can_i_help")
         return []
 
 

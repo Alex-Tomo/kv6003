@@ -29,6 +29,7 @@ class MessagesFunctions extends React.Component {
             value={this.props.userInput}
             onChange={this.props.handleInput}
             onKeyDown={this.props.handleKeyPress}
+            autoComplete="off"
           />
           <SendButton
             isSending={this.props.isSending}
