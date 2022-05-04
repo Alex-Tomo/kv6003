@@ -26,6 +26,7 @@ in one terminal run:
 
 in another terminal run
 
+<code>rasa train</code><br />
 <code>rasa run --enable-api --cors="*" --credentials credentials.yml</code>
 
 ## The backend does not need to be run
