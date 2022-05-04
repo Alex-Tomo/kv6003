@@ -18,21 +18,21 @@ class ApiMessagesController extends Controller
     // if the request is GET return an error
     if (!parent::isValidRequestMethod("POST")) return ["error"];
 
+    $add = $this->getRequest()->getParameter("add");
+    $remove = $this->getRequest()->getParameter("remove");
+    $id = $this->getRequest()->getParameter("id");
+    $type = $this->getRequest()->getParameter("type");
+    $message = $this->getRequest()->getParameter("message");
+    $link = $this->getRequest()->getParameter("link");
+    $date = $this->getRequest()->getParameter("date");
+
     // Add a new message
-    if ($this->getRequest()->getParameter("add") !== null) {
-
-      $id = $this->getRequest()->getParameter("id");
-      $type = $this->getRequest()->getParameter("type");
-      $message = $this->getRequest()->getParameter("message");
-      $link = $this->getRequest()->getParameter("link");
-      $date = $this->getRequest()->getParameter("date");
-
+    if ($add !== null) {
       $this->getGateway()->addMessage($id, $type, $message, $link, $date);
-
-    } else if ($this->getRequest()->getParameter("remove") !== null) {
+    } else if ($remove !== null) {
       $this->getGateway()->removeMessages($this->getRequest()->getParameter("id"));
     // get all users messages
-    } else if ($this->getRequest()->getParameter("id") !== null) {
+    } else if ($id !== null) {
       $this->getGateway()->getMessages($this->getRequest()->getParameter("id"));
     }
 

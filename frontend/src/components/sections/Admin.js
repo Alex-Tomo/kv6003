@@ -244,7 +244,9 @@ class Admin extends React.Component {
     if (this.state.intents.length > 0) {
       intents = this.state.intents.map((intent, i) => {
         return (
-          <tr key={i} className={`${localStorage.getItem('theme')} admin-tr-intent-row`}
+          <tr
+              key={i}
+              className={`${localStorage.getItem('theme')} admin-tr-intent-row`}
               onClick={async () => {
                 await this.setState({
                   modal: <IntentsModal

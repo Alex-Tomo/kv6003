@@ -166,12 +166,18 @@ class ActionShowModules(Action):
             ActionWhichModules.run(self, dispatcher, tracker, domain)
             return []
 
-        moduleButtons = getCourseModulesByYear(courseCode, year)
+        modules = getCourseModulesByYear(courseCode, year)
+        moduleText = ""
+        for i in range(len(modules)):
+            moduleText += modules[i]['title'] + "\n\n"
 
         dispatcher.utter_message(
             text="Here are the modules i found:",
-            buttons=moduleButtons
         )
+        dispatcher.utter_message(
+            text=f"{moduleText}",
+        )
+
         return [SlotSet("year", None)]
 
 
@@ -243,7 +249,6 @@ class ActionSayCourseEntryRequirements(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         course = str(tracker.get_slot("course"))
-        print(course)
 
         if course is None:
             dispatcher.utter_message(
@@ -314,7 +319,7 @@ class ActionGetBuildingName(Action):
 
         if len(response.json()) > 0:
             dispatcher.utter_message(
-                text=f"{buildingCode} is {str(response.json()[0]['building_name'])}",
+                text=f"{str(response.json()[0]['building_code'])} is {str(response.json()[0]['building_name'])}",
                 buttons=[{"title": "Get Directions"}, {"title": "Show on Map"}]
             )
         else:
@@ -406,9 +411,6 @@ class ActionGetBuildingLocation(Action):
 
         buildings = getAllBuildings()
 
-        print(buildingCode)
-        print(buildingName)
-
         origin = []
         response = None
 
@@ -420,8 +422,6 @@ class ActionGetBuildingLocation(Action):
             dispatcher.utter_message(text="I cannot find that building")
             dispatcher.utter_message(response="utter_can_i_help")
             return []
-
-        print(origin)
 
         if origin['ratio'] is not None and origin['ratio'] < 0.4:
             dispatcher.utter_message(
@@ -478,9 +478,6 @@ class ActionBuildingMap(Action):
 
         buildings = getAllBuildings()
 
-        print(buildingCode)
-        print(buildingName)
-
         origin = []
         response = None
 
@@ -492,8 +489,6 @@ class ActionBuildingMap(Action):
             dispatcher.utter_message(text="I cannot find that building")
             dispatcher.utter_message(response="utter_can_i_help")
             return []
-
-        print(origin)
 
         if origin['ratio'] is not None and origin['ratio'] < 0.4:
             dispatcher.utter_message(
@@ -554,9 +549,6 @@ class ActionMyLocationToBuildingMap(Action):
 
         buildings = getAllBuildings()
 
-        print(buildingCode)
-        print(buildingName)
-
         origin = []
         response = None
 
@@ -567,8 +559,6 @@ class ActionMyLocationToBuildingMap(Action):
         else:
             dispatcher.utter_message(text="I cannot find that building")
             return []
-
-        print(origin)
 
         if origin['ratio'] is not None and origin['ratio'] < 0.4:
             dispatcher.utter_message(
@@ -627,11 +617,6 @@ class ActionBuildingToBuildingMap(Action):
         buildingCodeDestination = str(tracker.get_slot("building_code_destination"))
         buildingName = str(tracker.get_slot("building_name"))
         buildingNameDestination = str(tracker.get_slot("building_name_destination"))
-
-        print(buildingCode)
-        print(buildingCodeDestination)
-        print(buildingName)
-        print(buildingNameDestination)
 
         buildings = getAllBuildings()
 
@@ -708,6 +693,7 @@ class ActionBuildingToBuildingMap(Action):
                 ]
             }
         )
+        dispatcher.utter_message(response="utter_can_i_help")
 
         return [
             SlotSet('building_code', None),

@@ -8,7 +8,9 @@
 }
 
 /* Settings Switch */
-/* Reference the switch stuff and put in to its own file */
+/* Reference for the switch code below
+https://stackoverflow.com/questions/45275135/toggle-switch-css
+*/
 
 .settings-switch {
   margin-right: 5px;

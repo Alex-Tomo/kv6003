@@ -775,6 +775,7 @@ class HomePage extends React.Component {
           } else if (message.image !== undefined) {
             return (
             <img
+              key={i}
               className='image campus-map'
               src={message.image}
               alt='map'

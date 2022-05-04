@@ -15,10 +15,13 @@ class ApiBuildingsController extends Controller
 
   protected function processRequest()
   {
-    if ($this->getRequest()->getParameter("building_code") !== null) {
-      $this->getGateway()->getBuildingLocationByCode($this->getRequest()->getParameter("building_code"));
-    } else if ($this->getRequest()->getParameter("building_name") !== null) {
-      $this->getGateway()->getBuildingLocationByName($this->getRequest()->getParameter("building_name"));
+    $buildingCode = $this->getRequest()->getParameter("building_code");
+    $buildingName = $this->getRequest()->getParameter("building_name");
+
+    if ($buildingCode !== null) {
+      $this->getGateway()->getBuildingLocationByCode($buildingCode);
+    } else if ($buildingName !== null) {
+      $this->getGateway()->getBuildingLocationByName($buildingName);
     } else {
       $this->getGateway()->getAllBuildingCodes();
     }

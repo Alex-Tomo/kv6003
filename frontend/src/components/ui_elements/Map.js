@@ -25,7 +25,9 @@ class Map extends Component {
       duration: '',
       distance: ''
     }
+  }
 
+  componentDidMount() {
     if (this.props.my_location !== undefined) {
       this.getMyLocation()
     }
@@ -69,7 +71,7 @@ class Map extends Component {
         let bounds = new maps.LatLngBounds()
 
         // load each marker on the map
-        this.state.markers.map(marker => {
+        this.state.markers.forEach(marker => {
           let infoWindow = new maps.InfoWindow({
             content: `<p class='info-window'>${marker.name}</p>`
           })
@@ -109,8 +111,6 @@ class Map extends Component {
           unitSystem: maps.UnitSystem.IMPERIAL
         }
 
-        let distanceNumber = 0
-
         // get the distance between two locations
         new maps.DistanceMatrixService()
           .getDistanceMatrix(distanceMatrixRequest, (response, status) => {
@@ -118,7 +118,6 @@ class Map extends Component {
               let origins = response.originAddresses
               origins.forEach((origin, originIndex) => {
                 let results = response.rows[originIndex].elements
-                distanceNumber = results[0].distance.value
                 let distance = results[0].distance.text
                 let duration = results[0].duration.text
 

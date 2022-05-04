@@ -51,7 +51,11 @@ class ApiAuthenticateController extends Controller
 
     // Use the JWT class to encode the token
     $jwt = JWT::encode($payload, SECRET_KEY);
-    $data = ['token' => $jwt, 'id' => $this->getGateway()->getResult()[0]['user_id'], 'type' => $this->getGateway()->getResult()[0]['user_type']];
+    $data = [
+      'token' => $jwt,
+      'id' => $this->getGateway()->getResult()[0]['user_id'],
+      'type' => $this->getGateway()->getResult()[0]['user_type']
+    ];
 
     // If the token was not created then
     // return a 401 unauthorised response

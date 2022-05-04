@@ -3,63 +3,41 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: false
 intents:
-- start_over
-- building_location
-- get_directions_from_my_location
-- generic_affirm
-- campus_map
-- get_directions_from_another_building
-- buildings
-- building_name
-- building_location_option
-- courses_choose_module_type
-- generic_deny
-- courses_entry_requirements_for_course
-- courses_select_course
-- building_codes_option
-- generic_greet
-- show_map
-- courses_apply_for_course
-- courses_extensions
-- university_accommodation
-- courses_interest_in_course
-- university_facilities
-- visit_campus
-- open_days
-- courses_show_modules
-- courses_entry_requirements
-- courses_fees
-- courses_choose_modules_for_specific_course
-- generic_thank
-- generic_goodbye
-- bot_challenge
-- give_name
-- ask_which_courses
-- university_scholarships
-- university_loans
-- lecturer_email
-- lecturer_availability
-- lecturer_office
-- half_term
-- when_is_term
-- show_me_the_calendar
-- how_to_apply_for_extension
-- how_to_report_an_absence
-- how_to_file_a_complaint
-- how_to_switch_course
-- how_are_grades_calculated
-- what_support
-- mental_health_support
-- physical_health_support
-- financial_support
-- legal_support
-- struggling
-- discrimination_support
-- lecturers_option
-- show_building_on_map
-- calendar
-- get_directions
-- help_user_needs_help
+  - generic_greet
+  - generic_goodbye
+  - generic_affirm
+  - generic_deny
+  - generic_thank
+  - bot_challenge
+  - start_over
+  - help_user_needs_help
+  - courses_interest_in_course
+  - courses_select_course
+  - courses_show_modules
+  - courses_choose_module_type
+  - courses_choose_modules_for_specific_course
+  - courses_entry_requirements
+  - courses_entry_requirements_for_course
+  - courses_fees
+  - courses_apply_for_course
+  - courses_extensions
+  - university_accommodation
+  - visit_campus
+  - open_days
+  - university_facilities
+  - campus_map
+  - buildings
+  - building_codes_option
+  - building_name
+  - building_location_option
+  - building_location
+  - show_building_on_map
+  - get_directions
+  - get_directions_from_my_location
+  - get_directions_from_another_building
+  - lecturers_option
+  - lecturer_email
+  - calendar
 entities:
 - building_code
 - building_code_destination

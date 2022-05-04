@@ -2,7 +2,7 @@ version: "3.0"
 
 stories:
 
-- story: welcome
+- story: welcome story
   steps:
     - intent: generic_greet
     - action: utter_greet
@@ -46,7 +46,6 @@ stories:
     - intent: generic_deny
     - action: utter_goodbye
 
-
 - story: ask entry requirements
   steps:
     - intent: courses_select_course
@@ -65,12 +64,6 @@ stories:
     - intent: generic_deny
     - action: utter_goodbye
 
-- story: ask how final grade is calculated
-  steps:
-    - intent: how_are_grades_calculated
-    - action: action_grades
-    - action: utter_can_i_help
-
 - story: can i help (yes)
   steps:
     - intent: generic_thank
@@ -85,7 +78,7 @@ stories:
     - intent: generic_deny
     - action: utter_goodbye
 
-- story: interactive_story_1
+- story: user is interested in courses
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -93,23 +86,7 @@ stories:
   - intent: courses_interest_in_course
   - action: action_get_courses
 
-- story: interactive_story_1
-  steps:
-  - intent: generic_greet
-  - action: utter_greet
-  - action: action_offer_help
-  - intent: courses_interest_in_course
-  - action: action_get_courses
-
-- story: interactive_story_2
-  steps:
-  - intent: generic_greet
-  - action: utter_greet
-  - action: action_offer_help
-  - intent: courses_interest_in_course
-  - action: action_get_courses
-
-- story: interactive_story_4
+- story: user is interested in courses (long)
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -125,7 +102,7 @@ stories:
   - slot_was_set:
     - courseCode: G400
 
-- story: interactive_story_1
+- story: user is interested in courses and wants modules
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -153,7 +130,7 @@ stories:
   - intent: generic_deny
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: user asks for modules for a specific course
   steps:
   - intent: courses_choose_modules_for_specific_course
     entities:
@@ -313,7 +290,7 @@ stories:
   - intent: generic_deny
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: user is interested in a course
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -321,7 +298,7 @@ stories:
   - intent: courses_interest_in_course
   - action: action_get_courses
 
-- story: interactive_story_2
+- story: user is interested in a course (long)
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -347,7 +324,7 @@ stories:
   - intent: generic_deny
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: user asks about a building
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -360,7 +337,7 @@ stories:
   - action: action_get_building_name
   - action: utter_can_i_help
 
-- story: interactive_story_1
+- story: user asks about a building 2
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -373,7 +350,7 @@ stories:
   - action: action_get_building_name
   - action: utter_can_i_help
 
-- story: interactive_story_2
+- story: user asks about a building 3
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -386,7 +363,7 @@ stories:
   - action: action_get_building_name
   - action: utter_can_i_help
 
-- story: interactive_story_3
+- story: user asks about a building 4
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -407,7 +384,7 @@ stories:
     - building_code: CCE1
   - action: action_get_building_name
 
-- story: interactive_story_4
+- story: user asks about a building 5
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -422,7 +399,7 @@ stories:
   - intent: generic_deny
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: user asks about a building 6
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -448,7 +425,7 @@ stories:
     - action: action_ask_about_buildings
 
 
-- story: building location
+- story: building location 1
   steps:
     - intent: generic_greet
     - action: utter_greet
@@ -457,7 +434,8 @@ stories:
     - action: action_ask_about_buildings
     - intent: building_location
     - action: action_ask_for_building_name
-- story: interactive_story_1
+
+- story: building location 2
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -472,7 +450,7 @@ stories:
     - building_name: City Campus East 1
   - action: action_get_building_location
 
-- story: interactive_story_2
+- story: building location 3
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -482,7 +460,7 @@ stories:
   - intent: building_location_option
   - action: action_get_building_location
 
-- story: interactive_story_3
+- story: user wants building location
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -500,7 +478,7 @@ stories:
     - building_name: Ellison Building A Block
   - action: action_get_building_location
 
-- story: interactive_story_1
+- story: user wants building location
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -521,7 +499,7 @@ stories:
   - intent: generic_deny
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: user wants building location
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -540,7 +518,7 @@ stories:
   - intent: generic_deny
   - action: utter_goodbye
 
-- story: interactive_story_1
+- story: user wants building location
   steps:
   - intent: buildings
   - action: action_ask_about_buildings
@@ -569,7 +547,7 @@ stories:
   - intent: building_location_option
   - action: action_ask_for_building_name
 
-- story: interactive_story_1
+- story: user wants building location
   steps:
   - intent: buildings
   - action: action_ask_about_buildings
@@ -584,7 +562,7 @@ stories:
     - building_name: Ellison Building B Block
   - action: action_get_building_location
 
-- story: interactive_story_1
+- story: user wants building location
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -603,7 +581,7 @@ stories:
   - action: action_get_building_name
   - action: utter_can_i_help
 
-- story: interactive_story_2
+- story: user wants building location
   steps:
   - intent: buildings
   - action: action_ask_about_buildings
@@ -618,7 +596,7 @@ stories:
     - building_name: City Campus East 2
   - action: action_get_building_location
 
-- story: interactive_story_1
+- story: user wants building location
   steps:
   - intent: buildings
   - action: action_ask_about_buildings
@@ -631,16 +609,7 @@ stories:
     - building_code: LIP
   - action: action_get_building_name
 
-- story: interactive_story_2
-  steps:
-  - intent: buildings
-  - action: action_ask_about_buildings
-  - intent: show_map
-  - action: utter_campus_map
-  - action: utter_can_i_help
-
-
-- story: interactive_story_1
+- story: user asks for lecturer email
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -648,7 +617,7 @@ stories:
   - intent: lecturers_option
   - action: action_lecturer_options
 
-- story: interactive_story_2
+- story: user asks for lecturer email
   steps:
   - intent: generic_greet
   - action: utter_greet
@@ -664,8 +633,7 @@ stories:
     - lecturer: Jeremy Ellman
   - action: action_get_lecturer_email
 
-
-- story: interactive_story_1
+- story: user asks for entry requirements for specific course
   steps:
   - intent: courses_entry_requirements_for_course
     entities:
@@ -677,7 +645,7 @@ stories:
   - intent: generic_deny
   - action: utter_goodbye
 
-- story: interactive_story_2
+- story: user asks about a course
   steps:
   - intent: courses_select_course
     entities:
@@ -688,7 +656,7 @@ stories:
   - intent: generic_affirm
   - action: action_confirm_course_name
 
-- story: interactive_story_1
+- story: user asks about a building
   steps:
   - intent: building_name
     entities:
@@ -715,7 +683,7 @@ stories:
   - intent: show_building_on_map
   - action: action_get_building_location
 
-- story: interactive_story_2
+- story: user asks about a building
   steps:
   - intent: building_name
     entities:
@@ -726,7 +694,7 @@ stories:
   - intent: show_building_on_map
   - action: action_get_building_location
 
-- story: interactive_story_3
+- story: user asks about a building
   steps:
   - intent: building_name
     entities:
@@ -1009,7 +977,7 @@ stories:
       - building_name: CIS building
   - action: action_building_to_building_map
 
-- story: interactive_story_1
+- story: building locations
   steps:
   - intent: get_directions_from_another_building
     entities:
@@ -1017,7 +985,7 @@ stories:
     - building_name_destination: sport central
   - action: action_building_to_building_map
 
-- story: interactive_story_2
+- story: building locations
   steps:
   - intent: get_directions_from_another_building
     entities:
@@ -1025,7 +993,7 @@ stories:
     - building_name_destination: sport central
   - action: action_building_to_building_map
 
-- story: interactive_story_3
+- story: building locations
   steps:
   - intent: get_directions_from_another_building
     entities:
@@ -1033,13 +1001,13 @@ stories:
     - building_code: cis building
   - action: action_building_to_building_map
 
-- story: interactive_story_1
+- story: campus map
   steps:
   - intent: campus_map
   - action: utter_campus_map
   - action: utter_can_i_help
 
-- story: interactive_story_1
+- story: building locations
   steps:
   - intent: get_directions_from_my_location
     entities:
@@ -1051,7 +1019,7 @@ stories:
   - action: action_location_after_confirmation
 
 
-- story: interactive_story_2
+- story: building locations
   steps:
   - intent: building_location
     entities:

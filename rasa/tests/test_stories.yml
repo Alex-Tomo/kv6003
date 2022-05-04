@@ -1,5 +1,5 @@
 stories:
-- story: ask courses
+- story: ask correct courses
   steps:
   - user: |
       what courses?
@@ -14,6 +14,49 @@ stories:
     intent: show_modules
   - action: action_show_modules
 
+- story: ask incorrect courses
+  steps:
+    - user: |
+        what courses?
+      intent: ask_which_courses
+    - action: action_get_courses
+    - user: |
+        [Computer science web](course)
+      intent: select_course
+    - action: action_say_course_name
+    - user: |
+        which modules
+      intent: show_modules
+    - action: action_show_modules
+
+- story: ask entry requirements courses
+  steps:
+    - user: |
+        entry reqirements for [computer network security](course)
+      intent: courses_entry_requirements_for_course
+    - action: action_say_course_entry_requirements
+
+- story: ask modules for courses
+  steps:
+    - user: |
+        [all](year) modules for [computer network security](course)
+      intent: courses_choose_modules_for_specific_course
+    - action: action_show_modules_for_specific_course
+
+- story: ask for campus map
+  steps:
+    - user: |
+        campus map
+      intent: campus_map
+    - action: utter_campus_map
+
+- story: ask for extension
+  steps:
+    - user: |
+        how do i apply for an extension
+      intent: courses_extensions
+    - action: utter_extensions
+
 - story: say goodbye
   steps:
   - user: |
@@ -27,27 +70,3 @@ stories:
       are you a bot?
     intent: bot_challenge
   - action: utter_iamabot
-
-- story: Aspiring Student
-  steps:
-  - user: |
-      hello
-    intent: greet
-  - action: utter_greet
-  - action: action_offer_help
-  - user: |
-      [Aspiring](student_type) Student
-    intent: my_student_type
-  - action: action_student_options
-
-- story: Existing Student
-  steps:
-  - user: |
-      hi
-    intent: greet
-  - action: utter_greet
-  - action: action_offer_help
-  - user: |
-      [Existing](student_type) Student
-    intent: my_student_type
-  - action: action_student_options

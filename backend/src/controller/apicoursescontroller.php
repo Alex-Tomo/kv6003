@@ -15,18 +15,21 @@ class ApiCoursesController extends Controller
 
   protected function processRequest()
   {
+    $courseCode = $this->getRequest()->getParameter("course_code");
+    $year = $this->getRequest()->getParameter("year");
+    $entryRequirements = $this->getRequest()->getParameter("entry_requirements");
+
     // If a course code has been provided
-    if ($this->getRequest()->getParameter("course_code") !== null) {
-      if ($this->getRequest()->getParameter("year") === "all") {
-        $this->getGateway()->getModules($this->getRequest()->getParameter("course_code"));
+    if ($courseCode !== null) {
+      if ($year === "all") {
+        $this->getGateway()->getModules($courseCode);
       } else {
-        $this->getGateway()->getModulesByYear($this->getRequest()->getParameter("course_code"), $this->getRequest()->getParameter("year"));
+        $this->getGateway()->getModulesByYear($courseCode, $year);
       }
 
-      if ($this->getRequest()->getParameter("entry_requirements") !== null) {
-        $this->getGateway()->getEntryRequirements($this->getRequest()->getParameter("course_code"));
+      if ($entryRequirements !== null) {
+        $this->getGateway()->getEntryRequirements($courseCode);
       }
-
     // get and all courses from the gateway
     } else {
       $this->getGateway()->getCourses();

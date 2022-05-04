@@ -27,7 +27,7 @@ rules:
   - intent: help_user_needs_help
   - action: action_offer_help
 
-- rule: User asks for help
+- rule: User asks about extensions
   steps:
     - intent: courses_extensions
     - action: utter_extensions
