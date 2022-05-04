@@ -1,8 +1,8 @@
-import React, {useEffect} from "react"
-import SpeechRecognition, {useSpeechRecognition} from "react-speech-recognition"
-import Button from "react-bootstrap/Button"
+import React, {useEffect} from 'react'
+import SpeechRecognition, {useSpeechRecognition} from 'react-speech-recognition'
+import Button from 'react-bootstrap/Button'
 
-import MicrophoneWhite from "../../assets/mic_white.svg"
+import MicrophoneWhite from '../../assets/mic_white.svg'
 
 /**
  * The VoiceButton method, uses the react-speech-recognition package,
@@ -35,25 +35,23 @@ const VoiceButton = (props) => {
   // if the browser does not support speech recognition
   // alert the user
   if (!browserSupportsSpeechRecognition) {
-    alert("Speech Recognition is not supported")
+    alert('Speech Recognition is not supported')
     supportedBrowser = false
   }
 
   useEffect(() => {
     if (supportedBrowser) {
-      let listeningPara = document.getElementById("listening")
+      let listeningPara = document.getElementById('listening')
 
       if (listening) {
-        listeningPara.classList.remove("is-hidden")
-      }
-
-      if (!listening) {
-        listeningPara.classList.add("is-hidden")
+        listeningPara.classList.remove('is-hidden')
+      } else {
+        listeningPara.classList.add('is-hidden')
       }
 
       // after the browser stops listening, get the transcript then
       // reset the transcript
-      if ((!listening) && (transcript.trim() !== "")) {
+      if ((!listening) && (transcript.trim() !== '')) {
         props.handleVoice(transcript)
         resetTranscript()
       }
@@ -62,14 +60,17 @@ const VoiceButton = (props) => {
 
   return (
     <Button
-      className="voice-button"
+      className='voice-button'
       onClick={() => {
         SpeechRecognition.startListening()
         props.displayVoiceModal()
       }}
       disabled={props.isSending}
     >
-      <img src={MicrophoneWhite} alt="Microphone Icon" />
+      <img
+        src={MicrophoneWhite}
+        alt='Microphone Icon'
+      />
     </Button>
   )
 }

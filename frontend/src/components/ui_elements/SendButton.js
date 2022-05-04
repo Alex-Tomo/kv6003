@@ -1,7 +1,7 @@
-import React from "react"
-import Button from "react-bootstrap/Button"
+import React from 'react'
+import Button from 'react-bootstrap/Button'
 
-import SendWhite from "../../assets/send_white.svg"
+import SendWhite from '../../assets/send_white.svg'
 
 /**
  * The SendButton class is used to send the users message
@@ -24,11 +24,15 @@ class SendButton extends React.Component {
   render() {
     return (
       <Button
-        id="send-button"
+        id='send-button'
         disabled={this.props.isSending}
-        onClick={(!this.props.isSending) ? this.props.handleClick : null}
+        onClick={(!this.props.isSending) ?
+          this.props.handleClick : null}
       >
-        <img src={SendWhite} alt="Send Icon" />
+        <img
+          src={SendWhite}
+          alt='Send Icon'
+        />
       </Button>
     )
   }

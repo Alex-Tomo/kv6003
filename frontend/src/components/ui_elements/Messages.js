@@ -1,6 +1,6 @@
-import React from "react"
-import RobotBlack from "../../assets/robot_black.svg"
-import RobotWhite from "../../assets/robot_white.svg"
+import React from 'react'
+import RobotBlack from '../../assets/robot_black.svg'
+import RobotWhite from '../../assets/robot_white.svg'
 
 /**
  * The Messages class contains all of the messages and displays
@@ -14,31 +14,31 @@ class Messages extends React.Component {
   render() {
     let hidden = false
     try {
-      hidden = document.getElementById("messages")
-          .className.includes("is-hidden")
+      hidden = document.getElementById('messages')
+          .className.includes('is-hidden')
     } catch (e) {}
 
     return (
       <div
-        id="messages"
-        className={
-          (hidden) ?
-            `is-hidden ${this.props.colourTheme}` :
-            `${this.props.colourTheme}`
+        id='messages'
+        className={(hidden) ?
+          `is-hidden ${this.props.colourTheme}` :
+          `${this.props.colourTheme}`
         }
       >
-        {(this.props.responses.length > 0) ? this.props.responses :
-          <div className="bot-message-container">
+        {(this.props.responses.length > 0) ?
+          this.props.responses :
+          <div className='bot-message-container'>
             <img
-              src={(localStorage.getItem("theme") === "dark") ?
+              src={(localStorage.getItem('theme') === 'dark') ?
                 RobotWhite : RobotBlack}
-              alt="Account Circle"
-              className={`chat-circle ${localStorage.getItem("theme")}`}
+              alt='Account Circle'
+              className={`chat-circle ${localStorage.getItem('theme')}`}
             />
-            <div className="bot-message-typing">
-              <div className="typing-one" />
-              <div className="typing-two" />
-              <div className="typing-three" />
+            <div className='bot-message-typing'>
+              <div className='typing-one' />
+              <div className='typing-two' />
+              <div className='typing-three' />
             </div>
           </div>
         }

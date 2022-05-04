@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 /**
  * option buttons displayed by the bot
@@ -11,11 +11,13 @@ class MessageButton extends React.Component {
     return (
       <div>
         <button
-          className="button message-buttons"
-          id="buttons"
+          className='button message-buttons'
+          id='buttons'
           onClick={this.props.sendMessage}
         >
-          <span>{this.props.title}</span>
+          <span>
+            {this.props.title}
+          </span>
         </button>
         <br/>
       </div>

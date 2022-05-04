@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 /**
  * The Signup class contains the signup form information
@@ -10,23 +10,23 @@ import React from "react"
 class Signup extends React.Component {
   render() {
     return (
-      <div id="signup">
+      <div id='signup'>
         <input
           className={`input ${this.props.usernameClass} form-input`}
-          type="text"
-          placeholder="Username..."
+          type='text'
+          placeholder='Username...'
           onChange={event => this.props.handleUsername(event)}
         />
         <input
           className={`input ${this.props.passwordClass} form-input`}
-          type="password"
-          placeholder="Password..."
+          type='password'
+          placeholder='Password...'
           onChange={event => this.props.handlePassword(event)}
         />
         <input
           className={`input ${this.props.repeatPasswordClass} form-input`}
-          type="password"
-          placeholder="Repeat Password..."
+          type='password'
+          placeholder='Repeat Password...'
           onChange={event => this.props.handleRepeatPassword(event)}
         />
       </div>

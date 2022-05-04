@@ -6,7 +6,15 @@ from rasa.core.channels.channel import UserMessage, InputChannel
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
 from sanic.response import HTTPResponse
-from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
+from typing import Callable, Awaitable
+
+"""
+Get all the training data from the nlu YAML file, used
+to display details about the model and training data
+for the frontend 
+
+@author Alex Thompson, W19007452
+"""
 
 
 class RecieveFiles(InputChannel):
@@ -27,40 +35,12 @@ class RecieveFiles(InputChannel):
 
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
-            metadata = request.json.get("metadata")
 
+            metadata = request.json.get("metadata")
             data = None
 
-            if metadata['file'] == 'config':
-                with open(os.path.join(os.getcwd(), 'config.yml'), "r") as stream:
-                    try:
-                        data = yaml.safe_load(stream)
-                    except yaml.YAMLError as error:
-                        print(error)
-                        return
-            elif metadata['file'] == 'domain':
-                with open(os.path.join(os.getcwd(), 'domain.yml'), "r") as stream:
-                    try:
-                        data = yaml.safe_load(stream)
-                    except yaml.YAMLError as error:
-                        print(error)
-                        return
-            elif metadata['file'] == 'nlu':
+            if metadata['file'] == 'nlu':
                 with open(os.path.join(os.getcwd(), 'data', 'nlu.yml'), "r") as stream:
-                    try:
-                        data = yaml.safe_load(stream)
-                    except yaml.YAMLError as error:
-                        print(error)
-                        return
-            elif metadata['file'] == 'rules':
-                with open(os.path.join(os.getcwd(), 'data', 'rules.yml'), "r") as stream:
-                    try:
-                        data = yaml.safe_load(stream)
-                    except yaml.YAMLError as error:
-                        print(error)
-                        return
-            elif metadata['file'] == 'stories':
-                with open(os.path.join(os.getcwd(), 'data', 'stories.yml'), "r") as stream:
                     try:
                         data = yaml.safe_load(stream)
                     except yaml.YAMLError as error:

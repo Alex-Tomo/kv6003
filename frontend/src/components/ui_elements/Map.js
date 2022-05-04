@@ -22,8 +22,8 @@ class Map extends Component {
     this.state = {
       markers: markers,
       location: (this.props.my_location !== undefined) ? false : null,
-      duration: "",
-      distance: ""
+      duration: '',
+      distance: ''
     }
 
     if (this.props.my_location !== undefined) {
@@ -44,9 +44,12 @@ class Map extends Component {
           markers.push({
             lat: location.coords.latitude,
             lng: location.coords.longitude,
-            name: "Your location"
+            name: 'Your location'
           })
-          this.setState({markers: markers, location: true})
+          this.setState({
+            markers: markers,
+            location: true
+          })
         })
       }
     }
@@ -68,7 +71,7 @@ class Map extends Component {
         // load each marker on the map
         this.state.markers.map(marker => {
           let infoWindow = new maps.InfoWindow({
-            content: `<p class="info-window">${marker.name}</p>`
+            content: `<p class='info-window'>${marker.name}</p>`
           })
 
           let m = new maps.Marker({
@@ -78,7 +81,7 @@ class Map extends Component {
 
           // add an info window that the user can click
           // provide the location detail
-          m.addListener("click", () => {
+          m.addListener('click', () => {
             infoWindow.open({
               anchor: m,
               map,
@@ -100,8 +103,8 @@ class Map extends Component {
         let mapsDirectionsService = new maps.DirectionsService()
 
         let distanceMatrixRequest = {
-          origins: [this.state.markers[1].lat + "," + this.state.markers[1].lng],
-          destinations: [this.state.markers[0].lat + "," + this.state.markers[0].lng],
+          origins: [this.state.markers[1].lat+','+this.state.markers[1].lng],
+          destinations: [this.state.markers[0].lat+','+this.state.markers[0].lng],
           travelMode: maps.TravelMode.DRIVING,
           unitSystem: maps.UnitSystem.IMPERIAL
         }
@@ -125,8 +128,8 @@ class Map extends Component {
           })
 
         let directionsServiceRequest = {
-          origin: this.state.markers[1].lat + "," + this.state.markers[1].lng,
-          destination: this.state.markers[0].lat + "," + this.state.markers[0].lng,
+          origin: this.state.markers[1].lat+','+this.state.markers[1].lng,
+          destination: this.state.markers[0].lat+','+this.state.markers[0].lng,
           travelMode: maps.TravelMode.DRIVING
         }
 
@@ -156,7 +159,7 @@ class Map extends Component {
 
     return (
       <div>
-        <div className="map">
+        <div className='map'>
           <GoogleMapReact
             bootstrapURLKeys={{ key: 'AIzaSyC9PJvUlePYUdC4yXUQVA1L0wK6gObyQiI' }}
             defaultCenter={{lat: 54.9769, lng: -1.6072}}
@@ -168,9 +171,11 @@ class Map extends Component {
           />
         </div>
         <p>
-          {(this.state.duration !== "") ? "Duration: " +  this.state.duration : null}
+          {(this.state.duration !== '') ?
+            'Duration: ' +  this.state.duration : null}
           <br />
-          {(this.state.distance !== "") ? "Distance: " + this.state.distance : null}
+          {(this.state.distance !== '') ?
+            'Distance: ' + this.state.distance : null}
         </p>
       </div>
     )

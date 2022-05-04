@@ -77,6 +77,11 @@
   font-weight: 500;
 }
 
+.user-message-date {
+  text-align: start;
+  font-size: small;
+}
+
 .bot-message-container {
   display: flex;
   flex-direction: row;
@@ -112,6 +117,18 @@
 .bot-message p {
   margin: 1px;
   font-weight: 500;
+}
+
+.bot-message-date {
+  text-align: end;
+  font-size: small;
+}
+
+.campus-map {
+  width: 80%;
+  border: 1px solid grey;
+  border-radius: 2.5px;
+  margin-bottom: 5px;
 }
 
 .chat-circle {
@@ -158,6 +175,14 @@
   70% {
     transform: translateY(-7px);
   }
+}
+
+.incorrect-button-container {
+  padding: 2px;
+}
+
+.incorrect-button {
+  padding: 10px;
 }
 
 /* Messages Functionality Footer Styling */

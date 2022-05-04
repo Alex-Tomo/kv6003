@@ -5,7 +5,14 @@ from rasa.core.channels.channel import UserMessage, InputChannel
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
 from sanic.response import HTTPResponse
-from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
+from typing import Callable, Awaitable
+
+"""
+Custom action used to return a list of all available models
+Used to swap the currently running model
+
+@author Alex Thompson, W19007452
+"""
 
 
 class GetModels(InputChannel):
@@ -26,6 +33,12 @@ class GetModels(InputChannel):
 
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
+
+            """
+            Get all models available and check if it contains
+            .DS_Store, if so remove it then return the list of
+            files
+            """
 
             files = [file for file in os.listdir(os.path.join(os.getcwd(), 'models'))]
             try:

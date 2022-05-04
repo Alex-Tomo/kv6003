@@ -6,8 +6,16 @@ from rasa.core.channels.channel import UserMessage, InputChannel
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
 from sanic.response import HTTPResponse
-from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
+from typing import Callable, Awaitable
 
+"""
+Custom action used to add additional training data
+to the nlu file from an API request from the frontend
+All the data is recieved then the data is appended in
+the correct place then the file is rewritten
+
+@author Alex Thompson, W19007452
+"""
 
 class UpdateFiles(InputChannel):
     def name(self):
@@ -27,9 +35,8 @@ class UpdateFiles(InputChannel):
 
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
-            sender = request.json.get("sender")
-            metadata = request.json.get("metadata")
 
+            metadata = request.json.get("metadata")
             data = None
 
             if metadata['file'] == 'nlu.yml':
@@ -40,10 +47,12 @@ class UpdateFiles(InputChannel):
                         print(error)
                         return
 
+            # Delete all data in nlu.yml
             f = open(os.path.join(os.getcwd(), 'data', 'nlu.yml'), "w")
             f.write("")
             f.close()
 
+            # Rewrite the data to nlu.yml with the additional data
             f = open(os.path.join(os.getcwd(), 'data', 'nlu.yml'), "a")
             f.write("version: " + yaml.dump(data['version']) + "\n")
             f.write("nlu: \n")

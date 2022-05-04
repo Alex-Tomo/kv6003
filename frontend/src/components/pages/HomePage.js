@@ -1,21 +1,21 @@
-import React from "react"
+import React from 'react'
 
-import NavBar from "../sections/NavBar"
-import Messages from "../ui_elements/Messages"
-import MessagesFunctions from "../sections/MessagesFunctions"
-import SignupModal from "../modals/SignupModal"
-import LoginModal from "../modals/LoginModal"
-import MessagesHeader from "../sections/MessagesHeader"
-import SettingsModal from "../modals/SettingsModal"
-import AccountCircleBlack from "../../assets/account_circle_black.svg"
-import AccountCircleWhite from "../../assets/account_circle_white.svg"
-import RobotBlack from "../../assets/robot_black.svg"
-import RobotWhite from "../../assets/robot_white.svg"
-import MoreBlack from "../../assets/more_black.svg"
-import Admin from "../sections/Admin"
-import VoiceModal from "../modals/VoiceModal"
-import Map from "../ui_elements/Map"
-import MessageButton from "../ui_elements/MessageButton"
+import NavBar from '../sections/NavBar'
+import Messages from '../ui_elements/Messages'
+import MessagesFunctions from '../sections/MessagesFunctions'
+import SignupModal from '../modals/SignupModal'
+import LoginModal from '../modals/LoginModal'
+import MessagesHeader from '../sections/MessagesHeader'
+import SettingsModal from '../modals/SettingsModal'
+import AccountCircleBlack from '../../assets/account_circle_black.svg'
+import AccountCircleWhite from '../../assets/account_circle_white.svg'
+import RobotBlack from '../../assets/robot_black.svg'
+import RobotWhite from '../../assets/robot_white.svg'
+import MoreBlack from '../../assets/more_black.svg'
+import Admin from '../sections/Admin'
+import VoiceModal from '../modals/VoiceModal'
+import Map from '../ui_elements/Map'
+import MessageButton from '../ui_elements/MessageButton'
 
 /**
  * The Home page will be displayed is the main page
@@ -34,23 +34,23 @@ class HomePage extends React.Component {
     super(props)
 
     this.state = {
-      userInput: "",
+      userInput: '',
       responses: [],
       isSending: false,
       modal: <></>,
       loggedIn: false,
-      accessToken: "",
+      accessToken: '',
       user_id: null,
-      user_type: (localStorage.getItem("user_type") === null) ?
-        "" : localStorage.getItem("user_type"),
+      user_type: (localStorage.getItem('user_type') === null) ?
+        '' : localStorage.getItem('user_type'),
       initialMessageSend: false,
       displayAdmin: false,
-      voiceText: "",
+      voiceText: '',
       saveMessages: false
     }
 
-    if (localStorage.getItem("theme") === null) {
-      localStorage.setItem("theme", "dark")
+    if (localStorage.getItem('theme') === null) {
+      localStorage.setItem('theme', 'dark')
     }
 
     this.handleUserInputMessage = this.handleUserInputMessage.bind(this)
@@ -65,14 +65,14 @@ class HomePage extends React.Component {
    */
   componentDidMount() {
     if (
-      localStorage.getItem("token") &&
-      localStorage.getItem("id") &&
-      localStorage.getItem("user_type")
+      localStorage.getItem('token') &&
+      localStorage.getItem('id') &&
+      localStorage.getItem('user_type')
     ) {
       this.handleLogin(
-        localStorage.getItem("token"),
-        localStorage.getItem("id"),
-        localStorage.getItem("user_type")
+        localStorage.getItem('token'),
+        localStorage.getItem('id'),
+        localStorage.getItem('user_type')
       )
       .then(() => {
         this.getMessages()
@@ -131,7 +131,7 @@ class HomePage extends React.Component {
    * a blank message
    */
   handleClickSendButton = () => {
-    if (this.state.userInput.trim() === "") {
+    if (this.state.userInput.trim() === '') {
       return
     }
     this.setState({isSending: true})
@@ -146,12 +146,12 @@ class HomePage extends React.Component {
     // while the current sent message is being processed
     this.setState({isSending: true})
 
-    fetch("http://localhost:5005/webhooks/rest/webhook", {
-      // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+    fetch('http://localhost:5005/webhooks/rest/webhook', {
+      // fetch('https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook', {
       method: 'POST',
       body: JSON.stringify({
-        sender: "",
-        message: "hey"
+        sender: '',
+        message: 'hey'
       })
     })
       .then(r => {
@@ -166,12 +166,12 @@ class HomePage extends React.Component {
           saveMessages: true
         })
 
-        if (localStorage.getItem("sound") === 'true') {
+        if (localStorage.getItem('sound') === 'true') {
           this.speak()
         }
       })
       .catch(error => {
-        console.log("Error: " + error)
+        console.log(`Error: ${error}`)
       })
   }
 
@@ -190,7 +190,7 @@ class HomePage extends React.Component {
 
     if (d.length > 0) {
       const date = new Date()
-      let formattedDate = ""
+      let formattedDate = ''
       if (date.getHours() > 12 || date.getHours() === 0) {
         formattedDate = `${date.getHours()}:${date.getMinutes()}PM`
       } else {
@@ -286,7 +286,7 @@ class HomePage extends React.Component {
     }
 
     if (this.state.loggedIn && this.state.saveMessages) {
-      this.addMessageToDatabase(localStorage.getItem("id"), 'received', botText)
+      this.addMessageToDatabase(localStorage.getItem('id'), 'received', botText)
     }
 
     this.setState({
@@ -411,13 +411,13 @@ class HomePage extends React.Component {
    * @param botMsg
    * @param userMsg
    */
-  addIncorrectMessage = (botMsg, userMsg = "") => {
-    if (!window.confirm("Do you give permission for your message to be saved?"))
+  addIncorrectMessage = (botMsg, userMsg = '') => {
+    if (!window.confirm('Do you give permission for your message to be saved?'))
       return
 
     let formData = new FormData()
-    formData.append('incorrect', "true")
-    formData.append('add', "true")
+    formData.append('incorrect', 'true')
+    formData.append('add', 'true')
     formData.append('user_message', userMsg[0].text)
     formData.append('bot_message', botMsg[0].text)
 
@@ -425,7 +425,7 @@ class HomePage extends React.Component {
       method: 'POST',
       body: formData
     }).catch(() => {
-      console.log("could not add message")
+      console.log('could not add message')
     })
   }
 
@@ -447,11 +447,11 @@ class HomePage extends React.Component {
     })
 
     if (this.state.loggedIn && this.state.saveMessages) {
-      this.addMessageToDatabase(localStorage.getItem("id"), 'sent', msg)
+      this.addMessageToDatabase(localStorage.getItem('id'), 'sent', msg)
     }
 
     const date = new Date()
-    let formattedDate = ""
+    let formattedDate = ''
     if (date.getHours() > 12 || date.getHours() === 0) {
       formattedDate = `${date.getHours()}:${date.getMinutes()}PM`
     } else {
@@ -474,11 +474,11 @@ class HomePage extends React.Component {
       date: new Date().toString()
     })
 
-    fetch("http://localhost:5005/webhooks/rest/webhook", {
-    // fetch("https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook", {
+    fetch('http://localhost:5005/webhooks/rest/webhook', {
+    // fetch('https://alex-rasa-testing.eu.ngrok.io/webhooks/rest/webhook', {
       method: 'POST',
       body: JSON.stringify({
-        sender: "alex",
+        sender: 'user',
         message: msg.toLowerCase()
       })
     })
@@ -489,26 +489,26 @@ class HomePage extends React.Component {
         this.getMessageFromBot(d)
       })
       .then(() => {
-        if (localStorage.getItem("sound") === 'true') {
+        if (localStorage.getItem('sound') === 'true') {
           this.speak()
         }
         this.setState({
-          userInput: "",
+          userInput: '',
           isSending: false
         })
       })
       .catch(() => {
-        const message = document.getElementById("success-message")
-        const notification = document.getElementById("success-notification")
+        const message = document.getElementById('success-message')
+        const notification = document.getElementById('success-notification')
 
-        message.innerText = "Could Not Send Message"
-        notification.classList.add("is-danger")
-        notification.classList.remove("is-hidden")
+        message.innerText = 'Could Not Send Message'
+        notification.classList.add('is-danger')
+        notification.classList.remove('is-hidden')
 
         setTimeout(() => {
-          message.innerText = ""
-          notification.classList.add("is-hidden")
-          notification.classList.remove("is-danger")
+          message.innerText = ''
+          notification.classList.add('is-hidden')
+          notification.classList.remove('is-danger')
         }, 3000)
         this.setState({isSending: false})
       })
@@ -521,10 +521,11 @@ class HomePage extends React.Component {
    * @param id => users id
    * @param type => 'sent' or 'received'
    * @param msg => the message => do not include buttons
+   * @param link
    */
   addMessageToDatabase = (id, type, msg, link) => {
 
-    if (typeof msg == "object") {
+    if (typeof msg == 'object') {
       for (let i = 0; i < msg.length; i++) {
         let msgLink = msg[i].link
         if (msgLink === undefined) {
@@ -538,7 +539,7 @@ class HomePage extends React.Component {
     }
 
     const date = new Date()
-    let formattedDate = ""
+    let formattedDate = ''
     if (date.getHours() > 12 || date.getHours() === 0) {
       formattedDate = `${date.getHours()}:${date.getMinutes()}PM`
     } else {
@@ -557,7 +558,7 @@ class HomePage extends React.Component {
       method: 'POST',
       body: formData
     }).catch(() => {
-      console.log("Could not add message")
+      console.log('Could not add message')
     })
   }
 
@@ -621,21 +622,21 @@ class HomePage extends React.Component {
    * page.
    */
   handleLogout = async () => {
-    if (!window.confirm("Are you sure you want to log out?"))
+    if (!window.confirm('Are you sure you want to log out?'))
       return
 
     await this.setState({
-      accessToken: "",
+      accessToken: '',
       user_id: null,
       loggedIn: false,
       responses: []
     })
 
-    localStorage.removeItem("token")
-    localStorage.removeItem("id")
-    localStorage.removeItem("user_type")
+    localStorage.removeItem('token')
+    localStorage.removeItem('id')
+    localStorage.removeItem('user_type')
 
-    window.location.href = "http://localhost:3000"
+    window.location.href = 'http://localhost:3000'
   }
 
   /**
@@ -655,9 +656,9 @@ class HomePage extends React.Component {
       responses: []
     })
 
-    await localStorage.setItem("token", token)
-    await localStorage.setItem("id", id)
-    await localStorage.setItem("user_type", type)
+    await localStorage.setItem('token', token)
+    await localStorage.setItem('id', id)
+    await localStorage.setItem('user_type', type)
 
     this.closeModal()
     await this.getMessages()
@@ -677,20 +678,20 @@ class HomePage extends React.Component {
   }
 
   render() {
-    let responses = ""
+    let responses = ''
     let key = 0
 
     if (this.state.responses.length > 0) {
       responses = this.state.responses.map((response, i) => {
         key = i
-        let buttons = ""
+        let buttons = ''
 
         // displays a list of buttons to the user
         if (response.message.length > 0) {
           response.message.forEach(message => {
             if ((message.buttons !== null) && (message.buttons.length > 0)) {
               buttons = message.buttons.map((button, i) => {
-                if (button !== "None") {
+                if (button !== 'None') {
                   return (
                     <MessageButton
                       key={i}
@@ -706,17 +707,20 @@ class HomePage extends React.Component {
 
         let message = response.message.map((message, i) => {
           if (message.text !== undefined) {
-            message.text = message.text.replaceAll("&#13;", "")
-            message.text = message.text.replaceAll("&#10;", "\n")
-            message.text = message.text.replaceAll("&#39;", "'")
+            message.text = message.text.replaceAll('&#13;', '')
+            message.text = message.text.replaceAll('&#10;', '\n')
+            message.text = message.text.replaceAll('&#39;', "'")
 
             if (message.link !== undefined) {
-              let text = message.text.split("{?}")
+              let text = message.text.split('{?}')
               return (
-                <div className="bot-message" key={i}>
+                <div
+                  className='bot-message'
+                  key={i}
+                >
                   <p>{text[0]}<a href={message.link}>this link</a>{text[1]}</p>
                   <br />
-                  <p style={{textAlign: "end", fontSize: "small"}}>
+                  <p className='bot-message-date'>
                     <em>Received - {message.date}</em>
                   </p>
                 </div>
@@ -726,14 +730,17 @@ class HomePage extends React.Component {
             if (message.my_location !== undefined) {
               return (
                 <div key={i}>
-                  <div className="bot-message">
+                  <div className='bot-message'>
                     <p>{message.text}</p>
                     <br />
-                    <p style={{textAlign: "end", fontSize: "small"}}>
+                    <p className="bot-message-date">
                       <em>Received - {message.date}</em>
                     </p>
                   </div>
-                  <Map my_location={true} coordinates={message.coordinates} />
+                  <Map
+                    my_location={true}
+                    coordinates={message.coordinates}
+                  />
                 </div>
               )
             }
@@ -741,23 +748,26 @@ class HomePage extends React.Component {
             if (message.coordinates !== undefined) {
               return (
                 <div key={i}>
-                  <div className="bot-message">
+                  <div className='bot-message'>
                     <p>{message.text}</p>
                     <br />
-                    <p style={{textAlign: "end", fontSize: "small"}}>
+                    <p className="bot-message-date">
                       <em>Received - {message.date}</em>
                     </p>
                   </div>
-                  <Map my_location={undefined} coordinates={message.coordinates} />
+                  <Map
+                    my_location={undefined}
+                    coordinates={message.coordinates}
+                  />
                 </div>
               )
             }
 
             return (
-              <div className="bot-message" key={i}>
+              <div className='bot-message' key={i}>
                 <p>{message.text}</p>
                 <br />
-                <p style={{textAlign: "end", fontSize: "small"}}>
+                <p className="bot-message-date">
                   <em>Received - {message.date}</em>
                 </p>
               </div>
@@ -765,20 +775,17 @@ class HomePage extends React.Component {
           } else if (message.image !== undefined) {
             return (
             <img
-              className="image"
+              className='image campus-map'
               src={message.image}
-              alt="map"
-              style={{
-                width: "80%",
-                border: "1px solid grey",
-                borderRadius: "2.5px",
-                marginBottom: "5px"
-              }}
+              alt='map'
             />
             )
           } else if (message.buttons.length > 0) {
             return (
-              <div key={i} id="message-buttons-container">
+              <div
+                key={i}
+                id='message-buttons-container'
+              >
                 {buttons}
               </div>
             )
@@ -787,79 +794,109 @@ class HomePage extends React.Component {
 
         if (response.sender === this.USER) {
           return (
-            <div className="user-message-container" key={i}>
-              <div key={i} className="user-message">
+            <div
+              className='user-message-container'
+              key={i}
+            >
+              <div className='user-message'>
                 <p>{response.message[0].text}</p>
                 <br />
-                <p style={{textAlign: "start", fontSize: "small"}}>
+                <p className="user-message-date">
                   <em>Sent - {response.message[0].date}</em>
                 </p>
               </div>
               <img
-                src={(localStorage.getItem("theme") === "dark") ?
+                src={(localStorage.getItem('theme') === 'dark') ?
                   AccountCircleWhite : AccountCircleBlack}
-                alt="Account Circle"
-                className={`chat-circle  ${localStorage.getItem("theme")}`}
+                alt='Account Circle'
+                className={`chat-circle ${localStorage.getItem('theme')}`}
               />
             </div>
           )
         } else {
           return (
             <div key={i}>
-              <div className="bot-message-container">
-
-                <div style={{ display:"flex", flexDirection: "column", alignItems: "center" }}>
+              <div className='bot-message-container'>
+                <div
+                  style={{
+                    display:'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
                   <img
-                    src={(localStorage.getItem("theme") === "dark") ?
+                    src={(localStorage.getItem('theme') === 'dark') ?
                         RobotWhite : RobotBlack}
-                    alt="Account Circle"
-                    className={`chat-circle  ${localStorage.getItem("theme")}`}
-                    height="24px"
-                    width="24px"
+                    alt='Account Circle'
+                    className={`chat-circle ${localStorage.getItem('theme')}`}
+                    height='24px'
+                    width='24px'
                   />
-                  <div id={`menu${i}`} className="dropdown">
-                    <div className="dropdown-trigger">
-                      <button className="button" aria-haspopup="true" aria-controls="dropdown-menu"
-                        style={{padding: "10px"}}
+                  <div
+                    id={`menu${i}`}
+                    className='dropdown'
+                  >
+                    <div className='dropdown-trigger'>
+                      <button
+                        className='button'
+                        aria-haspopup='true'
+                        aria-controls='dropdown-menu'
                         onClick={() => {
                           const menu = document.getElementById(`menu${i}`)
-                          if (menu.classList.contains("is-active")) {
-                            menu.classList.remove("is-active")
+                          if (menu.classList.contains('is-active')) {
+                            menu.classList.remove('is-active')
                           } else {
-                            menu.classList.add("is-active")
+                            menu.classList.add('is-active')
                           }
                         }}
                         onBlur={() => {
                           const menu = document.getElementById(`menu${i}`)
-                          menu.classList.remove("is-active")
+                          menu.classList.remove('is-active')
                         }}
                       >
-                        <span className="icon is-small">
+                        <span className='icon is-small'>
                           <img
                             src={MoreBlack}
-                            alt="More Icon"
-                            height="24px"
-                            width="24px"
+                            alt='More Icon'
+                            height='24px'
+                            width='24px'
                           />
                         </span>
                       </button>
                     </div>
-                    <div className="dropdown-menu" id="dropdown-menu" role="menu" style={{padding: "2px"}}>
-                        <button
-                          className="button is-danger"
-                          onMouseDown={() => {
-                            document.getElementById(`menu${i}`).classList.remove("is-active")
-                            if (i > 1) {
-                              this.addIncorrectMessage(this.state.responses[i].message, this.state.responses[i - 1].message)
-                            } else {
-                              alert("Cannot report this message")
-                            }
-                          }}
-                        >This Response is Wrong</button>
+                    <div
+                      className='dropdown-menu'
+                      id='dropdown-menu'
+                      role='menu'
+                      style={{padding: '2px'}}
+                    >
+                      <button
+                        className='button is-danger'
+                        onMouseDown={() => {
+                          document.getElementById(`menu${i}`)
+                            .classList.remove('is-active')
+                          if (i > 1) {
+                            this.addIncorrectMessage(
+                              this.state.responses[i].message,
+                              this.state.responses[i - 1].message
+                            )
+                          } else {
+                            alert('Cannot report this message')
+                          }
+                        }}
+                      >
+                        This Response is Wrong
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%'
+                  }}
+                >
                   {message}
                 </div>
               </div>
@@ -871,64 +908,67 @@ class HomePage extends React.Component {
       // while the bots message is loading display an is typing message
       if (this.state.responses[this.state.responses.length-1].sender === this.USER) {
         responses.push(
-          <div className="bot-message-container" key={key+1}>
+          <div
+            className='bot-message-container'
+            key={key+1}
+          >
             <img
-              src={(localStorage.getItem("theme") === "dark") ?
+              src={(localStorage.getItem('theme') === 'dark') ?
                 RobotWhite : RobotBlack}
-              alt="Account Circle"
-              className={`chat-circle ${localStorage.getItem("theme")}`}
+              alt='Account Circle'
+              className={`chat-circle ${localStorage.getItem('theme')}`}
             />
-            <div className="bot-message-typing">
-              <div className="typing-one" />
-              <div className="typing-two" />
-              <div className="typing-three" />
+            <div className='bot-message-typing'>
+              <div className='typing-one' />
+              <div className='typing-two' />
+              <div className='typing-three' />
             </div>
           </div>
         )
       }
     }
 
-    let displayAdmin = (this.state.displayAdmin) ? "admin" : ""
+    let displayAdmin = (this.state.displayAdmin) ? 'admin' : ''
 
     return (
       <div
-        id="main-root"
-        className={`${localStorage.getItem("theme")} ${displayAdmin}`}
+        id='main-root'
+        className={`${localStorage.getItem('theme')} ${displayAdmin}`}
       >
         <NavBar
-          colourTheme={localStorage.getItem("theme")}
+          colourTheme={localStorage.getItem('theme')}
           displaySignupModal={this.displaySignupModal}
           displayLoginModal={this.displayLoginModal}
           closeModal={this.closeModal}
           loggedIn={this.state.loggedIn}
           handleLogout={this.handleLogout}
           displaySettingsModal={this.displaySettingsModal}
-          userType={localStorage.getItem("user_type")}
+          userType={localStorage.getItem('user_type')}
           displayAdmin={this.state.displayAdmin}
           updateAdmin={this.updateAdmin}
         />
 
         <div
-          id="notification"
-          className="notification is-hidden"
+          id='notification'
+          className='notification is-hidden'
         >
-          <p id="success-message" />
+          <p id='success-message' />
         </div>
 
         {(this.state.displayAdmin) ?
           <><Admin closeModal={this.closeModal} /></> :
           <>
             <MessagesHeader
-              colourTheme={localStorage.getItem("theme")}
+              colourTheme={localStorage.getItem('theme')}
             />
 
             <Messages
-              colourTheme={localStorage.getItem("theme")}
+              colourTheme={localStorage.getItem('theme')}
               responses={responses}
             />
 
             <MessagesFunctions
-              colourTheme={localStorage.getItem("theme")}
+              colourTheme={localStorage.getItem('theme')}
               handleVoice={this.handleVoice}
               userInput={this.state.userInput}
               handleInput={this.handleUserInputMessage}

@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 /**
  * The Login class contains the login form information
@@ -10,17 +10,17 @@ import React from "react"
 class Login extends React.Component {
   render() {
     return (
-      <div id="login">
+      <div id='login'>
         <input
-          className="input form-input"
-          type="text"
-          placeholder="Username..."
+          className='input form-input'
+          type='text'
+          placeholder='Username...'
           onChange={event => this.props.handleUsername(event)}
         />
         <input
-          className="input form-input"
-          type="password"
-          placeholder="Password..."
+          className='input form-input'
+          type='password'
+          placeholder='Password...'
           onChange={event => this.props.handlePassword(event)}
         />
       </div>

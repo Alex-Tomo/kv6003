@@ -1,5 +1,5 @@
-import React from "react"
-import Signup from "../forms/Signup"
+import React from 'react'
+import Signup from '../forms/Signup'
 
 /**
  * The SignupModal class contains the modal for the signup form
@@ -15,12 +15,12 @@ class SignupModal extends React.Component {
     super(props)
 
     this.state = {
-      username: "",
-      usernameClass: "",
-      password: "",
-      passwordClass: "",
-      repeatPassword: "",
-      repeatPasswordClass: ""
+      username: '',
+      usernameClass: '',
+      password: '',
+      passwordClass: '',
+      repeatPassword: '',
+      repeatPasswordClass: ''
     }
   }
 
@@ -70,39 +70,40 @@ class SignupModal extends React.Component {
    * @returns {boolean} - true is there are errors
    */
   checkUserDetails = () => {
-    const errorMessage = document.getElementById("error-message")
-    errorMessage.innerHTML = ""
-    document.getElementById("error-notification").classList.add("is-hidden")
+    const errorMessage = document.getElementById('error-message')
+    errorMessage.innerHTML = ''
+    document.getElementById('error-notification')
+      .classList.add('is-hidden')
 
     let usernameError = false
     let passwordError = false
     let repeatPasswordError = false
 
-    if (this.state.username.trim() === "") {
+    if (this.state.username.trim() === '') {
       usernameError = true
-      errorMessage.innerHTML += "Invalid Username<br />"
+      errorMessage.innerHTML += 'Invalid Username<br />'
     }
 
     if (this.state.password.trim() !== this.state.repeatPassword.trim()) {
       passwordError = true
       repeatPasswordError = true
-      errorMessage.innerHTML += "Passwords do not match<br />"
+      errorMessage.innerHTML += 'Passwords do not match<br />'
     }
 
-    if (this.state.password.trim() === "") {
+    if (this.state.password.trim() === '') {
       passwordError = true
-      errorMessage.innerHTML += "Invalid Password<br />"
+      errorMessage.innerHTML += 'Invalid Password<br />'
     }
 
     this.setState({
-      usernameClass: (usernameError) ? "is-danger" : "",
-      passwordClass: (passwordError) ? "is-danger" : "",
-      repeatPasswordClass: (repeatPasswordError) ? "is-danger" : ""
+      usernameClass: (usernameError) ? 'is-danger' : '',
+      passwordClass: (passwordError) ? 'is-danger' : '',
+      repeatPasswordClass: (repeatPasswordError) ? 'is-danger' : ''
     })
 
     if (usernameError || passwordError || repeatPasswordError) {
-      document.getElementById("error-notification")
-        .classList.remove("is-hidden")
+      document.getElementById('error-notification')
+        .classList.remove('is-hidden')
       return true
     }
     return false
@@ -128,40 +129,48 @@ class SignupModal extends React.Component {
       this.props.accountCreated()
       this.props.closeModal()
 
-      const message = document.getElementById("success-message")
-      const notification = document.getElementById("notification")
+      const message = document.getElementById('success-message')
+      const notification = document.getElementById('notification')
 
-      message.innerText = "Account Successfully Created"
-      notification.classList.add("is-success")
-      notification.classList.remove("is-hidden")
+      message.innerText = 'Account Successfully Created'
+      notification.classList.add('is-success')
+      notification.classList.remove('is-hidden')
 
       setTimeout(() => {
-        message.innerText = ""
-        notification.classList.add("is-hidden")
-        notification.classList.remove("is-success")
+        message.innerText = ''
+        notification.classList.add('is-hidden')
+        notification.classList.remove('is-success')
       }, 3000)
     }).catch(() => {
-      let message = document.getElementById("error-message")
-      let notification = document.getElementById("error-notification")
+      let message = document.getElementById('error-message')
+      let notification = document.getElementById('error-notification')
 
-      message.innerHTML = "Could not create account"
-      notification.classList.remove("is-hidden")
+      message.innerHTML = 'Could not create account'
+      notification.classList.remove('is-hidden')
     })
   }
 
   render() {
     return (
       <div>
-        <div className="modal is-active">
-          <div className="modal-background" />
-          <div className="modal-card modal-card-width">
-            <header className="modal-card-head">
-              <p className="modal-card-title">Sign Up</p>
-              <button className="delete" aria-label="close" />
+        <div className='modal is-active'>
+          <div className='modal-background' />
+          <div className='modal-card modal-card-width'>
+            <header className='modal-card-head'>
+              <p className='modal-card-title'>
+                Sign Up
+              </p>
+              <button
+                className='delete'
+                aria-label='close'
+              />
             </header>
-            <section className="modal-card-body">
-              <div id="error-notification" className="notification is-danger is-hidden">
-                <p id="error-message"/>
+            <section className='modal-card-body'>
+              <div
+                id='error-notification'
+                className='notification is-danger is-hidden'
+              >
+                <p id='error-message'/>
               </div>
               <Signup
                 handleUsername={this.handleUsername}
@@ -172,14 +181,16 @@ class SignupModal extends React.Component {
                 repeatPasswordClass={this.state.repeatPasswordClass}
               />
             </section>
-            <footer className="modal-card-foot">
+            <footer className='modal-card-foot'>
               <button
-                className="button is-success"
+                className='button is-success'
                 onClick={this.handleSignup}
               >
                 Create Account
               </button>
-              <button className="button cancel">Cancel</button>
+              <button className='button cancel'>
+                Cancel
+              </button>
             </footer>
           </div>
         </div>

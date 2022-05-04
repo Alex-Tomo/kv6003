@@ -1,10 +1,10 @@
-import React from "react"
+import React from 'react'
 
-import LightIcon from "../../assets/light_black.svg"
-import DarkIcon from "../../assets/dark_black.svg"
+import LightIcon from '../../assets/light_black.svg'
+import DarkIcon from '../../assets/dark_black.svg'
 
-import MuteIcon from "../../assets/mute_black.svg"
-import SoundIcon from "../../assets/sound_black.svg"
+import MuteIcon from '../../assets/mute_black.svg'
+import SoundIcon from '../../assets/sound_black.svg'
 
 /**
  * The Settings class contains modifiable settings:
@@ -30,22 +30,23 @@ class Settings extends React.Component {
       body: formData
     })
       .then(() => {
-        window.location.href = "http://localhost:3000"
+        window.location.href = 'http://localhost:3000'
       })
       .catch(() => {
-        alert("Could not delete messages")
+        alert('Could not delete messages')
       })
   }
 
   render() {
-    const userId = localStorage.getItem("id")
-    let clearMessagesButton =  ""
+    const userId = localStorage.getItem('id')
+    let clearMessagesButton =  ''
 
+    // if the user is logged in display this button
     if (userId !== null) {
       clearMessagesButton = (
-        <div style={{marginTop: "20px"}}>
+        <div className='clear-messages-button'>
           <button
-            className="button is-danger"
+            className='button is-danger'
             onClick={() => {
               this.clearUserMessages(userId)
             }}
@@ -57,47 +58,47 @@ class Settings extends React.Component {
     }
 
     return (
-      <div id="settings">
-        <div id="setting-container">
-          <div className="field">
+      <div id='settings'>
+        <div id='setting-container'>
+          <div className='field'>
             <img
-              className="settings-switch"
+              className='settings-switch'
               src={LightIcon}
-              alt="Colour Theme Icon"
+              alt='Colour Theme Icon'
             />
-            <label className="switch">
+            <label className='switch'>
               <input
-                type="checkbox"
+                type='checkbox'
                 onChange={this.props.changeColourTheme}
                 checked={this.props.colourThemeChecked}
               />
-              <span className="slider round"/>
+              <span className='slider round'/>
             </label>
             <img
-              className="settings-switch"
+              className='settings-switch'
               src={DarkIcon}
-              alt="Colour Theme Icon"
+              alt='Colour Theme Icon'
             />
           </div>
 
-          <div className="field">
+          <div className='field'>
             <img
-              className="settings-switch"
+              className='settings-switch'
               src={MuteIcon}
-              alt="Mute Icon"
+              alt='Mute Icon'
             />
-            <label className="switch">
+            <label className='switch'>
               <input
-                type="checkbox"
+                type='checkbox'
                 onChange={this.props.handleChange}
                 checked={this.props.isChecked}
               />
-              <span className="slider round"/>
+              <span className='slider round'/>
             </label>
             <img
-              className="settings-switch"
+              className='settings-switch'
               src={SoundIcon}
-              alt="Sound Icon"
+              alt='Sound Icon'
             />
           </div>
           {clearMessagesButton}

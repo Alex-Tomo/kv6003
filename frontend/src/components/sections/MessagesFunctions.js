@@ -1,6 +1,6 @@
-import React from "react"
-import VoiceButton from "../ui_elements/VoiceButton"
-import SendButton from "../ui_elements/SendButton"
+import React from 'react'
+import VoiceButton from '../ui_elements/VoiceButton'
+import SendButton from '../ui_elements/SendButton'
 
 /**
  * The MessagesFunctions displays the bottom of the messages
@@ -14,8 +14,11 @@ import SendButton from "../ui_elements/SendButton"
 class MessagesFunctions extends React.Component {
   render() {
     return (
-      <div id="message-functionality-container">
-        <div id="message-functionality" className={this.props.colourTheme}>
+      <div id='message-functionality-container'>
+        <div
+          id='message-functionality'
+          className={this.props.colourTheme}
+        >
           <VoiceButton
             isSending={this.props.isSending}
             props={this.props}
@@ -24,16 +27,16 @@ class MessagesFunctions extends React.Component {
             closeModal={this.props.closeModal}
           />
           <input
-            id="input-message"
-            placeholder="Type your message here..."
+            id='input-message'
+            placeholder='Type your message here...'
             value={this.props.userInput}
             onChange={this.props.handleInput}
             onKeyDown={this.props.handleKeyPress}
-            autoComplete="off"
+            autoComplete='off'
           />
           <SendButton
             isSending={this.props.isSending}
-            buttonText="Send"
+            buttonText='Send'
             handleClick={this.props.handleClick}
           />
         </div>

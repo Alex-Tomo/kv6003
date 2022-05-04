@@ -1,14 +1,18 @@
 import inspect
 import os
 
-import requests
-import yaml
 from rasa.core.channels.channel import UserMessage, InputChannel
 from sanic import Sanic, Blueprint, response
 from sanic.request import Request
 from sanic.response import HTTPResponse
-from typing import Text, Dict, Any, Optional, Callable, Awaitable, NoReturn
+from typing import Callable, Awaitable
 
+"""
+Custom action used to retrain the model using a 
+terminal command
+
+@author Alex Thompson, W19007452
+"""
 
 class RetrainModel(InputChannel):
     def name(self):
@@ -29,8 +33,8 @@ class RetrainModel(InputChannel):
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
 
+            # Runs the command rasa train from the terminal
             print("training")
-
             os.system("rasa train")
 
             return response.json({"status": 200})

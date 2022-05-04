@@ -1,5 +1,5 @@
-import React from "react"
-import Login from "../forms/Login"
+import React from 'react'
+import Login from '../forms/Login'
 
 /**
  * The LoginModal class contains the modal for the login form
@@ -14,8 +14,8 @@ class LoginModal extends React.Component {
     super(props)
 
     this.state = {
-      username: "",
-      password: ""
+      username: '',
+      password: ''
     }
   }
 
@@ -52,31 +52,31 @@ class LoginModal extends React.Component {
    * @returns {boolean} - true is there are errors
    */
   checkUserDetails = () => {
-    let errorMessage = document.getElementById("error-message")
-    errorMessage.innerHTML = ""
-    document.getElementById("error-notification").classList.add("is-hidden")
+    let errorMessage = document.getElementById('error-message')
+    errorMessage.innerHTML = ''
+    document.getElementById('error-notification').classList.add('is-hidden')
 
     let usernameError = false
     let passwordError = false
 
-    if (this.state.username.trim() === "") {
+    if (this.state.username.trim() === '') {
       usernameError = true
-      errorMessage.innerHTML += "Invalid Username<br />"
+      errorMessage.innerHTML += 'Invalid Username<br />'
     }
 
-    if (this.state.password.trim() === "") {
+    if (this.state.password.trim() === '') {
       passwordError = true
-      errorMessage.innerHTML += "Invalid Password<br />"
+      errorMessage.innerHTML += 'Invalid Password<br />'
     }
 
     this.setState({
-      usernameClass: (usernameError) ? "is-danger" : "",
-      passwordClass: (passwordError) ? "is-danger" : ""
+      usernameClass: (usernameError) ? 'is-danger' : '',
+      passwordClass: (passwordError) ? 'is-danger' : ''
     })
 
     if (usernameError || passwordError) {
-      document.getElementById("error-notification")
-        .classList.remove("is-hidden")
+      document.getElementById('error-notification')
+        .classList.remove('is-hidden')
       return true
     }
 
@@ -108,9 +108,9 @@ class LoginModal extends React.Component {
     }).then(r => {
       this.accept(r)
     }).catch(() => {
-      const errorNotification = document.getElementById("error-notification")
-      errorNotification.innerText = "Could Not Log In"
-      errorNotification.classList.remove("is-hidden")
+      const errorNotification = document.getElementById('error-notification')
+      errorNotification.innerText = 'Could Not Log In'
+      errorNotification.classList.remove('is-hidden')
     })
   }
 
@@ -126,17 +126,17 @@ class LoginModal extends React.Component {
     // logs the user in, saves the user details, closes the modal
     this.props.handleLogin(results.token, results.id, results.type)
 
-    const successMessage = document.getElementById("success-message")
-    const notification = document.getElementById("notification")
+    const successMessage = document.getElementById('success-message')
+    const notification = document.getElementById('notification')
 
     successMessage.innerText = `Welcome ${this.state.username}!`
-    notification.classList.add("is-success")
-    notification.classList.remove("is-hidden")
+    notification.classList.add('is-success')
+    notification.classList.remove('is-hidden')
 
     setTimeout(() => {
-      successMessage.innerText = ""
-      notification.classList.add("is-hidden")
-      notification.classList.remove("is-success")
+      successMessage.innerText = ''
+      notification.classList.add('is-hidden')
+      notification.classList.remove('is-success')
     }, 3000)
   }
 
@@ -145,38 +145,48 @@ class LoginModal extends React.Component {
    * displays an error message to the user
    */
   reject = () => {
-    const notification = document.getElementById("error-notification")
+    const notification = document.getElementById('error-notification')
 
-    notification.innerText = "Could Not Log In"
-    notification.classList.remove("is-hidden")
+    notification.innerText = 'Could Not Log In'
+    notification.classList.remove('is-hidden')
   }
 
   render() {
     return (
-      <div className="modal is-active">
-        <div className="modal-background"/>
-        <div className="modal-card modal-card-width">
-          <header className="modal-card-head">
-            <p className="modal-card-title">Log In</p>
-            <button className="delete" aria-label="close"/>
+      <div className='modal is-active'>
+        <div className='modal-background'/>
+        <div className='modal-card modal-card-width'>
+          <header className='modal-card-head'>
+            <p className='modal-card-title'>
+              Log In
+            </p>
+            <button
+              className='delete'
+              aria-label='close'
+            />
           </header>
-          <section className="modal-card-body">
-            <div id="error-notification" className="notification is-danger is-hidden">
-              <p id="error-message"/>
+          <section className='modal-card-body'>
+            <div
+              id='error-notification'
+              className='notification is-danger is-hidden'
+            >
+              <p id='error-message'/>
             </div>
             <Login
               handleUsername={this.handleUsername}
               handlePassword={this.handlePassword}
             />
           </section>
-          <footer className="modal-card-foot">
+          <footer className='modal-card-foot'>
             <button
-              className="button is-success"
+              className='button is-success'
               onClick={this.handleLogin}
             >
               Log In
             </button>
-            <button className="button cancel">Cancel</button>
+            <button className='button cancel'>
+              Cancel
+            </button>
           </footer>
         </div>
       </div>
