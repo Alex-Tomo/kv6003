@@ -160,7 +160,7 @@ class Map extends Component {
       <div>
         <div className='map'>
           <GoogleMapReact
-            bootstrapURLKeys={{ key: 'AIzaSyC9PJvUlePYUdC4yXUQVA1L0wK6gObyQiI' }}
+            bootstrapURLKeys={{ key: 'deleted-this-key 🤷‍♂️' }}
             defaultCenter={{lat: 54.9769, lng: -1.6072}}
             defaultZoom={10}
             yesIWantToUseGoogleMapApiInternals={true}
