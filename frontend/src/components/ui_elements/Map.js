@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
 
+
 /**
  * Makes use of the NPM google-map-react Library to render
  * Google Maps API
